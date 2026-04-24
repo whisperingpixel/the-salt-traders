@@ -86,6 +86,7 @@ def buy_salt(amount, mine):
     print(f"Bought {amount}kg from {mine} for {total_cost}g")
     return total_cost
 
+
 def sell_salt(amount, market):
 
     if(amount > salt):
@@ -95,6 +96,7 @@ def sell_salt(amount, market):
     revenue = (SELL_PRICE - SHIP_COST) * amount
     print(f"Sold {amount}kg of salt at the {market} market and earned {gold} gold")
     return revenue
+
 
 def is_bankrupt(gold):
     return gold <= 0

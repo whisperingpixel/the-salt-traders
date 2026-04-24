@@ -306,6 +306,7 @@ if __name__ == "__main__":
         markets = {}
 
         def __init__(self):
+            super().__init__()
             for mine in config["mines"]:
                 self.mines[mine] = Mine(mine, shipping_cost = config["trading"]["costs"]["ship_cost"])
 

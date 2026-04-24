@@ -129,6 +129,7 @@ if __name__ == "__main__":
             "Exit the game"
             return True
 
+
     Game().cmdloop()
 
 # Options to improve on your own:

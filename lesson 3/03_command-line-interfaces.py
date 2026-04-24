@@ -94,6 +94,7 @@ def buy_salt(amount, mine):
     print(f"Bought {amount}kg from {mine} for {total_cost}g")
     return total_cost
 
+
 def sell_salt(amount, market):
     """Function to sell salt
 
@@ -113,6 +114,7 @@ def sell_salt(amount, market):
     revenue = (config["trading"]["revenue"]["price"] - config["trading"]["costs"]["ship_cost"]) * amount
     print(f"Sold {amount}kg of salt at the {market} market and earned {gold} gold")
     return revenue
+
 
 def is_bankrupt(gold):
     """Checks whether you are bankrupt or not.
@@ -161,7 +163,6 @@ if __name__ == "__main__":
             global gold
 
             try:
-
                 cost = buy_salt(amount, mine)
                 salt = salt + amount
                 gold = gold - cost
@@ -191,6 +192,7 @@ if __name__ == "__main__":
         def do_exit(self, _):
             "Exit the game"
             return True
+
 
     Game().cmdloop()
 
