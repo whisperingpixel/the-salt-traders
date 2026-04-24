@@ -1,4 +1,5 @@
 # The Salt Traders in Medieval Salzburg
+
 The Salt Traders · A merchant simulation game of the medieval salt trade. The purpose is for teaching in the "Basics of Software Development" class with a focus on spatial data.
 
 ## About
@@ -23,3 +24,20 @@ Part / Lesson | Expected learning outcomes
  6 | Geospatial vector data
  7 | Geospatial raster data
  8 | Finalisation and playing the game
+
+## Contributions and improvements
+
+This teaching project is open for contributions and improvements. Please contact me or use GitHub issues for discussion or pull-requests for improvements.
+
+## AI declaration
+
+Generative AI has not been used in the conceptualisation or programming of this code.
+
+## Contact
+
+[Martin Sudmanns](https://www.plus.ac.at/geoinformatik/fachbereich/team/sudmanns/)
+University of Salzburg
+Department of Geoinformatics
+Schillerstraße 30
+5020 Salzburg
+Austria
