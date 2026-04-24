@@ -22,7 +22,7 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                               PART 2
+#                                    PART 2
 # Expected learing outcomes:
 #  - File handling
 #  - YAML

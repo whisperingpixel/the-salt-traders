@@ -44,24 +44,18 @@ import argparse
 ################################################################################
 
 #
-# Command-line input
-#
-parser = argparse.ArgumentParser()
-parser.add_argument('--config', type=str, default='config.yml')
-parser.add_argument('--gold', type=float, default=1500)
-parser.add_argument('--salt', type=float, default=0)
-args = parser.parse_args()
-
-#
 # Initial state of the stock
 #
-gold = args.gold
-salt = args.salt
+gold = 1500.0
+salt = 0
 
 #
 # Configuration
 #
-with open(args.config, 'r') as f:
+
+# TODO: Replace the hard-coded 'config.yml' file with a command-line input
+
+with open('config.yml', 'r') as f:
     config = yaml.load(f, Loader=yaml.SafeLoader)
 
 ################################################################################
@@ -77,7 +71,7 @@ def buy_salt(amount, mine):
 
     Parameters
     ----------
-    amount : float
+    amount : int
         The amount of salt that should be bought.
     mine : str
         The name of the mine.
@@ -94,6 +88,7 @@ def buy_salt(amount, mine):
     print(f"Bought {amount}kg from {mine} for {total_cost}g")
     return total_cost
 
+
 def sell_salt(amount, market):
     """Function to sell salt
 
@@ -101,7 +96,7 @@ def sell_salt(amount, market):
 
     Parameters
     ----------
-    amount : float
+    amount : int
         The amount of salt that should be sold.
     market : str
         The name of the market of a city.
@@ -114,6 +109,7 @@ def sell_salt(amount, market):
     print(f"Sold {amount}kg of salt at the {market} market and earned {gold} gold")
     return revenue
 
+
 def is_bankrupt(gold):
     """Checks whether you are bankrupt or not.
 
@@ -121,11 +117,11 @@ def is_bankrupt(gold):
 
     Parameters
     ----------
-    gold : float
+    gold : int
         The amount of gold in your stock.
     """
 
-    return gold <= 0.0
+    return gold <= 0
 
 ################################################################################
 #
@@ -135,64 +131,10 @@ def is_bankrupt(gold):
 ################################################################################
 
 if __name__ == "__main__":
-
-    class Game(cmd.Cmd):
-        intro = """
-        Welcome to the world of salt, merchant!
-
-        You can see your stock by typing 'list_stock'. Type 'purchase <amount> <mine>'
-        to purchase salt from a mine. For example: 'purchase 100 Dürrnberg' to
-        purchase 100kg from the Dürrnberg mine. Type 'sell <amount> <market>'
-        to sell salt to a market. For example: 'sell 100 Passau' to sell 100kg
-        of salt to Passau.
-        """
-        prompt = "The Salt Traders> "
-
-        def do_list_stock(self, name):
-            """ List your stock """
-            print(f"You have {salt}kg of salt and {gold} gold")
-
-        def do_purchase(self, args):
-            """Purchase salt from a mine"""
-            amount, mine = args.split()
-            amount = int(amount)
-
-            global salt
-            global gold
-
-            try:
-
-                cost = buy_salt(amount, mine)
-                salt = salt + amount
-                gold = gold - cost
-            except Exception as e:
-                print(e)
-
-            if is_bankrupt(gold):
-                print("You are bankrupt")
-                sys.exit()
-
-        def do_sell(self, args):
-            """Sell salt to a market in a city"""
-
-            amount, market = args.split()
-            amount = int(amount)
-
-            global salt
-            global gold
-
-            try:
-                revenue = sell_salt(amount, market)
-                gold = gold + revenue
-                salt = salt - amount
-            except Exception as e:
-                print(e)
-
-        def do_exit(self, _):
-            "Exit the game"
-            return True
-
-    Game().cmdloop()
+    
+    # TODO: Implement a command-line-based interactive programm.
+    # NOTE: Remove the 'pass' keyword!
+    pass
 
 # Options to improve on your own:
 #

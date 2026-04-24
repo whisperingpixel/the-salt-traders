@@ -22,9 +22,12 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                    PART 1
-# Expected learning outcomes:
-#  - Creating and using functions in Python.
+#                                    PART 2
+# Expected learing outcomes:
+#  - File handling
+#  - YAML
+#  - Handling errors and exceptions
+#  - Documentation
 #
 # Author: Martin Sudmanns (martin.sudmanns@plus.ac.at)
 # Date: 22.04.2026
@@ -33,6 +36,7 @@
 
 import random
 import sys
+import yaml
 
 ###############################################################################
 #
@@ -41,29 +45,21 @@ import sys
 ###############################################################################
 
 #
-# Cities and mines
-#
-MINES = ["Dürrnberg", "Berchtesgaden"]
-MARKETS = ["Salzburg", "Laufen", "Passau"]
-
-#
-# Trading
-#
-BUY_COST = 5.0      # gold per kg
-SHIP_COST = 1.5     # gold per transaction
-SELL_PRICE = 10.0   # gold per kg
-MAX_STOCK = 100_000    # kg
-
-#
 # Initial state of the stock
 #
 gold = 1500.0
 salt = 0
 
 #
-# Simulation / game parameters
+# Simulation parameters
 #
 MAX_ITER = 100
+
+#
+# Configuration
+#
+config = None
+# TODO: Load configuration from file.
 
 ###############################################################################
 #
@@ -72,31 +68,40 @@ MAX_ITER = 100
 ###############################################################################
 
 def buy_salt(amount, mine):
+    # TODO: Add a proper function documentation.
 
-    if (salt + amount) > MAX_STOCK:
+    if (salt + amount) > config["trading"]["stock"]["max"]:
+        # TODO: Replace the 'print' statement with an exception.
         print("Can not buy salt, not enough room in the stock")
         return
 
-    cost_per_kg = BUY_COST + SHIP_COST
+    cost_per_kg = config["trading"]["costs"]["buy_cost"] + config["trading"]["costs"]["ship_cost"]
     total_cost = cost_per_kg * amount
     if total_cost > gold:
+        # TODO: Replace the 'print' statement with an exception.
         print("Can not afford salt, not enough gold")
         return
 
     print(f"Bought {amount}kg from {mine} for {total_cost}g")
     return total_cost
 
+
 def sell_salt(amount, market):
+    # TODO: Add a proper function documentation.
 
     if(amount > salt):
+        # TODO: Replace the 'print' statement with an exception.
         print(f"You can not sell more than you have!")
         return
 
-    revenue = (SELL_PRICE - SHIP_COST) * amount
+    revenue = (config["trading"]["revenue"]["price"] - config["trading"]["costs"]["ship_cost"]) * amount
     print(f"Sold {amount}kg of salt at the {market} market and earned {gold} gold")
     return revenue
 
+
 def is_bankrupt(gold):
+    # TODO: Add a proper function documentation.
+
     return gold <= 0
 
 ###############################################################################
@@ -117,13 +122,16 @@ if __name__ == "__main__":
         print(f"Next iteration: {iteration}/{MAX_ITER}")
         print(f"You have {salt}kg of salt and {gold} gold")
 
-        for mine in MINES:
+        for mine in config["mines"]:
+            # TODO: Catch the exception
             salt_to_purcase = random.randint(50,150)
             cost = buy_salt(salt_to_purcase, mine)
             salt = salt + salt_to_purcase
             gold = gold - cost
 
-        for market in MARKETS:
+
+        for market in config["markets"]:
+            # TODO: Catch the exception
             salt_to_sell = random.randint(30, 70)
             revenue = sell_salt(salt_to_sell, market)
             gold = gold + revenue
@@ -136,17 +144,22 @@ if __name__ == "__main__":
         iteration = iteration + 1
         input()
 
-# Options to improve on your own:
+# Assignment for next week:
 #
-# - add more cities
-# - add capacities for mines
-# - add market saturation for cities
-# - add different shipping costs for mines and cities (we will do that later based
-#   on their location!)
-# - adjust purchasing and selling based on the limits we have
+# - Add random events in an interation, which could be an attack of outlaws that
+#   steal the shipment or a broken boat, which means that the salt gets lost.
+
+# Options to improve on your own (no assignment):
+#
+# - Add a random disaster (e.g. flooding, mine or bridge accident) that prevents
+#   salt from being purchased or sold. This event can happen at a random chance
+#   during an event. Money might be necessary to fix it.
+# - Add a bank that can give a credit to buy salt or recover from the disaster,
+#   but the money needs to be paid back.
+# - Add randomly an option for war outbreak that increases the shipping cost
+#   until the war is over. Peace may be also randomly, but only if there is
+#   a war.
 
 # Next week:
 #
-# - better error handing: The program should not crash when something goes wrong!
-# - separation of configuration and program execution
-# - better documentation of the code!
+# - Create an interactive program with a command-line interface!

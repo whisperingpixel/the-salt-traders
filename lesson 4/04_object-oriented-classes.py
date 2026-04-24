@@ -22,7 +22,7 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                               PART 4
+#                                    PART 4
 # Expected learing outcomes:
 #  - Creating and instantiating classes
 #  - Using class methods
@@ -38,75 +38,252 @@ import argparse
 
 ###############################################################################
 #
-# Cities and mines
+# Configuration
 #
 ###############################################################################
 
+#
+# Command-line input
+#
 parser = argparse.ArgumentParser()
 parser.add_argument('--config', type=str, default='config.yml')
+parser.add_argument('--gold', type=float, default=1500)
+parser.add_argument('--salt', type=float, default=0)
 args = parser.parse_args()
 
+#
+# Configuration
+#
 with open(args.config, 'r') as f:
     config = yaml.load(f, Loader=yaml.SafeLoader)
 
+###############################################################################
+#
+# Classes
+#
+###############################################################################
 
 class Mine():
+    """
+    A Mine allows to purchase salt.
+
+    Attributes
+    ----------
+    name : str
+        The name of the mine
+    shipping_cost : float
+        the amount of gold required to bring the salt from the mine to your
+        stock.
+
+    Methods
+    ----------
+    purchase_salt(amount)
+        Buys salt from the mine.
+    """
+
     name = None
     shipping_cost = 0
 
     def __init__(self, name, shipping_cost):
+        """ Initialises the Mine using a name and the shipping cost.
+
+        Parameters
+        ----------
+        name : str
+            The name of the mine.
+        shipping_cost : float
+            The amount of gold required to bring the salt from the mine to your
+            stock.
+        """
+
         self.name = name
         self.shipping_cost = shipping_cost
 
     def purchase_salt(self, amount):
+        """Method to buy salt
+
+        This method allows to buy a certain amount of salt from a mine.
+
+        Parameters
+        ----------
+        amount : float
+            The amount of salt that should be bought (in kilogram).
+        """
+
         cost = amount * (config["trading"]["costs"]["buy_cost"] + config["trading"]["costs"]["ship_cost"])
         return cost
 
 
 class Market():
+    """
+    A Market allows to sell salt.
+
+    Attributes
+    ----------
+    name : str
+        The name of the market
+    shipping_cost : float
+        the amount of gold required to bring the salt from the market to your
+        stock.
+
+    Methods
+    ----------
+    sell_salt(amount)
+        Sells salt from the mine (in kilogram).
+    """
+
     name = None
     shipping_cost = 0
 
     def __init__(self, name, shipping_cost):
+        """ Initialises the Market using a name and the shipping cost.
+
+        Parameters
+        ----------
+        name : str
+            The name of the market.
+        shipping_cost : float
+            The amount of gold required to bring the salt from your stock to the
+            market.
+        """
+
         self.name = name
         self.shipping_cost = self.shipping_cost
 
     def sell_salt(self, amount):
+        """Method to sell salt
+
+        This method allows to sell a certain amount of salt to a market.
+
+        Parameters
+        ----------
+        amount : float
+            The amount of salt that should be sold (in kilogram).
+        """
+
         revenue = amount * (config["trading"]["revenue"]["price"] - config["trading"]["costs"]["ship_cost"])
         return revenue
 
 
 class Stock():
+    """
+    The Stock manages your salt and gold
+
+    Attributes
+    ----------
+    gold : float
+        The amount of gold in the stock in kilogram.
+    salt : float
+        the amount of salt in the stock in kilogram.
+    MAX_STOCK : float
+        the maximum amount of salt in the stock in kilogram.
+
+    Methods
+    ----------
+    get_salt()
+        Returns the amount of salt in kilogram.
+    
+    get_gold()
+        Returns the amount of gold in stock.
+
+    add_salt(amount)
+        Adds salt to the stock (in kilogram).
+    
+    remove_salt(amount)
+        Removes salt from the stock (in kilogram).
+    
+    add_gold(amont)
+        adds gold to the stock.
+    
+    remove_gold(amount)
+        removes gold from the stock.
+    """
+
     gold = 0
-    stock = 0
+    salt = 0
     MAX_STOCK = config["trading"]["stock"]["max"]
 
-    def __init__(self, gold, stock):
-        self.gold = gold
-        self.stock = stock
+    def __init__(self, gold, salt):
+        """ Initialises the Stock using a default gold and salt.
 
-    def get_stock(self):
-        return self.stock
+        Parameters
+        ----------
+        gold : float
+            The initial amount of gold in the stock.
+        salt : float
+            The initial amount of salt in the stock (usually 0).
+        """
+
+        self.gold = gold
+        self.salt = salt
+
+    def get_salt(self):
+        """Returns the amount of salt in stock in kilogram.
+        """
+
+        return self.salt
 
     def get_gold(self):
+        """Returns the amount of gold in stock.
+        """
+
         return self.gold
 
     def add_salt(self, amount):
-        if (self.stock + amount) > self.MAX_STOCK:
-            raise Exception(f"You are full! You have {self.stock}kg of salt and can not add another {amount}kg")
+        """Method to add salt to the stock.
+
+        This method adds salt to the stock if there is still enough space. If
+        the amount exceeds the MAX_STOCK parameter, the salt will be rejected.
+
+        Parameters
+        ----------
+        amount : float
+            The amount of salt that should be added.
+        """
+
+        if (self.salt + amount) > self.MAX_STOCK:
+            raise Exception(f"You are full! You have {self.salt}kg of salt and can not add another {amount}kg")
 
         self.stock = self.stock + amount
 
     def remove_salt(self, amount):
-        if amount > self.stock:
-            raise Exception(f"You can't remove {amount}kg of salt from your stock, you only have {self.stock}kg")
+        """Method to remove salt from the stock.
 
-        self.stock = self.stock - amount
+        This method removes salt from the stock if it is in there. If the amount
+        exceeds the current amount of salt in stock, an exception will be
+        thrown.
+
+        Parameters
+        ----------
+        amount : float
+            The amount of salt that should be removed.
+        """
+
+        if amount > self.salt:
+            raise Exception(f"You can't remove {amount}kg of salt from your stock, you only have {self.salt}kg")
+
+        self.salt = self.salt - amount
 
     def add_gold(self, amount):
+        """Method to add gold to the stock
+
+        Parameters
+        ----------
+        amount : float
+            The amount of gold that should be added.
+        """
+
         self.gold = self.gold + amount
 
     def remove_gold(self, amount):
+        """Method to remove gold from the stock
+
+        Parameters
+        ----------
+        amount : float
+            The amount of gold that should be removed.
+        """
+
         if amount > self.gold:
             raise Exception(f"Can not remove more gold than you currently have. You have {self.gold} gold")
         self.gold = self.gold - amount
@@ -124,7 +301,7 @@ if __name__ == "__main__":
         intro = "Welcome"
         prompt = "Anno> "
 
-        my_stock = Stock(gold = 1500.0, stock = 0.0)
+        my_stock = Stock(gold = args.gold, salt = args.salt)
         mines = {}
         markets = {}
 
@@ -137,7 +314,7 @@ if __name__ == "__main__":
 
         def do_list_stock(self):
             "List your stock"
-            print(f"You have {self.my_stock.get_stock()}kg of salt and {self.my_stock.get_gold()} gold")
+            print(f"You have {self.my_stock.get_salt()}kg of salt and {self.my_stock.get_gold()} gold")
 
         def do_purchase(self, args):
             "Purchase salt from a mine"

@@ -71,33 +71,11 @@ MAX_ITER = 100
 #
 ###############################################################################
 
-def buy_salt(amount, mine):
+# TODO: Add a function to buy salt
 
-    if (salt + amount) > MAX_STOCK:
-        print("Can not buy salt, not enough room in the stock")
-        return
+# TODO: Add a function to sell salt
 
-    cost_per_kg = BUY_COST + SHIP_COST
-    total_cost = cost_per_kg * amount
-    if total_cost > gold:
-        print("Can not afford salt, not enough gold")
-        return
-
-    print(f"Bought {amount}kg from {mine} for {total_cost}g")
-    return total_cost
-
-def sell_salt(amount, market):
-
-    if(amount > salt):
-        print(f"You can not sell more than you have!")
-        return
-
-    revenue = (SELL_PRICE - SHIP_COST) * amount
-    print(f"Sold {amount}kg of salt at the {market} market and earned {gold} gold")
-    return revenue
-
-def is_bankrupt(gold):
-    return gold <= 0
+# TODO: Add a function that checks whether you are bankrupt
 
 ###############################################################################
 #
@@ -118,20 +96,16 @@ if __name__ == "__main__":
         print(f"You have {salt}kg of salt and {gold} gold")
 
         for mine in MINES:
-            salt_to_purcase = random.randint(50,150)
-            cost = buy_salt(salt_to_purcase, mine)
-            salt = salt + salt_to_purcase
-            gold = gold - cost
+            pass
+            # TODO: buy salt. Use your function defined above and additional calculations!
+            # NOTE: Remove the 'pass' keyword
 
         for market in MARKETS:
-            salt_to_sell = random.randint(30, 70)
-            revenue = sell_salt(salt_to_sell, market)
-            gold = gold + revenue
-            salt = salt - salt_to_sell
+            pass
+            # TODO: sell salt. Use your function defined above and additional calculations!
+            # NOTE: Remove the 'pass' keyword
 
-        if is_bankrupt(gold):
-            print("You are bankrupt")
-            sys.exit()
+        # TODO: Check whether you are bankrupt
 
         iteration = iteration + 1
         input()
