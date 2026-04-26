@@ -22,7 +22,7 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                    PART 1
+#                                  LESSON 1
 # Expected learning outcomes:
 #  - Creating and using functions in Python.
 #

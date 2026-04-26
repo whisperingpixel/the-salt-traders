@@ -22,7 +22,7 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                    PART 3
+#                                  LESSON 3
 # Expected learing outcomes:
 #  - Passing arguments to the program
 #  - Command-line interfaces

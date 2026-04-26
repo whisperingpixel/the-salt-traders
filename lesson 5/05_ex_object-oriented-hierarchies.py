@@ -22,7 +22,7 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                    PART 4
+#                                    PART 5
 # Expected learing outcomes:
 #  - Creating hierachies of classes
 #  - Using class composition
