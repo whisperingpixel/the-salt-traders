@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
     class Game(cmd.Cmd):
         intro = "Welcome"
-        prompt = "Anno> "
+        prompt = "The Salt Traders> "
 
         # TODO: Initialise your stock
         mines = {}

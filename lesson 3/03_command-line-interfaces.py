@@ -150,7 +150,7 @@ if __name__ == "__main__":
         """
         prompt = "The Salt Traders> "
 
-        def do_list_stock(self, name):
+        def do_list_stock(self, args):
             """ List your stock """
             print(f"You have {salt}kg of salt and {gold} gold")
 

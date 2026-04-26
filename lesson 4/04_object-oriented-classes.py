@@ -244,7 +244,7 @@ class Stock():
         if (self.salt + amount) > self.MAX_STOCK:
             raise Exception(f"You are full! You have {self.salt}kg of salt and can not add another {amount}kg")
 
-        self.stock = self.stock + amount
+        self.salt = self.salt + amount
 
     def remove_salt(self, amount):
         """Method to remove salt from the stock.
@@ -299,7 +299,7 @@ if __name__ == "__main__":
 
     class Game(cmd.Cmd):
         intro = "Welcome"
-        prompt = "Anno> "
+        prompt = "The Salt Traders> "
 
         my_stock = Stock(gold = args.gold, salt = args.salt)
         mines = {}
@@ -313,7 +313,7 @@ if __name__ == "__main__":
             for market in config["markets"]:
                 self.markets[market] = Market(market, shipping_cost = config["trading"]["costs"]["ship_cost"])
 
-        def do_list_stock(self):
+        def do_list_stock(self, args):
             "List your stock"
             print(f"You have {self.my_stock.get_salt()}kg of salt and {self.my_stock.get_gold()} gold")
 
