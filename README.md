@@ -39,9 +39,9 @@ Generative AI has not been used in the conceptualisation or programming of this 
 
 ## Contact
 
-> [Martin Sudmanns](https://www.plus.ac.at/geoinformatik/fachbereich/team/sudmanns/)
-> University of Salzburg
-> Department of Geoinformatics
-> Schillerstraße 30
-> 5020 Salzburg
-> Austria
+[Martin Sudmanns](https://www.plus.ac.at/geoinformatik/fachbereich/team/sudmanns/)  
+University of Salzburg  
+Department of Geoinformatics  
+Schillerstraße 30  
+5020 Salzburg  
+Austria  
