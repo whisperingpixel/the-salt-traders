@@ -140,6 +140,7 @@ if __name__ == "__main__":
     #       can alter the execution.
     pass
 
+
 # Options to improve on your own:
 #
 # - Add a function that lists available markets and mines.

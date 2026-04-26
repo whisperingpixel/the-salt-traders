@@ -564,15 +564,18 @@ if __name__ == "__main__":
 
     Game().cmdloop()
 
+
 # Options to improve on your own:
 #
-# - Use the salary and experience of the merchant to influence the price.
+# - Use the salary and experience of the merchant to influence the price. Use 
+# - the experience to have a discount for buying salt or an increased price for
+#   selling but also subtract the salary as percent-based commission.
 # - Add more merchants and add a check that a merchant can only be hired
 #   if they are free. Then, implement a CLI-method to list the available 
 #   merchants.
 # - Add a class StockClerk that can be employed in the stock to increase the 
-#   maximum capacity. Hint: You may use a class employees and use.
-#   inheritance or composition for the merchants and the stock clerk.
+#   maximum capacity. Hint: You may use a class Employee and use
+#   inheritance or composition or organise the merchants and the stock clerk.
 # - Change the shipping cost to a cost per unit and not per overall shipment.
 # - Split the classes into individual files for a organisation of the source
 #   code.

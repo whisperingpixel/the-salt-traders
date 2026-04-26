@@ -148,6 +148,14 @@ if __name__ == "__main__":
 
     Game().cmdloop()
 
+
+# Assignment for next week:
+#
+# - Add a class for events (as in the assignment in lesson 2) that can block
+#   buying or selling salt. Instantiate the classes with probabilities for an
+#   outbreak. Add a method that checks whether or not an outbreak happened when 
+#   a do_sell or do_purchase command is executed.
+
 # Options to improve on your own:
 # - Add more markets.
 # - Add a class bank that can give a credit to buy salt,
@@ -160,6 +168,5 @@ if __name__ == "__main__":
 
 # Next week:
 #
-# - Create trading routes
-# - Add a merchant that can influence the price.
-# - Add random disaster events
+# - Create trading routes for selling and purchasing (class hierarchy)
+# - Add a merchant that can influence the price (composition).

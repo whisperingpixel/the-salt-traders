@@ -160,6 +160,7 @@ if __name__ == "__main__":
         iteration = iteration + 1
         input()
 
+
 # Assignment for next week:
 #
 # - Add random events in an interation, which could be an attack of outlaws that
