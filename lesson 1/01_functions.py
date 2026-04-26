@@ -50,7 +50,7 @@ MARKETS = ["Salzburg", "Laufen", "Passau"]
 # Trading
 #
 BUY_COST = 5.0      # gold per kg
-SHIP_COST = 1.5     # gold per transaction
+SHIPPING_COST = 1.5     # gold per transaction
 SELL_PRICE = 10.0   # gold per kg
 MAX_STOCK = 100_000    # kg
 
@@ -77,7 +77,7 @@ def buy_salt(amount, mine):
         print("Can not buy salt, not enough room in the stock")
         return
 
-    cost_per_kg = BUY_COST + SHIP_COST
+    cost_per_kg = BUY_COST + SHIPPING_COST
     total_cost = cost_per_kg * amount
     if total_cost > gold:
         print("Can not afford salt, not enough gold")
@@ -93,7 +93,7 @@ def sell_salt(amount, market):
         print(f"You can not sell more than you have!")
         return
 
-    revenue = (SELL_PRICE - SHIP_COST) * amount
+    revenue = (SELL_PRICE - SHIPPING_COST) * amount
     print(f"Sold {amount}kg of salt at the {market} market and earned {gold} gold")
     return revenue
 

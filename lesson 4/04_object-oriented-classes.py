@@ -110,7 +110,7 @@ class Mine():
             The amount of salt that should be bought (in kilogram).
         """
 
-        cost = amount * (config["trading"]["costs"]["buy_cost"] + config["trading"]["costs"]["ship_cost"])
+        cost = amount * (config["trading"]["costs"]["buy_cost"] + config["trading"]["costs"]["shipping_cost"])
         return cost
 
 
@@ -161,7 +161,7 @@ class Market():
             The amount of salt that should be sold (in kilogram).
         """
 
-        revenue = amount * (config["trading"]["revenue"]["price"] - config["trading"]["costs"]["ship_cost"])
+        revenue = amount * (config["trading"]["revenue"]["price"] - config["trading"]["costs"]["shipping_cost"])
         return revenue
 
 
@@ -308,10 +308,10 @@ if __name__ == "__main__":
         def __init__(self):
             super().__init__()
             for mine in config["mines"]:
-                self.mines[mine] = Mine(mine, shipping_cost = config["trading"]["costs"]["ship_cost"])
+                self.mines[mine] = Mine(mine, shipping_cost = config["trading"]["costs"]["shipping_cost"])
 
             for market in config["markets"]:
-                self.markets[market] = Market(market, shipping_cost = config["trading"]["costs"]["ship_cost"])
+                self.markets[market] = Market(market, shipping_cost = config["trading"]["costs"]["shipping_cost"])
 
         def do_list_stock(self, args):
             "List your stock"
@@ -363,4 +363,3 @@ if __name__ == "__main__":
 #
 # - Create trading routes
 # - Add a merchant that can influence the price.
-# - Add random disaster events

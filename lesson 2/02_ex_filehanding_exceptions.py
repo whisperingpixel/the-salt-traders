@@ -75,7 +75,7 @@ def buy_salt(amount, mine):
         print("Can not buy salt, not enough room in the stock")
         return
 
-    cost_per_kg = config["trading"]["costs"]["buy_cost"] + config["trading"]["costs"]["ship_cost"]
+    cost_per_kg = config["trading"]["costs"]["buy_cost"] + config["trading"]["costs"]["shipping_cost"]
     total_cost = cost_per_kg * amount
     if total_cost > gold:
         # TODO: Replace the 'print' statement with an exception.
@@ -94,7 +94,7 @@ def sell_salt(amount, market):
         print(f"You can not sell more than you have!")
         return
 
-    revenue = (config["trading"]["revenue"]["price"] - config["trading"]["costs"]["ship_cost"]) * amount
+    revenue = (config["trading"]["revenue"]["price"] - config["trading"]["costs"]["shipping_cost"]) * amount
     print(f"Sold {amount}kg of salt at the {market} market and earned {gold} gold")
     return revenue
 
