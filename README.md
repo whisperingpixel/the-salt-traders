@@ -14,6 +14,10 @@ Note: The salt trade represented here is largely simplified. The complexity incr
 
 ## Lessons
 
+The lessos are organised in the corresponding subfolders and each lesson builds upon the previous one. Therefore, there are at least two files in each subfolder: The file with the `_ex_` in the filename is the exercise file. In this file a learing outcome corresponds with at least one TODO. This TODO indicates that there is something new to implement. An example solution is provided in the second file. For the continuation of the exercise, you can either continue to use your own file or use the execise-files provided in the individual folders.
+
+At the bottom of each file are either optional improvements or assignments. The optional improvements can be done on your own and are mostly additional exercises for of the same topic / learning outcome.
+
 Part / Lesson | Expected learning outcomes
 ---------|-------------------
  1 | Creating and using functions in Python.
@@ -35,9 +39,9 @@ Generative AI has not been used in the conceptualisation or programming of this 
 
 ## Contact
 
-[Martin Sudmanns](https://www.plus.ac.at/geoinformatik/fachbereich/team/sudmanns/)
-University of Salzburg
-Department of Geoinformatics
-Schillerstraße 30
-5020 Salzburg
-Austria
+> [Martin Sudmanns](https://www.plus.ac.at/geoinformatik/fachbereich/team/sudmanns/)
+> University of Salzburg
+> Department of Geoinformatics
+> Schillerstraße 30
+> 5020 Salzburg
+> Austria
