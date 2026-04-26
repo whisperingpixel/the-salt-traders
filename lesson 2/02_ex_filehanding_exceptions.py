@@ -60,6 +60,8 @@ MAX_ITER = 100
 #
 config = None
 # TODO: Load configuration from file.
+#       Learning objective: Learn how to use Python for reading the content of a
+#       file into memory.
 
 ###############################################################################
 #
@@ -69,9 +71,12 @@ config = None
 
 def buy_salt(amount, mine):
     # TODO: Add a proper function documentation.
-
+    #       Learning objective: Learn how to properly document a function and
+    #       use the documentation in an IDE
     if (salt + amount) > config["trading"]["stock"]["max"]:
         # TODO: Replace the 'print' statement with an exception.
+        #       Learning objective: Learn how to use exceptions for error
+        #       handling.
         print("Can not buy salt, not enough room in the stock")
         return
 
@@ -79,6 +84,8 @@ def buy_salt(amount, mine):
     total_cost = cost_per_kg * amount
     if total_cost > gold:
         # TODO: Replace the 'print' statement with an exception.
+        #       Learning objective: Learn how to use exceptions for error
+        #       handling.
         print("Can not afford salt, not enough gold")
         return
 
@@ -88,9 +95,13 @@ def buy_salt(amount, mine):
 
 def sell_salt(amount, market):
     # TODO: Add a proper function documentation.
+    #       Learning objective: Learn how to properly document a function and
+    #       use the documentation in an IDE
 
     if(amount > salt):
         # TODO: Replace the 'print' statement with an exception.
+        #       Learning objective: Learn how to use exceptions for error
+        #       handling.
         print(f"You can not sell more than you have!")
         return
 
@@ -101,7 +112,8 @@ def sell_salt(amount, market):
 
 def is_bankrupt(gold):
     # TODO: Add a proper function documentation.
-
+    #       Learning objective: Learn how to properly document a function and
+    #       use the documentation in an IDE
     return gold <= 0
 
 ###############################################################################
@@ -124,6 +136,8 @@ if __name__ == "__main__":
 
         for mine in config["mines"]:
             # TODO: Catch the exception
+            #       Learning objective: Learn how to use exceptions for error
+            #       handling.
             salt_to_purcase = random.randint(50,150)
             cost = buy_salt(salt_to_purcase, mine)
             salt = salt + salt_to_purcase
@@ -132,6 +146,8 @@ if __name__ == "__main__":
 
         for market in config["markets"]:
             # TODO: Catch the exception
+            #       Learning objective: Learn how to use exceptions for error
+            #       handling.
             salt_to_sell = random.randint(30, 70)
             revenue = sell_salt(salt_to_sell, market)
             gold = gold + revenue

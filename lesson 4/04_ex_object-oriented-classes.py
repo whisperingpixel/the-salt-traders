@@ -64,10 +64,13 @@ with open(args.config, 'r') as f:
 ###############################################################################
 
 # TODO: Create a class 'Mine' that allows purchasing salt
+#       Learning objective: Create classes for object-oriented programming.
 
 # TODO: Create a class 'Market' that allows selling salt
+#       Learning objective: Create classes for object-oriented programming.
 
 # TODO: Create a class 'Stock' that manages your gold and salt
+#       Learning objective: Create classes for object-oriented programming.
 
 ###############################################################################
 #
@@ -91,6 +94,7 @@ if __name__ == "__main__":
         prompt = "The Salt Traders> "
 
         # TODO: Initialise your stock
+        #       Learning objective: instantiate objects from classes.
         mines = {}
         markets = {}
 
@@ -99,11 +103,13 @@ if __name__ == "__main__":
                 pass
                 # TODO: Initialise the mine.
                 # NOTE: Remove the 'pass' keyword!
+                #       Learning objective: instantiate objects from classes.
 
             for market in config["markets"]:
                 pass
                 # TODO: Initialise the market.
                 # NOTE: Remove the 'pass' keyword!
+                #       Learning objective: instantiate objects from classes.
 
         def do_list_stock(self):
             "List your stock"
@@ -117,6 +123,7 @@ if __name__ == "__main__":
             try:
                 # TODO: Purchase the salt from the mine, add the salt to your
                 #       stock and reduce the money.
+                #       Learning objective: Call class methods.
                 print(f"Purchased {amount}kg of salt for {cost} gold.")
             except Exception as e:
                 print(e)
@@ -129,6 +136,7 @@ if __name__ == "__main__":
             try:
                 # TODO: Sell the salt at the market, reduce the salt in your
                 #       stock and add the money.
+                #       Learning objective: Call class methods.
                 print(f"Sold {amount}kg of salt for {revenue} gold")
             except Exception as e:
                 print(e)

@@ -26,6 +26,7 @@
 # Expected learing outcomes:
 #  - Creating hierachies of classes
 #  - Using class composition
+#  - Using polymorphism to reduce the code.
 #
 # Author: Martin Sudmanns (martin.sudmanns@plus.ac.at)
 # Date: 26.04.2026
@@ -295,18 +296,26 @@ class Stock():
 
 
 # TODO: Add class Merchant (remove pass)
+#       Learning objective: Learn how to use class composition for organising
+#       classes.
 class Merchant():
     pass
 
 # TODO: Add abstract class TradeRoute
+#       Learning objective: Learn how to use object hierarchies for organising
+#       classes.
 class TradeRoute():
     pass
 
 # TODO: Add class PurchaseRoute
+#       Learning objective: Learn how to use object hierarchies for organising
+#       classes.
 class PurchaseRoute():
     pass
 
-# TODO: Add clas SellRoute
+# TODO: Add class SellRoute
+#       Learning objective: Learn how to use object hierarchies for organising
+#       classes.
 class SellRoute():
     pass
 
@@ -336,19 +345,20 @@ if __name__ == "__main__":
         my_stock = Stock(gold = args.gold, salt = args.salt)
         mines = {}
         markets = {}
-
-        # TODO Add variables to keep TradeRoutes and Merchant
         trade_routes = {}
         merchants = []
 
         def __init__(self):
-            # TODO: remove shipping costs and add instances of Merchantes
             super().__init__()
             for mine in config["mines"]:
-                self.mines[mine] = Mine(mine, shipping_cost = config["trading"]["costs"]["shipping_cost"])
-
+                self.mines[mine] = Mine(mine)
+                
             for market in config["markets"]:
-                self.markets[market] = Market(market, shipping_cost = config["trading"]["costs"]["shipping_cost"])
+                self.markets[market] = Market(market)
+
+            self.merchants.append(Merchant("Karl", 0.1, 1))
+            self.merchants.append(Merchant("Freya", 0.2, 3))
+            self.merchants.append(Merchant("Ulrich", 0.1, 2))
 
         def do_list_stock(self, args):
             "List your stock"
@@ -356,9 +366,14 @@ if __name__ == "__main__":
 
         # TODO: Add a method to add a trading route (for purchasing or selling)
         #       and a method to list the routes.
+        #       Learning objective: Learn how to use object hierarchies for
+        #       organising classes.
 
         # TODO: Remove do_purchase and do_sell and replace with a single
-        #       method do_trading that takes the amount and trading route
+        #       method do_trading that takes the amount and trading route.
+        #       Learning objective: Learn how to use polymorphism in object-
+        #       oriented programming.
+    
         def do_purchase(self, args):
             "Purchase salt from a mine"
             amount, mine = args.split()

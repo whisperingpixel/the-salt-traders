@@ -54,6 +54,8 @@ salt = 0
 #
 
 # TODO: Replace the hard-coded 'config.yml' file with a command-line input
+#       Learning objectives: Learn how to create a program that takes arguments
+#       to alter the behaviour (command-line arguments).
 
 with open('config.yml', 'r') as f:
     config = yaml.load(f, Loader=yaml.SafeLoader)
@@ -134,6 +136,8 @@ if __name__ == "__main__":
     
     # TODO: Implement a command-line-based interactive programm.
     # NOTE: Remove the 'pass' keyword!
+    #       Learning objective: Create an interactive program in which the user
+    #       can alter the execution.
     pass
 
 # Options to improve on your own:
