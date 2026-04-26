@@ -1,0 +1,17 @@
+mines:
+  - "Dürrnberg"
+  - "Berchtesgaden"
+
+markets:
+  - "Passau"
+  - "Laufen"
+  - "Salzburg"
+
+trading:
+  costs:
+    buy_cost: 5
+    shipping_cost: 1.5
+  revenue:
+    price: 10
+  stock:
+    max: 1000
