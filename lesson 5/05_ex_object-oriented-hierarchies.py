@@ -24,17 +24,18 @@
 #
 #                                    PART 4
 # Expected learing outcomes:
-#  - Creating and instantiating classes
-#  - Using class methods
+#  - Creating hierachies of classes
+#  - Using class composition
 #
 # Author: Martin Sudmanns (martin.sudmanns@plus.ac.at)
-# Date: 22.04.2026
+# Date: 26.04.2026
 #
 ################################################################################
 
 import yaml
 import cmd
 import argparse
+import abc
 
 ###############################################################################
 #
@@ -80,6 +81,8 @@ class Mine():
     purchase_salt(amount)
         Buys salt from the mine.
     """
+
+    # TODO: remove shipping_cost from the Mine and add it to the route.
 
     name = None
     shipping_cost = 0
@@ -131,6 +134,8 @@ class Market():
     sell_salt(amount)
         Sells salt from the mine (in kilogram).
     """
+
+    # TODO: remove shipping_cost from the Mine and add it to the route.
 
     name = None
     shipping_cost = 0
@@ -288,6 +293,23 @@ class Stock():
             raise Exception(f"Can not remove more gold than you currently have. You have {self.gold} gold")
         self.gold = self.gold - amount
 
+
+# TODO: Add class Merchant (remove pass)
+class Merchant():
+    pass
+
+# TODO: Add abstract class TradeRoute
+class TradeRoute():
+    pass
+
+# TODO: Add class PurchaseRoute
+class PurchaseRoute():
+    pass
+
+# TODO: Add clas SellRoute
+class SellRoute():
+    pass
+
 ###############################################################################
 #
 # Start of the program.
@@ -301,11 +323,13 @@ if __name__ == "__main__":
         intro = """
         Welcome to the world of salt, merchant!
 
-        You can see your stock by typing 'list_stock'. Type 'purchase <amount> <mine>'
-        to purchase salt from a mine. For example: 'purchase 100 Dürrnberg' to
-        purchase 100kg from the Dürrnberg mine. Type 'sell <amount> <market>'
-        to sell salt to a market. For example: 'sell 100 Passau' to sell 100kg
-        of salt to Passau.
+        You can see your stock by typing 'list_stock'. Add a trading route by
+        typing 'add_route purchase <name> <mine>' for purchasing salt at a mine
+        and 'add_route sell <name> <market>' for selling salt at a market. Type
+        'trade <amount> <name>' to trade on a route, while <amount> is the kg of
+        salt and name is the <name> of the route. You can hire a merchant by 
+        typing 'hire_merchant <merchant_name> <route_name>' and fire a merchant
+        by typing 'fire_merchant <merchant_name>'.
         """
         prompt = "The Salt Traders> "
 
@@ -313,7 +337,12 @@ if __name__ == "__main__":
         mines = {}
         markets = {}
 
+        # TODO Add variables to keep TradeRoutes and Merchant
+        trade_routes = {}
+        merchants = []
+
         def __init__(self):
+            # TODO: remove shipping costs and add instances of Merchantes
             super().__init__()
             for mine in config["mines"]:
                 self.mines[mine] = Mine(mine, shipping_cost = config["trading"]["costs"]["shipping_cost"])
@@ -325,6 +354,11 @@ if __name__ == "__main__":
             "List your stock"
             print(f"You have {self.my_stock.get_salt()}kg of salt and {self.my_stock.get_gold()} gold")
 
+        # TODO: Add a method to add a trading route (for purchasing or selling)
+        #       and a method to list the routes.
+
+        # TODO: Remove do_purchase and do_sell and replace with a single
+        #       method do_trading that takes the amount and trading route
         def do_purchase(self, args):
             "Purchase salt from a mine"
             amount, mine = args.split()
@@ -351,6 +385,8 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
 
+        # TODO: Add a method to hire a merchant and one to fire them.
+
         def do_exit(self, _):
             "Exit the game"
             return True
@@ -358,16 +394,16 @@ if __name__ == "__main__":
     Game().cmdloop()
 
 # Options to improve on your own:
-# - Add more markets.
-# - Add a class bank that can give a credit to buy salt,
-#   but the money needs to be paid back.
-# - Add a individual deposit per mine that fills per iteration with a certain
-#   amount (capacity). You can only buy what's in the deposit for each
-#   iteration.
-# - Add custom shipping costs per mine.
-# - Add a market saturation.
+#
+# - Use the salary and experience of the merchant to influence the price.
+# - Add more merchants and add a check that a merchant can only be hired
+#   if they are free.
+# - Add a class StockClerk that can be employed in the stock to increase the 
+#   maximum capacity. Hint: You may use a class employees and use
+#   inheritance or composition for the merchants and the stock clerk.
+# - Change the shipping cost to a cost per unit and not per overall shipment.
 
 # Next week:
 #
-# - Create trading routes
-# - Add a merchant that can influence the price.
+# - Use geospatial vector data to position mines and markets and calculate
+#   addition geometric and topological attributes (e.g. distances).

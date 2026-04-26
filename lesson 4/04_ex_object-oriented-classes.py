@@ -79,7 +79,15 @@ with open(args.config, 'r') as f:
 if __name__ == "__main__":
 
     class Game(cmd.Cmd):
-        intro = "Welcome"
+        intro = """
+        Welcome to the world of salt, merchant!
+
+        You can see your stock by typing 'list_stock'. Type 'purchase <amount> <mine>'
+        to purchase salt from a mine. For example: 'purchase 100 Dürrnberg' to
+        purchase 100kg from the Dürrnberg mine. Type 'sell <amount> <market>'
+        to sell salt to a market. For example: 'sell 100 Passau' to sell 100kg
+        of salt to Passau.
+        """
         prompt = "The Salt Traders> "
 
         # TODO: Initialise your stock
