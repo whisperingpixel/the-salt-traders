@@ -71,29 +71,9 @@ MAX_ITER = 100
 #
 ###############################################################################
 
-def buy_salt(amount, mine):
-    if amount <= 0:
-        print("Please be reasonable")
-        return
-    
-    cost_per_kg = BUY_COST + SHIPPING_COST
-    total_cost = amount * cost_per_kg
+# TODO: Add a function to buy salt
 
-    if total_cost > gold:
-        print("Cannot affor salt, not enough gold")
-        return
-    
-    print(f"Bought {amount}kg from {mine} for {total_cost}")
-    return total_cost
-
-def sell_salt(amount, market):
-    if amount > salt:
-        print("You can not sell more salt than you have")
-        return
-    
-    revenue = (SELL_PRICE - SHIPPING_COST) * amount
-    print(f"Sold {amount}kg of salt at the {market} and earned {gold} gold")
-    return revenue
+# TODO: Add a function to sell salt
 
 # TODO: Add a function that checks whether you are bankrupt
 
@@ -116,16 +96,14 @@ if __name__ == "__main__":
         print(f"You have {salt}kg of salt and {gold} gold")
 
         for mine in MINES:
-            salt_to_purchase = 50
-            cost = buy_salt(salt_to_purchase, mine)
-            salt = salt + salt_to_purchase
-            gold = gold - cost
+            pass
+            # TODO: buy salt. Use your function defined above and additional calculations!
+            # NOTE: Remove the 'pass' keyword
 
         for market in MARKETS:
-            salt_to_sell = 30
-            revenue = sell_salt(salt_to_sell, market)
-            gold = gold + revenue
-            salt = salt - salt_to_sell
+            pass
+            # TODO: sell salt. Use your function defined above and additional calculations!
+            # NOTE: Remove the 'pass' keyword
 
         # TODO: Check whether you are bankrupt
 
