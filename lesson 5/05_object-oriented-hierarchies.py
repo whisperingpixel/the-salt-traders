@@ -420,7 +420,7 @@ class PurchaseRoute(TradeRoute):
             The amount of salt to buy.
         """
 
-        cost = self.mine.purchase_salt(amount) + self.shipping_cost
+        cost = self.mine.purchase_salt(amount) + (amount * self.shipping_cost)
         self.stock.remove_gold(cost)
         self.stock.add_salt(amount)
         print(f"Purchased {amount}kg of salt for {cost} gold.")
@@ -466,7 +466,7 @@ class SellRoute(TradeRoute):
             The amount of salt to sell.
         """
 
-        revenue = self.market.sell_salt(amount) - self.shipping_cost
+        revenue = self.market.sell_salt(amount) - (amount * self.shipping_cost)
         self.stock.add_gold(revenue)
         self.stock.remove_salt(amount)
         print(f"Sold {amount}kg of salt for {revenue} gold.")
@@ -576,7 +576,6 @@ if __name__ == "__main__":
 # - Add a class StockClerk that can be employed in the stock to increase the 
 #   maximum capacity. Hint: You may use a class Employee and use
 #   inheritance or composition or organise the merchants and the stock clerk.
-# - Change the shipping cost to a cost per unit and not per overall shipment.
 # - Split the classes into individual files for a organisation of the source
 #   code.
 

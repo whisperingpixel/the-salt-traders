@@ -420,7 +420,6 @@ if __name__ == "__main__":
 # - Add a class StockClerk that can be employed in the stock to increase the 
 #   maximum capacity. Hint: You may use a class Employee and use
 #   inheritance or composition or organise the merchants and the stock clerk.
-# - Change the shipping cost to a cost per unit and not per overall shipment.
 # - Split the classes into individual files for a organisation of the source
 #   code.
 
