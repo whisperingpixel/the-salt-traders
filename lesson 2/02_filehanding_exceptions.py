@@ -58,8 +58,15 @@ MAX_ITER = 100
 #
 # Configuration
 #
-with open('config.yml', 'r') as f:
-    config = yaml.load(f, Loader=yaml.SafeLoader)
+try:
+    with open('config.yml', 'r') as f:
+        config = yaml.load(f, Loader=yaml.SafeLoader)
+except FileNotFoundError:
+    print("File doesn't exist")
+except PermissionError:
+    print("No read access")
+except OSError as e:
+    print(f"OS error: {e}")
 
 ###############################################################################
 #

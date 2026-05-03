@@ -57,8 +57,15 @@ salt = 0
 #       Learning objectives: Learn how to create a program that takes arguments
 #       to alter the behaviour (command-line arguments).
 
-with open('config.yml', 'r') as f:
-    config = yaml.load(f, Loader=yaml.SafeLoader)
+try:
+    with open('config.yml', 'r') as f:
+        config = yaml.load(f, Loader=yaml.SafeLoader)
+except FileNotFoundError:
+    print("File doesn't exist")
+except PermissionError:
+    print("No read access")
+except OSError as e:
+    print(f"OS error: {e}")
 
 ################################################################################
 #

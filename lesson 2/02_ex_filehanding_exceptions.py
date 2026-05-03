@@ -59,9 +59,9 @@ MAX_ITER = 100
 # Configuration
 #
 config = None
-# TODO: Load configuration from file.
+# TODO: Load configuration from file and catch different types of errors.
 #       Learning objective: Learn how to use Python for reading the content of a
-#       file into memory.
+#       file into memory and learn how to deal with errors.
 
 ###############################################################################
 #

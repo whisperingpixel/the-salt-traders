@@ -54,8 +54,15 @@ args = parser.parse_args()
 #
 # Configuration
 #
-with open(args.config, 'r') as f:
-    config = yaml.load(f, Loader=yaml.SafeLoader)
+try:
+    with open(args.config, 'r') as f:
+        config = yaml.load(f, Loader=yaml.SafeLoader)
+except FileNotFoundError:
+    print("File doesn't exist")
+except PermissionError:
+    print("No read access")
+except OSError as e:
+    print(f"OS error: {e}")
 
 ###############################################################################
 #
