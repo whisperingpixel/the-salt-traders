@@ -179,7 +179,7 @@ if __name__ == "__main__":
 
 # Assignment for next week:
 #
-# - Add random events in an interation, which could be an attack of outlaws that
+# - Add random events in an iteration, which could be an attack of outlaws that
 #   steal the shipment or a broken boat, which means that the salt gets lost.
 
 # Options to improve on your own (no assignment):
