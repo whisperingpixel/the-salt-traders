@@ -60,7 +60,7 @@ MAX_ITER = 100
 #
 try:
     with open('config.yml', 'r') as f:
-        config = yaml.load(f, Loader=yaml.SafeLoader)
+        config = yaml.safe_load(f)
 except FileNotFoundError:
     print("File doesn't exist")
 except PermissionError:
