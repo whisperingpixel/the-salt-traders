@@ -36,7 +36,7 @@
 
 import random
 import sys
-import yaml
+import yaml # Install this lib using pyyaml, e.g. python3 -m pip install pyyaml
 
 ###############################################################################
 #
