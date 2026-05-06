@@ -94,9 +94,10 @@ class Mine():
     """
 
     name = None
-    location = None
+    # TODO: Add a location variable that holds the location as Shapely
+    # coordinates.
 
-    def __init__(self, name, location):
+    def __init__(self, name):
         """ Initialises the Mine using a name and the location
 
         Parameters
@@ -108,7 +109,8 @@ class Mine():
         """
 
         self.name = name
-        self.location = location
+        # TODO: Initialise the location variable passed in this constructor as 
+        #       a variable.
 
     def purchase_salt(self, amount):
         """Method to buy salt
@@ -124,8 +126,7 @@ class Mine():
         cost = amount * config["trading"]["costs"]["buy_cost"]
         return cost
 
-    def get_location(self):
-        return self.location
+    # TODO: Implement a function that returns the location variable.
 
 class Market():
     """
@@ -147,9 +148,10 @@ class Market():
     """
 
     name = None
-    location = None
+    # TODO: Add a location variable that holds the location as Shapely
+    # coordinates.
 
-    def __init__(self, name, location):
+    def __init__(self, name):
         """ Initialises the Market using a name and the location.
 
         Parameters
@@ -161,7 +163,8 @@ class Market():
         """
 
         self.name = name
-        self.location = location
+        # TODO: Initialise the location variable passed in this constructor as 
+        #       a variable.
 
     def sell_salt(self, amount):
         """Method to sell salt
@@ -177,8 +180,7 @@ class Market():
         revenue = amount * config["trading"]["revenue"]["price"]
         return revenue
 
-    def get_location(self):
-        return self.location
+    # TODO: Implement a function that returns the location variable.
 
 class Stock():
     """
@@ -215,10 +217,12 @@ class Stock():
 
     gold = 0
     salt = 0
-    location = None
     MAX_STOCK = config["trading"]["stock"]["max"]
 
-    def __init__(self, gold, salt, location):
+    # TODO: Add a location variable that holds the location as Shapely
+    # coordinates.
+
+    def __init__(self, gold, salt):
         """ Initialises the Stock using a default gold and salt.
 
         Parameters
@@ -233,7 +237,7 @@ class Stock():
 
         self.gold = gold
         self.salt = salt
-        self.location = location
+        # TODO: Initialise the location variable.
 
     def get_salt(self):
         """Returns the amount of salt in stock in kilogram.
@@ -306,8 +310,7 @@ class Stock():
             raise Exception(f"Can not remove more gold than you currently have. You have {self.gold} gold")
         self.gold = self.gold - amount
 
-    def get_location(self):
-        return self.location
+    # TODO: Implement a function that returns the location variable
 
 
 class Merchant():
@@ -375,9 +378,11 @@ class TradeRoute(abc.ABC):
     """
 
     name = None
-    route = None
     merchant = None
     shipping_cost = config["trading"]["costs"]["shipping_cost"]
+
+    # TODO: Add a variable called 'route' that will hold the LineString as 
+    #       Shapely geometry.
 
     def print_name(self):
         """ Prints the name of the route """
@@ -414,10 +419,11 @@ class TradeRoute(abc.ABC):
         print(f"Fire merchant {self.merchant.get_name()}")
         self.merchant = None
 
-    def get_length(self):
-        """Returns the length of the route."""
-
-        return self.route.length
+    # TODO: Implement a function called 'get_length()' that returns the length
+    #       of the route using the LineString variable
+    #       Learning objective: Accessing geometric properties from Shapely
+    #       geometries. Additionally: Using inheritance as object-oriented
+    #       programming concept.
 
 
 class PurchaseRoute(TradeRoute):
@@ -450,7 +456,9 @@ class PurchaseRoute(TradeRoute):
         self.name = name
         self.mine = mine
         self.stock = stock
-        self.route = LineString([mine.get_location(), stock.get_location()])
+        # TODO: Add the route as LineString using the mine and stock location
+        #       Use the previously implemented get_location() method.
+        #       Learning objective: Instantiating Shapely geometries.
 
     def trade(self, amount):
         """ Buys the amount of salt from the mine and deposits it in our stock.
@@ -496,7 +504,9 @@ class SellRoute(TradeRoute):
         self.name = name
         self.market = market
         self.stock = stock
-        self.route = LineString([market.get_location(), stock.get_location()])
+        # TODO: Add the route as LineString using the market and stock location
+        #       Use the previously implemented get_location() method.
+        #       Learning objective: Instantiating Shapely geometries.
 
     def trade(self, amount):
         """ Sells the amount of salt at the market.
@@ -539,14 +549,14 @@ if __name__ == "__main__":
         """
         prompt = "The Salt Traders> "
 
-        stock_location = Point(
-            config["trading"]["stock"]["latitude"],
-            config["trading"]["stock"]["longitude"])
+        # TODO: Use the latitude and longitude in the config file to define the
+        #       location of our stock using a Shapely Point. Don't forget to
+        #       pass it to the Stock's constructor!
+        #       Learning objective: Instantiating Shapely geometries.
 
         my_stock = Stock(
             gold = args.gold,
-            salt = args.salt,
-            location = stock_location)
+            salt = args.salt)
         mines = {}
         markets = {}
         trade_routes = {}
@@ -556,15 +566,19 @@ if __name__ == "__main__":
             super().__init__()
             for mine in config["mines"]:
                 name = mine["name"]
-                lat = mine["latitude"]
-                lon = mine["longitude"]
-                self.mines[name] = Mine(name, Point(lat, lon))
+                # TODO: Use the latitude and longitude in the config file to
+                #       define the location of the mine using a Shapely Point.
+                #       Don't forget to pass it to the Mine's constructor!
+                #       Learning objective: Instantiating Shapely geometries.
+                self.mines[name] = Mine(name)
 
             for market in config["markets"]:
                 name = market["name"]
-                lat = market["latitude"]
-                lon = market["longitude"]
-                self.markets[name] = Market(name, Point(lat, lon))
+                # TODO: Use the latitude and longitude in the config file to
+                #       define the location of the mine using a Shapely Point.
+                #       Don't forget to pass it to the Mine's constructor!
+                #       Learning objective: Instantiating Shapely geometries.
+                self.markets[name] = Market(name)
 
             self.merchants.append(Merchant("Karl", 0.1, 1))
             self.merchants.append(Merchant("Freya", 0.2, 3))
@@ -615,29 +629,26 @@ if __name__ == "__main__":
                     route.fire_merchant()
                     print(f"You fired merchant {merchant_name} from route {route.get_name()}")
 
+        # TODO: Complete the function that calculates the distance between our 
+        #       stock and a destination (mine or market) defined by the user
+        #       input.
+        #       Learning objective: Calculating geometric relationships between
+        #       two Shapely geometries.
         def do_explore_route(self, args):
             "Explores a route and reports the distance and shipping costs"
             destination = args
-
-            stock_location = self.my_stock.get_location()
-
-            if destination in self.mines:
-                target_location = self.mines[destination].get_location()
-            elif destination in self.markets:
-                target_location = self.markets[destination].get_location()
-            else:
-                print(f"Could not find route to destination {destination}!")
-                return
-
-            distance = stock_location.distance(target_location)
+            distance = None
             shipping_cost = distance * config["trading"]["costs"]["shipping_cost"]
             print(f"The distance between your stock and the target {destination} is {distance}! " +
                     f"The shipping costs are {shipping_cost} gold per kg of salt.")
 
+        # TODO: Complete the function that adds a new market using a latitude
+        #       and longitude coordinate tuple as user input. Translate them
+        #       into a WKT format for input.
+        #       Learning objective: Using WKT to instantiate Shapely geometries.
         def do_add_market(self, args):
             "Adding a new market using a name and the WKT geometry"
-            name, wkt_geometry = args.split(' ', 1)
-            self.markets[name] = Market(name, wkt.loads(wkt_geometry))
+            name, wkt_geometry = args.split()
             print(f"Added market {name} at {wkt_geometry}.")
 
         def do_exit(self, _):
