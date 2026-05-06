@@ -89,7 +89,7 @@ class Mine():
     name = None
 
     def __init__(self, name):
-        """ Initialises the Mine using a name and the shipping cost.
+        """ Initialises the Mine using a name
 
         Parameters
         ----------
@@ -126,14 +126,13 @@ class Market():
     Methods
     ----------
     sell_salt(amount)
-        Sells salt from the mine (in kilogram).
+        Sells salt at the market (in kilogram).
     """
 
     name = None
-    shipping_cost = 0
 
     def __init__(self, name):
-        """ Initialises the Market using a name and the shipping cost.
+        """ Initialises the Market using a name
 
         Parameters
         ----------
@@ -146,7 +145,7 @@ class Market():
     def sell_salt(self, amount):
         """Method to sell salt
 
-        This method allows to sell a certain amount of salt to a market.
+        This method allows to sell a certain amount of salt at the market.
 
         Parameters
         ----------
@@ -175,19 +174,15 @@ class Stock():
     ----------
     get_salt()
         Returns the amount of salt in kilogram.
-    
     get_gold()
         Returns the amount of gold in stock.
 
     add_salt(amount)
         Adds salt to the stock (in kilogram).
-    
     remove_salt(amount)
         Removes salt from the stock (in kilogram).
-    
     add_gold(amont)
         adds gold to the stock.
-    
     remove_gold(amount)
         removes gold from the stock.
     """
@@ -290,10 +285,8 @@ class Merchant():
     ----------
     name : str
         The experience of a merchant
-
     experience : int
         The experience of a merchant
-
     salary : float
         The salary of a merchant (% commission of a trade)
 
@@ -325,31 +318,26 @@ class TradeRoute(abc.ABC):
     ----------
     name : str
         The name of the route.
-
     merchant : Merchant
         The Merchant for the route (or None).
-
     shipping_cost : float
-        The shipping cost for the route.
+        The shipping cost for the route per 1kg of salt.
 
     Methods
     ----------
     get_name()
         Returns the name of the route.
-
     get_merchant_name()
         Returns the name of the merchant for the route.
-
     hire_merchant()
         Hires a Merchant for the route.
-
     fire_merchant()
         Fires the Merchant of the route
     """
 
     name = None
     merchant = None
-    shipping_cost = 1.5
+    shipping_cost = config["trading"]["costs"]["shipping_cost"]
 
     def print_name(self):
         """ Prints the name of the route """
@@ -358,11 +346,11 @@ class TradeRoute(abc.ABC):
     def get_name(self):
         """ Returns the name of the route """
         return self.name
-    
+
     def get_merchant_name(self):
         """ Returns the name of the merchant """
         return self.merchant.get_name()
-    
+
     def hire_merchant(self, merchant):
         """ Hires a merchant for the route.
 
@@ -382,7 +370,7 @@ class TradeRoute(abc.ABC):
 
         if (self.merchant == None):
             raise Exception("There is no merchant on this route")
-        
+
         print(f"Fire merchant {self.merchant.get_name()}")
         self.merchant = None
 
@@ -442,10 +430,8 @@ class SellRoute(TradeRoute):
     ----------
     name : str
         The name of the route.
-
     market : Market
         The Market for selling the salt.
-
     stock : Stock
         Our Stock.
 
@@ -512,7 +498,7 @@ if __name__ == "__main__":
             super().__init__()
             for mine in config["mines"]:
                 self.mines[mine] = Mine(mine)
-                
+
             for market in config["markets"]:
                 self.markets[market] = Market(market)
 
@@ -537,7 +523,7 @@ if __name__ == "__main__":
             "List your trading routes"
             print(f"You have {len(self.trade_routes)} routes:")
             for route in self.trade_routes.values():
-                route.print_name() 
+                route.print_name()
 
         def do_trade(self, args):
             "Purchase salt from a mine"
@@ -574,13 +560,13 @@ if __name__ == "__main__":
 
 # Options to improve on your own:
 #
-# - Use the salary and experience of the merchant to influence the price. Use 
+# - Use the salary and experience of the merchant to influence the price. Use
 # - the experience to have a discount for buying salt or an increased price for
 #   selling but also subtract the salary as percent-based commission.
 # - Add more merchants and add a check that a merchant can only be hired
-#   if they are free. Then, implement a CLI-method to list the available 
+#   if they are free. Then, implement a CLI-method to list the available
 #   merchants.
-# - Add a class StockClerk that can be employed in the stock to increase the 
+# - Add a class StockClerk that can be employed in the stock to increase the
 #   maximum capacity. Hint: You may use a class Employee and use
 #   inheritance or composition or organise the merchants and the stock clerk.
 # - Split the classes into individual files for a organisation of the source

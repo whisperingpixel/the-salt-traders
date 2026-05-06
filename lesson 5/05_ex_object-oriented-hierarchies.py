@@ -140,10 +140,10 @@ class Market():
     Methods
     ----------
     sell_salt(amount)
-        Sells salt from the mine (in kilogram).
+        Sells salt at the market (in kilogram).
     """
 
-    # TODO: remove shipping_cost from the Mine and add it to the route.
+    # TODO: remove shipping_cost from the Market and add it to the route.
 
     name = None
     shipping_cost = 0
@@ -195,19 +195,14 @@ class Stock():
     ----------
     get_salt()
         Returns the amount of salt in kilogram.
-    
     get_gold()
         Returns the amount of gold in stock.
-
     add_salt(amount)
         Adds salt to the stock (in kilogram).
-    
     remove_salt(amount)
         Removes salt from the stock (in kilogram).
-    
     add_gold(amont)
         adds gold to the stock.
-    
     remove_gold(amount)
         removes gold from the stock.
     """
@@ -359,7 +354,7 @@ if __name__ == "__main__":
             super().__init__()
             for mine in config["mines"]:
                 self.mines[mine] = Mine(mine)
-                
+
             for market in config["markets"]:
                 self.markets[market] = Market(market)
 
@@ -380,7 +375,7 @@ if __name__ == "__main__":
         #       method do_trading that takes the amount and trading route.
         #       Learning objective: Learn how to use polymorphism in object-
         #       oriented programming.
-    
+
         def do_purchase(self, args):
             "Purchase salt from a mine"
             amount, mine = args.split()
@@ -418,13 +413,13 @@ if __name__ == "__main__":
 
 # Options to improve on your own:
 #
-# - Use the salary and experience of the merchant to influence the price. Use 
+# - Use the salary and experience of the merchant to influence the price. Use
 # - the experience to have a discount for buying salt or an increased price for
 #   selling but also subtract the salary as percent-based commission.
 # - Add more merchants and add a check that a merchant can only be hired
-#   if they are free. Then, implement a CLI-method to list the available 
+#   if they are free. Then, implement a CLI-method to list the available
 #   merchants.
-# - Add a class StockClerk that can be employed in the stock to increase the 
+# - Add a class StockClerk that can be employed in the stock to increase the
 #   maximum capacity. Hint: You may use a class Employee and use
 #   inheritance or composition or organise the merchants and the stock clerk.
 # - Split the classes into individual files for a organisation of the source
