@@ -23,7 +23,7 @@
 #       purposes.
 #
 #                                  LESSON 5
-# Expected learing outcomes:
+# Expected learning outcomes:
 #  - Creating hierachies of classes
 #  - Using class composition
 #

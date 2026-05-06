@@ -23,7 +23,7 @@
 #       purposes.
 #
 #                                  LESSON 3
-# Expected learing outcomes:
+# Expected learning outcomes:
 #  - Passing arguments to the program
 #  - Command-line interfaces
 #

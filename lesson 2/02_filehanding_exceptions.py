@@ -23,7 +23,7 @@
 #       purposes.
 #
 #                                  LESSON 2
-# Expected learing outcomes:
+# Expected learning outcomes:
 #  - File handling
 #  - YAML
 #  - Handling errors and exceptions

@@ -23,7 +23,7 @@
 #       purposes.
 #
 #                                  LESSON 4
-# Expected learing outcomes:
+# Expected learning outcomes:
 #  - Creating and instantiating classes
 #  - Using class methods
 #

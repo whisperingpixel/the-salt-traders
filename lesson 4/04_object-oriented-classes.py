@@ -23,7 +23,7 @@
 #       purposes.
 #
 #                                  LESSON 4
-# Expected learing outcomes:
+# Expected learning outcomes:
 #  - Creating and instantiating classes
 #  - Using class methods
 #
@@ -189,19 +189,14 @@ class Stock():
     ----------
     get_salt()
         Returns the amount of salt in kilogram.
-    
     get_gold()
         Returns the amount of gold in stock.
-
     add_salt(amount)
         Adds salt to the stock (in kilogram).
-    
     remove_salt(amount)
         Removes salt from the stock (in kilogram).
-    
     add_gold(amont)
         adds gold to the stock.
-    
     remove_gold(amount)
         removes gold from the stock.
     """
