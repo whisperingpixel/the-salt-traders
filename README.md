@@ -27,7 +27,8 @@ Part / Lesson | Expected learning outcomes
  5 | Class inheritance, composition
  6 | Geospatial vector data
  7 | Geospatial raster data
- 8 | Finalisation and playing the game
+ 8 | Coordinate systems and coordinate transformation
+ 9 | Finalisation and playing the game
 
 ## Contributions and improvements
 
