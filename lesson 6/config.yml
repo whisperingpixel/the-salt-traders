@@ -1,0 +1,34 @@
+mines:
+  - name: "Dürrnberg"
+    description: "Mine entrance"
+    latitude: 47.6794
+    longitude: 13.0883
+  - name: "Berchtesgaden"
+    description: "Mine entrance"
+    latitude: 47.6236
+    longitude: 13.0037
+
+markets:
+  - name: "Passau"
+    description: "Domplatz"
+    latitude: 48.5742
+    longitude: 13.4677
+  - name: "Laufen"
+    description: "Marienplatz"
+    latitude: 47.9466
+    longitude: 12.9287
+  - name: "Salzburg"
+    description: "Residenzplatz"
+    latitude: 47.8003
+    longitude: 13.0443
+
+trading:
+  costs:
+    buy_cost: 5
+    shipping_cost: 15
+  revenue:
+    price: 10
+  stock:
+    max: 1000
+    latitude: 47.7995
+    longitude: 13.048
