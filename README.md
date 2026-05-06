@@ -14,7 +14,7 @@ Note: The salt trade represented here is largely simplified. The complexity incr
 
 ## Lessons
 
-The lessos are organised in the corresponding subfolders and each lesson builds upon the previous one. Therefore, there are at least two files in each subfolder: The file with the `_ex_` in the filename is the exercise file. In this file a learing outcome corresponds with at least one TODO. This TODO indicates that there is something new to implement. An example solution is provided in the second file. For the continuation of the exercise, you can either continue to use your own file or use the execise-files provided in the individual folders.
+The lessons are organised in the corresponding subfolders and each lesson builds upon the previous one. Therefore, there are at least two files in each subfolder: The file with the `_ex_` in the filename is the exercise file. In this file a learning outcome corresponds with at least one TODO. This TODO indicates that there is something new to implement. An example solution is provided in the second file. For the continuation of the exercise, you can either continue to use your own file or use the execise-files provided in the individual folders.
 
 At the bottom of each file are either optional improvements or assignments. The optional improvements can be done on your own and are mostly additional exercises for of the same topic / learning outcome.
 
@@ -32,7 +32,7 @@ Part / Lesson | Expected learning outcomes
 
 ## Contributions and improvements
 
-This teaching project is open for contributions and improvements. Please contact me or use GitHub issues for discussion or pull-requests for improvements.
+This teaching project is open for contributions and improvements. Please contact me or use GitHub issues for discussion or pull-requests for improvements. Any contributions or comments are welcome!
 
 ## AI declaration
 
