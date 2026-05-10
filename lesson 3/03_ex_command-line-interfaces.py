@@ -46,6 +46,11 @@ import argparse
 #
 # Initial state of the stock
 #
+
+# TODO: Replace the hard-coded inital parameters with a command-line input
+#       Learning objectives: Learn how to create a program that takes arguments
+#       to alter the behaviour (command-line arguments).
+
 gold = 1500.0
 salt = 0
 
