@@ -474,7 +474,7 @@ class SellRoute(TradeRoute):
 
 if __name__ == "__main__":
 
-    class Game(cmd.Cmd):
+    class TheSaltTraders(cmd.Cmd):
         intro = """
         Welcome to the world of salt, merchant!
 
@@ -555,7 +555,7 @@ if __name__ == "__main__":
             "Exit the game"
             return True
 
-    Game().cmdloop()
+    TheSaltTraders().cmdloop()
 
 
 # Options to improve on your own:
