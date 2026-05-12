@@ -145,7 +145,7 @@ def is_bankrupt(gold):
 ################################################################################
 
 if __name__ == "__main__":
-    
+
     # TODO: Implement a command-line-based interactive programm.
     # NOTE: Remove the 'pass' keyword!
     #       Learning objective: Create an interactive program in which the user

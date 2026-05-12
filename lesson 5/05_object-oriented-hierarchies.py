@@ -510,9 +510,9 @@ if __name__ == "__main__":
             "List your stock"
             print(f"You have {self.my_stock.get_salt()}kg of salt and {self.my_stock.get_gold()} gold")
 
-        def do_add_route(self, args):
+        def do_add_route(self, line):
             "Add a new trading route"
-            type, name, target = args.split()
+            type, name, target = line.split()
             if type == "purchase":
                 self.trade_routes[name] = PurchaseRoute(name, self.mines[target], self.my_stock)
             if type == "sell":
@@ -525,9 +525,9 @@ if __name__ == "__main__":
             for route in self.trade_routes.values():
                 route.print_name()
 
-        def do_trade(self, args):
+        def do_trade(self, line):
             "Purchase salt from a mine"
-            amount, route = args.split()
+            amount, route = line.split()
             amount = int(amount)
 
             try:
@@ -535,17 +535,17 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
 
-        def do_hire_merchant(self, args):
+        def do_hire_merchant(self, line):
             "Hire a new merchant for the route"
-            merchant_name, route_name = args.split()
+            merchant_name, route_name = line.split()
             for merchant in self.merchants:
                 if merchant.get_name() == merchant_name:
                     self.trade_routes[route_name].hire_merchant(merchant)
                     print(f"You hired merchant {merchant_name} for route {self.trade_routes[route_name].get_name()}")
 
-        def do_fire_merchant(self, args):
+        def do_fire_merchant(self, line):
             "Fire a merchant from a route"
-            merchant_name = args
+            merchant_name = line
             for route in self.trade_routes.values():
                 if route.get_merchant_name() == merchant_name:
                     route.fire_merchant()

@@ -122,9 +122,9 @@ if __name__ == "__main__":
             "List your stock"
             print(f"You have {self.my_stock.get_salt()}kg of salt and {self.my_stock.get_gold()} gold")
 
-        def do_purchase(self, args):
+        def do_purchase(self, line):
             "Purchase salt from a mine"
-            amount, mine = args.split()
+            amount, mine = line.split()
             amount = int(amount)
 
             try:
@@ -135,9 +135,9 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
 
-        def do_sell(self, args):
+        def do_sell(self, line):
             "Sell salt to a market in a city"
-            amount, market = args.split()
+            amount, market = line.split()
             amount = int(amount)
 
             try:

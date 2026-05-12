@@ -588,9 +588,9 @@ if __name__ == "__main__":
             "List your stock"
             print(f"You have {self.my_stock.get_salt()}kg of salt and {self.my_stock.get_gold()} gold")
 
-        def do_add_route(self, args):
+        def do_add_route(self, line):
             "Add a new trading route"
-            type, name, target = args.split()
+            type, name, target = line.split()
             if type == "purchase":
                 self.trade_routes[name] = PurchaseRoute(name, self.mines[target], self.my_stock)
             if type == "sell":
@@ -603,9 +603,9 @@ if __name__ == "__main__":
             for route in self.trade_routes.values():
                 route.print_name()
 
-        def do_trade(self, args):
+        def do_trade(self, line):
             "Purchase salt from a mine"
-            amount, route = args.split()
+            amount, route = line.split()
             amount = int(amount)
 
             try:
@@ -613,17 +613,17 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
 
-        def do_hire_merchant(self, args):
+        def do_hire_merchant(self, line):
             "Hire a new merchant for the route"
-            merchant_name, route_name = args.split()
+            merchant_name, route_name = line.split()
             for merchant in self.merchants:
                 if merchant.get_name() == merchant_name:
                     self.trade_routes[route_name].hire_merchant(merchant)
                     print(f"You hired merchant {merchant_name} for route {self.trade_routes[route_name].get_name()}")
 
-        def do_fire_merchant(self, args):
+        def do_fire_merchant(self, line):
             "Fire a merchant from a route"
-            merchant_name = args
+            merchant_name = line
             for route in self.trade_routes.values():
                 if route.get_merchant_name() == merchant_name:
                     route.fire_merchant()
@@ -634,9 +634,9 @@ if __name__ == "__main__":
         #       input.
         #       Learning objective: Calculating geometric relationships between
         #       two Shapely geometries.
-        def do_explore_route(self, args):
+        def do_explore_route(self, line):
             "Explores a route and reports the distance and shipping costs"
-            destination = args
+            destination = line
             distance = None
             shipping_cost = distance * config["trading"]["costs"]["shipping_cost"]
             print(f"The distance between your stock and the target {destination} is {distance}! " +
@@ -646,9 +646,9 @@ if __name__ == "__main__":
         #       and longitude coordinate tuple as user input. Translate them
         #       into a WKT format for input.
         #       Learning objective: Using WKT to instantiate Shapely geometries.
-        def do_add_market(self, args):
+        def do_add_market(self, line):
             "Adding a new market using a name and the WKT geometry"
-            name, wkt_geometry = args.split()
+            name, wkt_geometry = line.split()
             print(f"Added market {name} at {wkt_geometry}.")
 
         def do_exit(self, _):
