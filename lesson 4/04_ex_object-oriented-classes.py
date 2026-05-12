@@ -118,7 +118,7 @@ if __name__ == "__main__":
                 # NOTE: Remove the 'pass' keyword!
                 #       Learning objective: instantiate objects from classes.
 
-        def do_list_stock(self):
+        def do_list_stock(self, _):
             "List your stock"
             print(f"You have {self.my_stock.get_salt()}kg of salt and {self.my_stock.get_gold()} gold")
 

@@ -570,7 +570,7 @@ if __name__ == "__main__":
             self.merchants.append(Merchant("Freya", 0.2, 3))
             self.merchants.append(Merchant("Ulrich", 0.1, 2))
 
-        def do_list_stock(self, args):
+        def do_list_stock(self, _):
             "List your stock"
             print(f"You have {self.my_stock.get_salt()}kg of salt and {self.my_stock.get_gold()} gold")
 
@@ -583,7 +583,7 @@ if __name__ == "__main__":
                 self.trade_routes[name] = SellRoute(name, self.markets[target], self.my_stock)
             print(f"Added new route {self.trade_routes[name].get_name()}.")
 
-        def do_list_routes(self, args):
+        def do_list_routes(self, _):
             "List your trading routes"
             print(f"You have {len(self.trade_routes)} routes:")
             for route in self.trade_routes.values():
