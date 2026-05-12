@@ -106,7 +106,7 @@ def sell_salt(amount, market):
         return
 
     revenue = (config["trading"]["revenue"]["price"] - config["trading"]["costs"]["shipping_cost"]) * amount
-    print(f"Sold {amount}kg of salt at the {market} market and earned {gold} gold")
+    print(f"Sold {amount}kg of salt at the {market} market and earned {revenue} gold")
     return revenue
 
 
