@@ -93,10 +93,6 @@ class Mine():
         Returns the Shapely Point of the mine's location.
     """
 
-    name = None
-    # TODO: Add a location variable that holds the location as Shapely
-    # coordinates.
-
     def __init__(self, name):
         """ Initialises the Mine using a name and the location
 
@@ -109,8 +105,8 @@ class Mine():
         """
 
         self.name = name
-        # TODO: Initialise the location variable passed in this constructor as 
-        #       a variable.
+        # TODO: Add and initialise the location variable passed in this
+        #       constructor as a variable.
 
     def purchase_salt(self, amount):
         """Method to buy salt
@@ -147,10 +143,6 @@ class Market():
         Returns the Shapely Point of the markets's location.
     """
 
-    name = None
-    # TODO: Add a location variable that holds the location as Shapely
-    # coordinates.
-
     def __init__(self, name):
         """ Initialises the Market using a name and the location.
 
@@ -163,8 +155,8 @@ class Market():
         """
 
         self.name = name
-        # TODO: Initialise the location variable passed in this constructor as 
-        #       a variable.
+        # TODO: Add and initialise the location variable passed in this
+        #       constructor as a variable.
 
     def sell_salt(self, amount):
         """Method to sell salt
@@ -215,14 +207,9 @@ class Stock():
         Returns the location of the stock as Shapely Point.
     """
 
-    gold = 0
-    salt = 0
-    MAX_STOCK = config["trading"]["stock"]["max"]
+    # TODO: Add a location variable 
 
-    # TODO: Add a location variable that holds the location as Shapely
-    # coordinates.
-
-    def __init__(self, gold, salt):
+    def __init__(self, gold = 0, salt = 0):
         """ Initialises the Stock using a default gold and salt.
 
         Parameters
@@ -237,7 +224,9 @@ class Stock():
 
         self.gold = gold
         self.salt = salt
-        # TODO: Initialise the location variable.
+        self.MAX_STOCK = config["trading"]["stock"]["max"]
+        # TODO: Add and initialise the location variable that holds the location
+        #       of the stock as Shapely coordinates.
 
     def get_salt(self):
         """Returns the amount of salt in stock in kilogram.
@@ -321,10 +310,8 @@ class Merchant():
     ----------
     name : str
         The experience of a merchant
-
     experience : int
-        The experience of a merchant
-
+        The experience of a merchant, 1 to 5 stars
     salary : float
         The salary of a merchant (% commission of a trade)
 
@@ -334,11 +321,7 @@ class Merchant():
         Returns the name of the Merchant.
     """
 
-    experience = 1 # 1 to 5 stars
-    salary = 0.1 # in percent
-    name = None
-
-    def __init__(self, name, salary, experience):
+    def __init__(self, name, salary = 0.1, experience = 1):
         self.name = name
         self.salary = salary
         self.experience = experience
@@ -377,12 +360,8 @@ class TradeRoute(abc.ABC):
         Returns the length of the route
     """
 
-    name = None
-    merchant = None
-    shipping_cost = config["trading"]["costs"]["shipping_cost"]
-
-    # TODO: Add a variable called 'route' that will hold the LineString as 
-    #       Shapely geometry.
+    def __init__(self):
+        self.shipping_cost = config["trading"]["costs"]["shipping_cost"]
 
     def print_name(self):
         """ Prints the name of the route """
@@ -448,15 +427,12 @@ class PurchaseRoute(TradeRoute):
         Returns the length of the route
     """
 
-    name = None
-    mine = None
-    stock = None
-
     def __init__(self, name, mine, stock):
+        super().__init__()
         self.name = name
         self.mine = mine
         self.stock = stock
-        # TODO: Add the route as LineString using the mine and stock location
+        # TODO: Add the route as LineString using the mine and stock location.
         #       Use the previously implemented get_location() method.
         #       Learning objective: Instantiating Shapely geometries.
 
@@ -496,15 +472,12 @@ class SellRoute(TradeRoute):
         Returns the length of the route
     """
 
-    name = None
-    Market = None
-    stock = None
-
     def __init__(self, name, market, stock):
+        super().__init__()
         self.name = name
         self.market = market
         self.stock = stock
-        # TODO: Add the route as LineString using the market and stock location
+        # TODO: Add the route as LineString using the market and stock location.
         #       Use the previously implemented get_location() method.
         #       Learning objective: Instantiating Shapely geometries.
 

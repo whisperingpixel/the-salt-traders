@@ -88,9 +88,6 @@ class Mine():
         Buys salt from the mine.
     """
 
-    name = None
-    shipping_cost = 0
-
     def __init__(self, name, shipping_cost):
         """ Initialises the Mine using a name and the shipping cost.
 
@@ -139,9 +136,6 @@ class Market():
         Sells salt from the mine (in kilogram).
     """
 
-    name = None
-    shipping_cost = 0
-
     def __init__(self, name, shipping_cost):
         """ Initialises the Market using a name and the shipping cost.
 
@@ -155,7 +149,7 @@ class Market():
         """
 
         self.name = name
-        self.shipping_cost = self.shipping_cost
+        self.shipping_cost = shipping_cost
 
     def sell_salt(self, amount):
         """Method to sell salt
@@ -201,10 +195,6 @@ class Stock():
         removes gold from the stock.
     """
 
-    gold = 0
-    salt = 0
-    MAX_STOCK = config["trading"]["stock"]["max"]
-
     def __init__(self, gold, salt):
         """ Initialises the Stock using a default gold and salt.
 
@@ -218,6 +208,7 @@ class Stock():
 
         self.gold = gold
         self.salt = salt
+        self.MAX_STOCK = config["trading"]["stock"]["max"]
 
     def get_salt(self):
         """Returns the amount of salt in stock in kilogram.

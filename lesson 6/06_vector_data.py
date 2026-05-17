@@ -93,9 +93,6 @@ class Mine():
         Returns the Shapely Point of the mine's location.
     """
 
-    name = None
-    location = None
-
     def __init__(self, name, location):
         """ Initialises the Mine using a name and the location
 
@@ -145,9 +142,6 @@ class Market():
     get_location()
         Returns the Shapely Point of the markets's location.
     """
-
-    name = None
-    location = None
 
     def __init__(self, name, location):
         """ Initialises the Market using a name and the location.
@@ -213,11 +207,6 @@ class Stock():
         Returns the location of the stock as Shapely Point.
     """
 
-    gold = 0
-    salt = 0
-    location = None
-    MAX_STOCK = config["trading"]["stock"]["max"]
-
     def __init__(self, gold, salt, location):
         """ Initialises the Stock using a default gold and salt.
 
@@ -233,6 +222,7 @@ class Stock():
 
         self.gold = gold
         self.salt = salt
+        self.MAX_STOCK = config["trading"]["stock"]["max"]
         self.location = location
 
     def get_salt(self):
@@ -331,10 +321,6 @@ class Merchant():
         Returns the name of the Merchant.
     """
 
-    experience = 1 # 1 to 5 stars
-    salary = 0.1 # in percent
-    name = None
-
     def __init__(self, name, salary, experience):
         self.name = name
         self.salary = salary
@@ -374,10 +360,8 @@ class TradeRoute(abc.ABC):
         Returns the length of the route
     """
 
-    name = None
-    route = None
-    merchant = None
-    shipping_cost = config["trading"]["costs"]["shipping_cost"]
+    def __init__(self):
+        self.shipping_cost = config["trading"]["costs"]["shipping_cost"]
 
     def print_name(self):
         """ Prints the name of the route """
@@ -442,11 +426,8 @@ class PurchaseRoute(TradeRoute):
         Returns the length of the route
     """
 
-    name = None
-    mine = None
-    stock = None
-
     def __init__(self, name, mine, stock):
+        super().__init__()
         self.name = name
         self.mine = mine
         self.stock = stock
@@ -488,11 +469,8 @@ class SellRoute(TradeRoute):
         Returns the length of the route
     """
 
-    name = None
-    Market = None
-    stock = None
-
     def __init__(self, name, market, stock):
+        super().__init__()
         self.name = name
         self.market = market
         self.stock = stock
@@ -542,7 +520,6 @@ if __name__ == "__main__":
         stock_location = Point(
             config["trading"]["stock"]["latitude"],
             config["trading"]["stock"]["longitude"])
-
         my_stock = Stock(
             gold = args.gold,
             salt = args.salt,

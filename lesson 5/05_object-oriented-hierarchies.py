@@ -86,8 +86,6 @@ class Mine():
         Buys salt from the mine.
     """
 
-    name = None
-
     def __init__(self, name):
         """ Initialises the Mine using a name
 
@@ -128,8 +126,6 @@ class Market():
     sell_salt(amount)
         Sells salt at the market (in kilogram).
     """
-
-    name = None
 
     def __init__(self, name):
         """ Initialises the Market using a name
@@ -187,11 +183,7 @@ class Stock():
         removes gold from the stock.
     """
 
-    gold = 0
-    salt = 0
-    MAX_STOCK = config["trading"]["stock"]["max"]
-
-    def __init__(self, gold, salt):
+    def __init__(self, gold = 0, salt = 0):
         """ Initialises the Stock using a default gold and salt.
 
         Parameters
@@ -204,6 +196,7 @@ class Stock():
 
         self.gold = gold
         self.salt = salt
+        self.MAX_STOCK = config["trading"]["stock"]["max"]
 
     def get_salt(self):
         """Returns the amount of salt in stock in kilogram.
@@ -286,7 +279,7 @@ class Merchant():
     name : str
         The experience of a merchant
     experience : int
-        The experience of a merchant
+        The experience of a merchant, 1 to 5 stars
     salary : float
         The salary of a merchant (% commission of a trade)
 
@@ -296,11 +289,7 @@ class Merchant():
         Returns the name of the Merchant.
     """
 
-    experience = 1 # 1 to 5 stars
-    salary = 0.1 # in percent
-    name = None
-
-    def __init__(self, name, salary, experience):
+    def __init__(self, name, salary = 0.1, experience = 1):
         self.name = name
         self.salary = salary
         self.experience = experience
@@ -335,9 +324,8 @@ class TradeRoute(abc.ABC):
         Fires the Merchant of the route
     """
 
-    name = None
-    merchant = None
-    shipping_cost = config["trading"]["costs"]["shipping_cost"]
+    def __init__(self):
+        self.shipping_cost = config["trading"]["costs"]["shipping_cost"]
 
     def print_name(self):
         """ Prints the name of the route """
@@ -397,11 +385,8 @@ class PurchaseRoute(TradeRoute):
         Buys the amount of salt from the mine and deposits it in our stock.
     """
 
-    name = None
-    mine = None
-    stock = None
-
     def __init__(self, name, mine, stock):
+        super().__init__()
         self.name = name
         self.mine = mine
         self.stock = stock
@@ -441,11 +426,8 @@ class SellRoute(TradeRoute):
         Sells the amount of salt at the market.
     """
 
-    name = None
-    Market = None
-    stock = None
-
     def __init__(self, name, market, stock):
+        super().__init__()
         self.name = name
         self.market = market
         self.stock = stock
@@ -529,7 +511,6 @@ if __name__ == "__main__":
             "Purchase salt from a mine"
             amount, route = line.split()
             amount = int(amount)
-
             try:
                 self.trade_routes[route].trade(amount)
             except Exception as e:
