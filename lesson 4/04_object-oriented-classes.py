@@ -114,7 +114,7 @@ class Mine():
             The amount of salt that should be bought (in kilogram).
         """
 
-        cost = amount * (config["trading"]["costs"]["buy_cost"] + config["trading"]["costs"]["shipping_cost"])
+        cost = amount * (config["trading"]["costs"]["buy_cost"] + self.shipping_cost)
         return cost
 
 
@@ -162,7 +162,7 @@ class Market():
             The amount of salt that should be sold (in kilogram).
         """
 
-        revenue = amount * (config["trading"]["revenue"]["price"] - config["trading"]["costs"]["shipping_cost"])
+        revenue = amount * (config["trading"]["revenue"]["price"] - self.shipping_cost)
         return revenue
 
 
