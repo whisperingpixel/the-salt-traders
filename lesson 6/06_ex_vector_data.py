@@ -124,6 +124,7 @@ class Mine():
 
     # TODO: Implement a function that returns the location variable.
 
+
 class Market():
     """
     A Market allows to sell salt.
@@ -173,6 +174,7 @@ class Market():
         return revenue
 
     # TODO: Implement a function that returns the location variable.
+
 
 class Stock():
     """
