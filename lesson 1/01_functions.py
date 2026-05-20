@@ -94,7 +94,7 @@ def sell_salt(amount, market):
         return
 
     revenue = (SELL_PRICE - SHIPPING_COST) * amount
-    print(f"Sold {amount}kg of salt at the {market} market and earned {gold} gold")
+    print(f"Sold {amount}kg of salt at the {market} market and earned {revenue} gold")
     return revenue
 
 
