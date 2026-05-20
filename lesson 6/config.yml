@@ -1,8 +1,8 @@
 mines:
   - name: "Dürrnberg"
     description: "Mine entrance"
-    latitude: 47.6794
-    longitude: 13.0883
+    latitude: 47.6667
+    longitude: 13.0927
   - name: "Berchtesgaden"
     description: "Mine entrance"
     latitude: 47.6236
