@@ -116,12 +116,24 @@ class Mine():
         ----------
         amount : float
             The amount of salt that should be bought (in kilogram).
+
+        Returns
+        -------
+        float
+            The cost of the salt that was purchased.
         """
 
         cost = amount * config["trading"]["costs"]["buy_cost"]
         return cost
 
     def get_location(self):
+        """ Returns the location as Shapely Point.
+
+        Returns
+        -------
+        Point
+            The Shapely Point of the location.
+        """
         return self.location
 
 
@@ -167,12 +179,24 @@ class Market():
         ----------
         amount : float
             The amount of salt that should be sold (in kilogram).
+
+        Returns
+        -------
+        float
+            The revenue from the salt that was sold.
         """
 
         revenue = amount * config["trading"]["revenue"]["price"]
         return revenue
 
     def get_location(self):
+        """ Returns the location as Shapely Point.
+
+        Returns
+        -------
+        Point
+            The Shapely Point of the location.
+        """
         return self.location
 
 
@@ -229,12 +253,22 @@ class Stock():
 
     def get_salt(self):
         """Returns the amount of salt in stock in kilogram.
+
+        Returns
+        -------
+        float
+            The the amount of salt currently in the stock (in kg).
         """
 
         return self.salt
 
     def get_gold(self):
         """Returns the amount of gold in stock.
+
+        Returns
+        -------
+        float
+            The the amount of gold currently in the stock.
         """
 
         return self.gold
@@ -299,6 +333,13 @@ class Stock():
         self.gold = self.gold - amount
 
     def get_location(self):
+        """ Returns the location as Shapely Point.
+
+        Returns
+        -------
+        Point
+            The Shapely Point of the location.
+        """
         return self.location
 
 
@@ -320,7 +361,7 @@ class Merchant():
     Methods
     ----------
     get_name()
-        Returns the name of the Merchant.
+        Returns the name of the merchant.
     """
 
     def __init__(self, name, salary, experience):
@@ -329,7 +370,13 @@ class Merchant():
         self.experience = experience
 
     def get_name(self):
-        """Returns the name of the merchant"""
+        """Returns the name of the merchant
+
+        Returns
+        -------
+        str
+            The name of the merchant.
+        """
         return self.name
 
 
@@ -370,11 +417,23 @@ class TradeRoute(abc.ABC):
         print(self.name)
 
     def get_name(self):
-        """ Returns the name of the route """
+        """ Returns the name of the route
+
+        Returns
+        -------
+        str
+            The name of the route.
+        """
         return self.name
 
     def get_merchant_name(self):
-        """ Returns the name of the merchant """
+        """ Returns the name of the merchant currently employed on this route
+
+        Returns
+        -------
+        str
+            The name of the merchant for this route.
+        """
         return self.merchant.get_name()
 
     def hire_merchant(self, merchant):
@@ -401,7 +460,14 @@ class TradeRoute(abc.ABC):
         self.merchant = None
 
     def get_length(self):
-        """Returns the length of the route."""
+        """Returns the length of the route. The length is calculated using the
+        shortest distance between the start and end point (linear distance).
+
+        Returns
+        -------
+        float
+            The length of the route in the unit of the CRS.
+        """
 
         return self.route.length
 
@@ -424,8 +490,6 @@ class PurchaseRoute(TradeRoute):
     ----------
     trade(amount)
         Buys the amount of salt from the mine and deposits it in our stock.
-    get_length()
-        Returns the length of the route
     """
 
     def __init__(self, name, mine, stock):
@@ -463,12 +527,11 @@ class SellRoute(TradeRoute):
         The Market for selling the salt.
     stock : Stock
         Our Stock.
+
     Methods
     ----------
     trade(amount)
         Sells the amount of salt at the market.
-    get_length()
-        Returns the length of the route
     """
 
     def __init__(self, name, market, stock):

@@ -116,6 +116,11 @@ class Mine():
         ----------
         amount : float
             The amount of salt that should be bought (in kilogram).
+
+        Returns
+        -------
+        float
+            The cost of the salt that was purchased.
         """
 
         cost = amount * (config["trading"]["costs"]["buy_cost"] + self.shipping_cost)
@@ -166,6 +171,11 @@ class Market():
         ----------
         amount : float
             The amount of salt that should be sold (in kilogram).
+
+        Returns
+        -------
+        float
+            The revenue from the salt that was sold.
         """
 
         revenue = amount * (config["trading"]["revenue"]["price"] - self.shipping_cost)
@@ -217,12 +227,22 @@ class Stock():
 
     def get_salt(self):
         """Returns the amount of salt in stock in kilogram.
+
+        Returns
+        -------
+        float
+            The the amount of salt currently in the stock (in kg).
         """
 
         return self.salt
 
     def get_gold(self):
         """Returns the amount of gold in stock.
+
+        Returns
+        -------
+        float
+            The the amount of gold currently in the stock.
         """
 
         return self.gold

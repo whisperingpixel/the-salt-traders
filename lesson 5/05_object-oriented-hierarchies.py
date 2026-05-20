@@ -106,6 +106,11 @@ class Mine():
         ----------
         amount : float
             The amount of salt that should be bought (in kilogram).
+
+        Returns
+        -------
+        float
+            The cost of the salt that was purchased.
         """
 
         cost = amount * config["trading"]["costs"]["buy_cost"]
@@ -147,6 +152,11 @@ class Market():
         ----------
         amount : float
             The amount of salt that should be sold (in kilogram).
+
+        Returns
+        -------
+        float
+            The revenue from the salt that was sold.
         """
 
         revenue = amount * config["trading"]["revenue"]["price"]
@@ -200,12 +210,22 @@ class Stock():
 
     def get_salt(self):
         """Returns the amount of salt in stock in kilogram.
+
+        Returns
+        -------
+        float
+            The the amount of salt currently in the stock (in kg).
         """
 
         return self.salt
 
     def get_gold(self):
         """Returns the amount of gold in stock.
+
+        Returns
+        -------
+        float
+            The the amount of gold currently in the stock.
         """
 
         return self.gold
@@ -286,7 +306,7 @@ class Merchant():
     Methods
     ----------
     get_name()
-        Returns the name of the Merchant.
+        Returns the name of the merchant.
     """
 
     def __init__(self, name, salary = 0.1, experience = 1):
@@ -295,7 +315,12 @@ class Merchant():
         self.experience = experience
 
     def get_name(self):
-        """Returns the name of the merchant"""
+        """Returns the name of the merchant
+
+        Returns
+        -------
+        str
+            The name of the merchant."""
         return self.name
 
 
@@ -332,11 +357,22 @@ class TradeRoute(abc.ABC):
         print(self.name)
 
     def get_name(self):
-        """ Returns the name of the route """
+        """ Returns the name of the route
+
+        Returns
+        -------
+        str
+            The name of the route."""
         return self.name
 
     def get_merchant_name(self):
-        """ Returns the name of the merchant """
+        """ Returns the name of the merchant currently employed on this route
+
+        Returns
+        -------
+        str
+            The name of the merchant for this route.
+        """
         return self.merchant.get_name()
 
     def hire_merchant(self, merchant):
