@@ -600,7 +600,11 @@ class Topography():
         self._base_data_dir = base_dir + '/'
 
         try:
-            self.dem = rioxarray.open_rasterio(self._base_data_dir + 'salt_traders_dem.tif', lock = False).sel(band = 1)
+            self.dem = (
+                rioxarray.open_rasterio(self._base_data_dir + 'salt_traders_dem.tif', lock = False)
+                .load()
+                .sel(band = 1)
+            )
             self.snow_depth = xr.zeros_like(self.dem)
             self._weather_update()
         except Exception as e:
@@ -632,7 +636,11 @@ class Topography():
         #
         try:
             pr_file = self._base_data_dir + "precipitation_scenario_" + str(random.randint(1,3)) + ".tif"
-            self.precipitation = rioxarray.open_rasterio(pr_file, lock = False).sel(band = 1)
+            self.precipitation = (
+                rioxarray.open_rasterio(pr_file, lock = False)
+                .load()
+                .sel(band = 1)
+            )
         except Exception as e:
             print(e)
             sys.exit()
@@ -880,7 +888,7 @@ if __name__ == "__main__":
                 target_location = self.markets[location].get_location()
                 self.dem.print_weather_report(target_location)
             else:
-                print(f"Could not find route to destination {location}!")
+                print(f"Could not find weather for location {location}!")
                 return
 
         def do_exit(self, _):
