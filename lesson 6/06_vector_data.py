@@ -409,7 +409,8 @@ class TradeRoute(abc.ABC):
         Returns the length of the route
     """
 
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.shipping_cost = config["trading"]["costs"]["shipping_cost"]
 
     def print_name(self):
@@ -493,8 +494,7 @@ class PurchaseRoute(TradeRoute):
     """
 
     def __init__(self, name, mine, stock):
-        super().__init__()
-        self.name = name
+        super().__init__(name)
         self.mine = mine
         self.stock = stock
         self.route = LineString([mine.get_location(), stock.get_location()])
@@ -535,8 +535,7 @@ class SellRoute(TradeRoute):
     """
 
     def __init__(self, name, market, stock):
-        super().__init__()
-        self.name = name
+        super().__init__(name)
         self.market = market
         self.stock = stock
         self.route = LineString([market.get_location(), stock.get_location()])
