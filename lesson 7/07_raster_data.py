@@ -776,8 +776,8 @@ if __name__ == "__main__":
         prompt = "The Salt Traders> "
 
         stock_location = Point(
-            config["trading"]["stock"]["latitude"],
-            config["trading"]["stock"]["longitude"])
+            config["trading"]["stock"]["longitude"],
+            config["trading"]["stock"]["latitude"])
         my_stock = Stock(
             gold = args.gold,
             salt = args.salt,
@@ -793,13 +793,13 @@ if __name__ == "__main__":
                 name = mine["name"]
                 lat = mine["latitude"]
                 lon = mine["longitude"]
-                self.mines[name] = Mine(name, Point(lat, lon))
+                self.mines[name] = Mine(name, Point(lon, lat))
 
             for market in config["markets"]:
                 name = market["name"]
                 lat = market["latitude"]
                 lon = market["longitude"]
-                self.markets[name] = Market(name, Point(lat, lon))
+                self.markets[name] = Market(name, Point(lon, lat))
 
             self.merchants.append(Merchant("Karl", 0.1, 1))
             self.merchants.append(Merchant("Freya", 0.2, 3))

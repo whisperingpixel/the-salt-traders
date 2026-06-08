@@ -25,7 +25,7 @@ markets:
 trading:
   costs:
     buy_cost: 5
-    shipping_cost: 15
+    shipping_cost: 5
   revenue:
     price: 10
   stock:
