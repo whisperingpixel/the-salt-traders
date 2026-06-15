@@ -805,7 +805,7 @@ if __name__ == "__main__":
             self.merchants.append(Merchant("Freya", 0.2, 3))
             self.merchants.append(Merchant("Ulrich", 0.1, 2))
 
-            self.dem = Topography('../data')
+            self.topography = Topography('../data')
 
         def do_list_stock(self, _):
             "List your stock"
@@ -882,10 +882,10 @@ if __name__ == "__main__":
             location = line
             if location in self.mines:
                 target_location = self.mines[location].get_location()
-                self.dem.print_weather_report(target_location)
+                self.topography.print_weather_report(target_location)
             elif location in self.markets:
                 target_location = self.markets[location].get_location()
-                self.dem.print_weather_report(target_location)
+                self.topography.print_weather_report(target_location)
             else:
                 print(f"Could not find weather for location {location}!")
                 return
