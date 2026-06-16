@@ -39,11 +39,13 @@ import cmd
 import argparse
 import abc
 from shapely import Point, LineString, distance, wkt
+import random
+import sys
+
+# TODO: Check new imports
 import xarray as xr
 import xrspatial
 import rioxarray
-import random
-import sys
 
 ###############################################################################
 #

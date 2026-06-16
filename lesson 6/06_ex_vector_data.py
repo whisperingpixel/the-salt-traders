@@ -38,6 +38,8 @@ import yaml
 import cmd
 import argparse
 import abc
+
+# TODO: Check new imports
 from shapely import Point, LineString, distance, wkt
 
 ###############################################################################
