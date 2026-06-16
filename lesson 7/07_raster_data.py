@@ -690,7 +690,7 @@ class Topography():
             Raster value of the point location. Type depends on the
             raster data type (e.g. str, int, list).
         """
-        return dataset.sel(x=point.y, y=point.x, method="nearest").values
+        return dataset.sel(x=point.x, y=point.y, method="nearest").values
 
     def get_altitude(self, point):
         """ Returns the altitude at a certain location. The location needs to
