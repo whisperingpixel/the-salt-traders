@@ -22,15 +22,13 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                  LESSON 7
+#                                  LESSON 12
 # Expected learning outcomes:
-#  - Read geospatial raster files into in-memory xarray data structures
-#  - Extract values of raster at a geospatial location
-#  - Reclassify raster values
-#  - Perform mathematical operations (raster calculator)
+#  - Handle coordinate reference systems (CRS)
+#  - Reproject data from one CRS to another
 #
 # Author: Martin Sudmanns (martin.sudmanns@plus.ac.at)
-# Date: 19.05.2026
+# Date: 16.06.2026
 #
 ################################################################################
 
@@ -39,11 +37,15 @@ import cmd
 import argparse
 import abc
 from shapely import Point, LineString, distance, wkt
-import random
-import sys
 import xarray as xr
 import xrspatial
 import rioxarray
+import random
+import sys
+
+# TODO: Check new imports
+from shapely.ops import transform
+from pyproj import Transformer
 
 ###############################################################################
 #
@@ -866,9 +868,17 @@ if __name__ == "__main__":
                 print(f"Could not find route to destination {destination}!")
                 return
 
+            # TODO: Transform the stock and target locations to a equal area
+            #       coordinate reference system (CRS), e.g. 3035 and perform the
+            #       distance calculation in the new CRS.
+            #       Learning objective: Handling CRS and perform coordinate
+            #       transformations.
+            transformer = Transformer.from_crs("EPSG:4326", "EPSG:3035", always_xy=True)
+
             distance = stock_location.distance(target_location)
+
             shipping_cost = distance * config["trading"]["costs"]["shipping_cost"]
-            print(f"The distance between your stock and the target {destination} is {distance}! " +
+            print(f"The distance between your stock and the target {destination} is {distance} m! " +
                     f"The shipping costs are {shipping_cost} gold per kg of salt.")
 
         def do_add_market(self, line):

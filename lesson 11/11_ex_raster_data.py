@@ -22,13 +22,15 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                  LESSON 8
+#                                  LESSON 11
 # Expected learning outcomes:
-#  - Handle coordinate reference systems (CRS)
-#  - Reproject data from one CRS to another
+#  - Read geospatial raster files into in-memory xarray data structures
+#  - Extract values of raster at a geospatial location
+#  - Reclassify raster values
+#  - Perform mathematical operations (raster calculator)
 #
 # Author: Martin Sudmanns (martin.sudmanns@plus.ac.at)
-# Date: 16.06.2026
+# Date: 19.05.2026
 #
 ################################################################################
 
@@ -37,13 +39,13 @@ import cmd
 import argparse
 import abc
 from shapely import Point, LineString, distance, wkt
+import random
+import sys
+
+# TODO: Check new imports
 import xarray as xr
 import xrspatial
 import rioxarray
-import random
-import sys
-from shapely.ops import transform
-from pyproj import Transformer
 
 ###############################################################################
 #
@@ -413,8 +415,7 @@ class TradeRoute(abc.ABC):
         Returns the length of the route
     """
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self):
         self.shipping_cost = config["trading"]["costs"]["shipping_cost"]
 
     def print_name(self):
@@ -499,7 +500,8 @@ class PurchaseRoute(TradeRoute):
     """
 
     def __init__(self, name, mine, stock):
-        super().__init__(name)
+        super().__init__()
+        self.name = name
         self.mine = mine
         self.stock = stock
         self.route = LineString([mine.get_location(), stock.get_location()])
@@ -541,7 +543,8 @@ class SellRoute(TradeRoute):
     """
 
     def __init__(self, name, market, stock):
-        super().__init__(name)
+        super().__init__()
+        self.name = name
         self.market = market
         self.stock = stock
         self.route = LineString([market.get_location(), stock.get_location()])
@@ -599,12 +602,17 @@ class Topography():
         self._base_data_dir = base_dir + '/'
 
         try:
-            self.dem = (
-                rioxarray.open_rasterio(self._base_data_dir + 'salt_traders_dem.tif', lock = False)
-                .load()
-                .sel(band = 1)
-            )
-            self.snow_depth = xr.zeros_like(self.dem)
+
+            # TODO: Load the digital elevation model (DEM) using the rioxarray
+            #       module. Use band 1 (the only one) to create an xarray
+            #       dataset.
+            #       Learning objective: Learn how to read a raster file in
+            #       memory.
+
+            # TODO: Instantiate an empty array of the same shape as the DEM
+            #       using xarray.
+            #       Learning objective: Use the xarray API.
+
             self._weather_update()
         except Exception as e:
             print(e)
@@ -635,11 +643,12 @@ class Topography():
         #
         try:
             pr_file = self._base_data_dir + "precipitation_scenario_" + str(random.randint(1,3)) + ".tif"
-            self.precipitation = (
-                rioxarray.open_rasterio(pr_file, lock = False)
-                .load()
-                .sel(band = 1)
-            )
+
+            # TODO: Load the selected precipitation scenario using the rioxarray
+            #       module. Use band 1 (the only one) to create an xarray
+            #       dataset.
+            #       Learning objective: Learn how to read a raster file in
+            #       memory.
         except Exception as e:
             print(e)
             sys.exit()
@@ -654,13 +663,21 @@ class Topography():
         # Set all values in the raster cell to 0 if they are below the snow line
         # and to 1 if they are above.
         #
-        self.snowline = xr.where(self.dem > snowline_altitude, 1, 0).astype("uint8")
+
+        # TODO: Create a new array with the snowline by selecting all values of
+        #       the DEM higher than the snowline_altitude value.
+        #       Learning objective: Filter pixel values of a raster using the
+        #       xarray API.
 
         #
         # Calculating the snow depth by adding to the existing one 10% of the
         # precipitation if the precipitation is above the snowline.
         #
-        self.snow_depth = self.snow_depth + (self.snowline * self.precipitation / 10)
+
+        # TODO: Update the snow_depth array by pixel-wise addition of the snow
+        #       amount to the existing values. Assume 10% of the precipitation
+        #       value will be the snow in mm.
+        #       Learning objective: Calculating with arrays using xarray.
 
         #
         # Reclassify the precipitation values into code ranging from 0 to 4:
@@ -670,10 +687,11 @@ class Topography():
         #   3 - heavy precipitation
         #   4 - very heavy precipitation
         #
-        self.precipitation = xrspatial.reclassify(
-            self.precipitation,
-            bins=[0, 20, 50, 75, 100],
-            new_values=[0, 1, 2, 3, 4])
+
+        # TODO: Reclassify the precipitation values using the xrspatial package.
+        #       Use the code from the comment above-
+        #       Learning objective: Reclassifying and coding raster cells based
+        #       on their value.
 
     def _get_value(self, dataset, point):
         """ Returns the value of a certain location. The location needs to be
@@ -690,7 +708,11 @@ class Topography():
             Raster value of the point location. Type depends on the
             raster data type (e.g. str, int, list).
         """
-        return dataset.sel(x=point.x, y=point.y, method="nearest").values
+
+        # TODO: Extract the raster value at the custom point. Use the "nearest"
+        #       method.
+        #       Learning objective: Using the xarray API to select a raster
+        #       value at a certain point.
 
     def get_altitude(self, point):
         """ Returns the altitude at a certain location. The location needs to
@@ -805,7 +827,7 @@ if __name__ == "__main__":
             self.merchants.append(Merchant("Freya", 0.2, 3))
             self.merchants.append(Merchant("Ulrich", 0.1, 2))
 
-            self.topography = Topography('../data')
+            self.dem = Topography('../data')
 
         def do_list_stock(self, _):
             "List your stock"
@@ -866,15 +888,9 @@ if __name__ == "__main__":
                 print(f"Could not find route to destination {destination}!")
                 return
 
-            transformer = Transformer.from_crs("EPSG:4326", "EPSG:3035", always_xy=True)
-
-            stock_location_reprojected = transform(transformer.transform, stock_location)
-            target_location_reprojected = transform(transformer.transform, target_location)
-
-            distance = stock_location_reprojected.distance(target_location_reprojected)
-
+            distance = stock_location.distance(target_location)
             shipping_cost = distance * config["trading"]["costs"]["shipping_cost"]
-            print(f"The distance between your stock and the target {destination} is {distance} m! " +
+            print(f"The distance between your stock and the target {destination} is {distance}! " +
                     f"The shipping costs are {shipping_cost} gold per kg of salt.")
 
         def do_add_market(self, line):
@@ -888,10 +904,10 @@ if __name__ == "__main__":
             location = line
             if location in self.mines:
                 target_location = self.mines[location].get_location()
-                self.topography.print_weather_report(target_location)
+                self.dem.print_weather_report(target_location)
             elif location in self.markets:
                 target_location = self.markets[location].get_location()
-                self.topography.print_weather_report(target_location)
+                self.dem.print_weather_report(target_location)
             else:
                 print(f"Could not find weather for location {location}!")
                 return

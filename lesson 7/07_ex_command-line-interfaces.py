@@ -22,42 +22,48 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                  LESSON 2
+#                                  LESSON 7
 # Expected learning outcomes:
-#  - File handling
-#  - YAML
-#  - Handling errors and exceptions
-#  - Documentation
+#  - Passing arguments to the program
+#  - Command-line interfaces
 #
 # Author: Martin Sudmanns (martin.sudmanns@plus.ac.at)
 # Date: 22.04.2026
 #
 ################################################################################
 
-import random
 import sys
-import yaml # Install this lib using pyyaml, e.g. python3 -m pip install pyyaml
+import yaml
 
-###############################################################################
+# TODO: Check new imports
+import cmd
+import argparse
+
+################################################################################
 #
 # Variables and constants
 #
-###############################################################################
+################################################################################
 
 #
 # Initial state of the stock
 #
+
+# TODO: Replace the hard-coded inital parameters with a command-line input
+#       Learning objectives: Learn how to create a program that takes arguments
+#       to alter the behaviour (command-line arguments).
+
 gold = 1500.0
 salt = 0
 
 #
-# Simulation parameters
-#
-MAX_ITER = 100
-
-#
 # Configuration
 #
+
+# TODO: Replace the hard-coded 'config.yml' file with a command-line input
+#       Learning objectives: Learn how to create a program that takes arguments
+#       to alter the behaviour (command-line arguments).
+
 try:
     with open('config.yml', 'r') as f:
         config = yaml.safe_load(f)
@@ -68,11 +74,11 @@ except PermissionError:
 except OSError as e:
     print(f"OS error: {e}")
 
-###############################################################################
+################################################################################
 #
 # Function definitions
 #
-###############################################################################
+################################################################################
 
 def buy_salt(amount, mine):
     """Function to buy salt
@@ -133,66 +139,30 @@ def is_bankrupt(gold):
 
     return gold <= 0
 
-###############################################################################
+################################################################################
 #
 # Start of the program.
 # This is the heart of the mechanism.
 #
-###############################################################################
+################################################################################
 
 if __name__ == "__main__":
-    #
-    # Running the game
-    #
-    iteration = 0
 
-    while iteration < MAX_ITER:
-
-        print(f"Next iteration: {iteration}/{MAX_ITER}")
-        print(f"You have {salt}kg of salt and {gold} gold")
-
-        for mine in config["mines"]:
-            try:
-                salt_to_purcase = random.randint(50,150)
-                cost = buy_salt(salt_to_purcase, mine)
-                salt = salt + salt_to_purcase
-                gold = gold - cost
-            except Exception as e:
-                print(e)
-
-        for market in config["markets"]:
-            try:
-                salt_to_sell = random.randint(30, 70)
-                revenue = sell_salt(salt_to_sell, market)
-                gold = gold + revenue
-                salt = salt - salt_to_sell
-            except Exception as e:
-                print(e)
-
-        if is_bankrupt(gold):
-            print("You are bankrupt")
-            sys.exit()
-
-        iteration = iteration + 1
-        input()
+    # TODO: Implement a command-line-based interactive programm.
+    # NOTE: Remove the 'pass' keyword!
+    #       Learning objective: Create an interactive program in which the user
+    #       can alter the execution.
+    pass
 
 
-# Assignment for next week:
+# Options to improve on your own:
 #
-# - Add random events in an iteration, which could be an attack of outlaws that
-#   steal the shipment or a broken boat, which means that the salt gets lost.
-
-# Options to improve on your own (no assignment):
-#
-# - Add a random disaster (e.g. flooding, mine or bridge accident) that prevents
-#   salt from being purchased or sold. This event can happen at a random chance
-#   during an event. Money might be necessary to fix it.
-# - Add a bank that can give a credit to buy salt or recover from the disaster,
-#   but the money needs to be paid back.
-# - Add randomly an option for war outbreak that increases the shipping cost
-#   until the war is over. Peace may be also randomly, but only if there is
-#   a war.
+# - Add a function that lists available markets and mines.
+# - Add checks that only existing mines and markets can be used.
+# - If you have programmed random events and the bank from the previous
+#   exercise, add the command-line interfaces to it.
 
 # Next week:
 #
-# - Create an interactive program with a command-line interface!
+# - Using an object-oriented programming style to extend the program more
+#   easily.

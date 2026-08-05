@@ -22,15 +22,15 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                  LESSON 6
+#                                  LESSON 11
 # Expected learning outcomes:
-#  - Instantiate Shapely geometries (Point, Linestring)
-#  - Use Well-Known Text (WKT) to instantiate Shapely geometries
-#  - Calculate geometric properties of Shapely geometries
-#  - Calculate geometric relationships between Shapely geometries
+#  - Read geospatial raster files into in-memory xarray data structures
+#  - Extract values of raster at a geospatial location
+#  - Reclassify raster values
+#  - Perform mathematical operations (raster calculator)
 #
 # Author: Martin Sudmanns (martin.sudmanns@plus.ac.at)
-# Date: 06.05.2026
+# Date: 19.05.2026
 #
 ################################################################################
 
@@ -38,9 +38,12 @@ import yaml
 import cmd
 import argparse
 import abc
-
-# TODO: Check new imports
 from shapely import Point, LineString, distance, wkt
+import random
+import sys
+import xarray as xr
+import xrspatial
+import rioxarray
 
 ###############################################################################
 #
@@ -95,7 +98,7 @@ class Mine():
         Returns the Shapely Point of the mine's location.
     """
 
-    def __init__(self, name):
+    def __init__(self, name, location):
         """ Initialises the Mine using a name and the location
 
         Parameters
@@ -107,8 +110,7 @@ class Mine():
         """
 
         self.name = name
-        # TODO: Add and initialise the location variable passed in this
-        #       constructor as a variable.
+        self.location = location
 
     def purchase_salt(self, amount):
         """Method to buy salt
@@ -129,7 +131,15 @@ class Mine():
         cost = amount * config["trading"]["costs"]["buy_cost"]
         return cost
 
-    # TODO: Implement a function that returns the location variable.
+    def get_location(self):
+        """ Returns the location as Shapely Point.
+
+        Returns
+        -------
+        Point
+            The Shapely Point of the location.
+        """
+        return self.location
 
 
 class Market():
@@ -151,7 +161,7 @@ class Market():
         Returns the Shapely Point of the markets's location.
     """
 
-    def __init__(self, name):
+    def __init__(self, name, location):
         """ Initialises the Market using a name and the location.
 
         Parameters
@@ -163,8 +173,7 @@ class Market():
         """
 
         self.name = name
-        # TODO: Add and initialise the location variable passed in this
-        #       constructor as a variable.
+        self.location = location
 
     def sell_salt(self, amount):
         """Method to sell salt
@@ -185,7 +194,15 @@ class Market():
         revenue = amount * config["trading"]["revenue"]["price"]
         return revenue
 
-    # TODO: Implement a function that returns the location variable.
+    def get_location(self):
+        """ Returns the location as Shapely Point.
+
+        Returns
+        -------
+        Point
+            The Shapely Point of the location.
+        """
+        return self.location
 
 
 class Stock():
@@ -221,9 +238,7 @@ class Stock():
         Returns the location of the stock as Shapely Point.
     """
 
-    # TODO: Add a location variable 
-
-    def __init__(self, gold = 0, salt = 0):
+    def __init__(self, gold, salt, location):
         """ Initialises the Stock using a default gold and salt.
 
         Parameters
@@ -239,8 +254,7 @@ class Stock():
         self.gold = gold
         self.salt = salt
         self.MAX_STOCK = config["trading"]["stock"]["max"]
-        # TODO: Add and initialise the location variable that holds the location
-        #       of the stock as Shapely coordinates.
+        self.location = location
 
     def get_salt(self):
         """Returns the amount of salt in stock in kilogram.
@@ -323,7 +337,15 @@ class Stock():
             raise Exception(f"Can not remove more gold than you currently have. You have {self.gold} gold")
         self.gold = self.gold - amount
 
-    # TODO: Implement a function that returns the location variable
+    def get_location(self):
+        """ Returns the location as Shapely Point.
+
+        Returns
+        -------
+        Point
+            The Shapely Point of the location.
+        """
+        return self.location
 
 
 class Merchant():
@@ -334,8 +356,10 @@ class Merchant():
     ----------
     name : str
         The experience of a merchant
+
     experience : int
-        The experience of a merchant, 1 to 5 stars
+        The experience of a merchant
+
     salary : float
         The salary of a merchant (% commission of a trade)
 
@@ -345,7 +369,7 @@ class Merchant():
         Returns the name of the merchant.
     """
 
-    def __init__(self, name, salary = 0.1, experience = 1):
+    def __init__(self, name, salary, experience):
         self.name = name
         self.salary = salary
         self.experience = experience
@@ -390,7 +414,7 @@ class TradeRoute(abc.ABC):
     """
 
     def __init__(self, name):
-        self.name
+        self.name = name
         self.shipping_cost = config["trading"]["costs"]["shipping_cost"]
 
     def print_name(self):
@@ -439,11 +463,17 @@ class TradeRoute(abc.ABC):
         print(f"Fire merchant {self.merchant.get_name()}")
         self.merchant = None
 
-    # TODO: Implement a function called 'get_length()' that returns the length
-    #       of the route using the LineString variable
-    #       Learning objective: Accessing geometric properties from Shapely
-    #       geometries. Additionally: Using inheritance as object-oriented
-    #       programming concept.
+    def get_length(self):
+        """Returns the length of the route. The length is calculated using the
+        shortest distance between the start and end point (linear distance).
+
+        Returns
+        -------
+        float
+            The length of the route in the unit of the CRS.
+        """
+
+        return self.route.length
 
 
 class PurchaseRoute(TradeRoute):
@@ -464,15 +494,15 @@ class PurchaseRoute(TradeRoute):
     ----------
     trade(amount)
         Buys the amount of salt from the mine and deposits it in our stock.
+    get_length()
+        Returns the length of the route
     """
 
     def __init__(self, name, mine, stock):
         super().__init__(name)
         self.mine = mine
         self.stock = stock
-        # TODO: Add the route as LineString using the mine and stock location.
-        #       Use the previously implemented get_location() method.
-        #       Learning objective: Instantiating Shapely geometries.
+        self.route = LineString([mine.get_location(), stock.get_location()])
 
     def trade(self, amount):
         """ Buys the amount of salt from the mine and deposits it in our stock.
@@ -502,20 +532,19 @@ class SellRoute(TradeRoute):
         The Market for selling the salt.
     stock : Stock
         Our Stock.
-
     Methods
     ----------
     trade(amount)
         Sells the amount of salt at the market.
+    get_length()
+        Returns the length of the route
     """
 
     def __init__(self, name, market, stock):
         super().__init__(name)
         self.market = market
         self.stock = stock
-        # TODO: Add the route as LineString using the market and stock location.
-        #       Use the previously implemented get_location() method.
-        #       Learning objective: Instantiating Shapely geometries.
+        self.route = LineString([market.get_location(), stock.get_location()])
 
     def trade(self, amount):
         """ Sells the amount of salt at the market.
@@ -530,6 +559,193 @@ class SellRoute(TradeRoute):
         self.stock.add_gold(revenue)
         self.stock.remove_salt(amount)
         print(f"Sold {amount}kg of salt for {revenue} gold.")
+
+
+class Topography():
+    """
+    Class for spatial calculations and deriving information for the mines and
+    the markets. Basic information for topography (based on a digital elevation
+    model) and weather (precipitation including snow and rain) is provided.
+
+    Attributes
+    ----------
+    dem : xarray Dataset
+        xarray raster Dataset containing altitude values in meter. To be loaded
+        from a dem raster file.
+    snow_depth : xarray Dataset
+        xarray raster Dataset containing the snow depth in cm.
+    precipitation : xarray Dataset
+        xarray raster Dataset containing the precipitation values. To be loaded
+        from a simulated raster file using a random choice from one of tree
+        files.
+    SN_COND_MSG: dict
+        Dictionary with text messages for the snow conditions.
+    PR_COND_MSG: dict
+        Dictionary with text messages for the precipitation conditions.
+
+    Methods
+    ----------
+    get_altitude(point)
+        Returns the altitude of a given location passed as a Shapely Point.
+    get_snow_depth(point)
+        Returns the altitude of a given location passed as a Shapely Point.
+    print_weather_report(point)
+        Returns the weather report of a given location passed as a Shapely
+        Point.
+    """
+
+    def __init__(self, base_dir):
+
+        self._base_data_dir = base_dir + '/'
+
+        try:
+            self.dem = (
+                rioxarray.open_rasterio(self._base_data_dir + 'salt_traders_dem.tif', lock = False)
+                .load()
+                .sel(band = 1)
+            )
+            self.snow_depth = xr.zeros_like(self.dem)
+            self._weather_update()
+        except Exception as e:
+            print(e)
+            sys.exit()
+
+        self.SN_COND_MSG = {
+            0: "We are below the snow line, precipitation is rain",
+            1: "We are above the snow line, precipitation is snow"
+        }
+
+        self.PR_COND_MSG = {
+            0: "It is dry as the overcooked steak we had for lunch. Btw, we should get a new cook",
+            1: "Expect some light precipitation. It will be likely not enough to interrupt our business",
+            2: "Precipitation will be coming",
+            3: "We expect heavy precipitation. Brace yourself",
+            4: "We have a serious problem, and this time it's not the cook"
+        }
+
+    def _weather_update(self):
+        """ Updates the weather information. This includes selecting randomly a
+            file for the precipitation, updating the snowline and the snow
+            depth.
+        """
+
+        #
+        # Reading one of three precipitation raster files. The precipitation
+        # values have been simulated.
+        #
+        try:
+            pr_file = self._base_data_dir + "precipitation_scenario_" + str(random.randint(1,3)) + ".tif"
+            self.precipitation = (
+                rioxarray.open_rasterio(pr_file, lock = False)
+                .load()
+                .sel(band = 1)
+            )
+        except Exception as e:
+            print(e)
+            sys.exit()
+
+        #
+        # Define a random snow line altitude. Above this altitude, the
+        # precipitation will be snow, below this altitude it will be rain.
+        #
+        snowline_altitude = random.randint(100, 1000)
+
+        #
+        # Set all values in the raster cell to 0 if they are below the snow line
+        # and to 1 if they are above.
+        #
+        self.snowline = xr.where(self.dem > snowline_altitude, 1, 0).astype("uint8")
+
+        #
+        # Calculating the snow depth by adding to the existing one 10% of the
+        # precipitation if the precipitation is above the snowline.
+        #
+        self.snow_depth = self.snow_depth + (self.snowline * self.precipitation / 10)
+
+        #
+        # Reclassify the precipitation values into code ranging from 0 to 4:
+        #   0 - No precipitation
+        #   1 - light precipitation
+        #   2 - medium precipitation
+        #   3 - heavy precipitation
+        #   4 - very heavy precipitation
+        #
+        self.precipitation = xrspatial.reclassify(
+            self.precipitation,
+            bins=[0, 20, 50, 75, 100],
+            new_values=[0, 1, 2, 3, 4])
+
+    def _get_value(self, dataset, point):
+        """ Returns the value of a certain location. The location needs to be
+        passed as Shapely point.
+
+        Parameters
+        ----------
+        point : Point
+            The location as Shapely point.
+
+        Returns
+        -------
+        object
+            Raster value of the point location. Type depends on the
+            raster data type (e.g. str, int, list).
+        """
+        return dataset.sel(x=point.x, y=point.y, method="nearest").values
+
+    def get_altitude(self, point):
+        """ Returns the altitude at a certain location. The location needs to
+        be passed as Shapely point.
+
+        Parameters
+        ----------
+        point : Point
+            The location as Shapely point.
+
+        Returns
+        -------
+        object
+            Raster value of the point location. Type depends on the
+            raster data type (e.g. str, int, list).
+        """
+        return self._get_value(self.dem, point)
+
+    def get_snow_depth(self, point):
+        """ Returns the snow depth at a certain location. The location needs to
+        be passed as Shapely point.
+
+        Parameters
+        ----------
+        point : Point
+            The location as Shapely point.
+
+        Returns
+        -------
+        object
+            Raster value of the point location. Type depends on the
+            raster data type (e.g. str, int, list).
+        """
+        return self._get_value(self.snow_depth, point)
+
+    def print_weather_report(self, point):
+        """ Prints the weather report of a certain location to the screen. The
+        location needs to be passed a Shapely point.
+
+        Parameters
+        ----------
+        point : Point
+            The location as Shapely point.
+        """
+        self._weather_update()
+
+        snow_condition = self._get_value(self.snowline, point)
+        rain_condition = self._get_value(self.precipitation, point)
+
+        print(
+            f"The location is on {self.get_altitude(point):.2f}m above sea level. " +
+            self.SN_COND_MSG.get(int(snow_condition)) + ". " +
+            f"There is {self.get_snow_depth(point):.2f} cm of snow. " +
+            self.PR_COND_MSG.get(int(rain_condition)) + ". "
+        )
 
 
 ###############################################################################
@@ -554,18 +770,18 @@ if __name__ == "__main__":
         route. You can hire a merchant by typing 'hire_merchant <merchant_name> <route_name>'
         and fire a merchant by typing 'fire_merchant <merchant_name>'. Add a new
         market by typing 'add_market <name> POINT(<latitude> <longitude>)', e.g.
-        'add_market Burghausen POINT(48.16925 12.83139)'.
+        'add_market Burghausen POINT(48.16925 12.83139)'. Get the weather report
+        by typing 'weather <name>' where <name> is any market or mine.
         """
         prompt = "The Salt Traders> "
 
-        # TODO: Use the latitude and longitude in the config file to define the
-        #       location of our stock using a Shapely Point. Don't forget to
-        #       pass it to the Stock's constructor!
-        #       Learning objective: Instantiating Shapely geometries.
-
+        stock_location = Point(
+            config["trading"]["stock"]["longitude"],
+            config["trading"]["stock"]["latitude"])
         my_stock = Stock(
             gold = args.gold,
-            salt = args.salt)
+            salt = args.salt,
+            location = stock_location)
         mines = {}
         markets = {}
         trade_routes = {}
@@ -575,23 +791,21 @@ if __name__ == "__main__":
             super().__init__()
             for mine in config["mines"]:
                 name = mine["name"]
-                # TODO: Use the latitude and longitude in the config file to
-                #       define the location of the mine using a Shapely Point.
-                #       Don't forget to pass it to the Mine's constructor!
-                #       Learning objective: Instantiating Shapely geometries.
-                self.mines[name] = Mine(name)
+                lat = mine["latitude"]
+                lon = mine["longitude"]
+                self.mines[name] = Mine(name, Point(lon, lat))
 
             for market in config["markets"]:
                 name = market["name"]
-                # TODO: Use the latitude and longitude in the config file to
-                #       define the location of the mine using a Shapely Point.
-                #       Don't forget to pass it to the Mine's constructor!
-                #       Learning objective: Instantiating Shapely geometries.
-                self.markets[name] = Market(name)
+                lat = market["latitude"]
+                lon = market["longitude"]
+                self.markets[name] = Market(name, Point(lon, lat))
 
             self.merchants.append(Merchant("Karl", 0.1, 1))
             self.merchants.append(Merchant("Freya", 0.2, 3))
             self.merchants.append(Merchant("Ulrich", 0.1, 2))
+
+            self.topography = Topography('../data')
 
         def do_list_stock(self, _):
             "List your stock"
@@ -638,27 +852,43 @@ if __name__ == "__main__":
                     route.fire_merchant()
                     print(f"You fired merchant {merchant_name} from route {route.get_name()}")
 
-        # TODO: Complete the function that calculates the distance between our 
-        #       stock and a destination (mine or market) defined by the user
-        #       input.
-        #       Learning objective: Calculating geometric relationships between
-        #       two Shapely geometries.
         def do_explore_route(self, line):
             "Explores a route and reports the distance and shipping costs"
             destination = line
-            distance = None
+
+            stock_location = self.my_stock.get_location()
+
+            if destination in self.mines:
+                target_location = self.mines[destination].get_location()
+            elif destination in self.markets:
+                target_location = self.markets[destination].get_location()
+            else:
+                print(f"Could not find route to destination {destination}!")
+                return
+
+            distance = stock_location.distance(target_location)
             shipping_cost = distance * config["trading"]["costs"]["shipping_cost"]
             print(f"The distance between your stock and the target {destination} is {distance}! " +
                     f"The shipping costs are {shipping_cost} gold per kg of salt.")
 
-        # TODO: Complete the function that adds a new market using a latitude
-        #       and longitude coordinate tuple as user input. Translate them
-        #       into a WKT format for input.
-        #       Learning objective: Using WKT to instantiate Shapely geometries.
         def do_add_market(self, line):
             "Adding a new market using a name and the WKT geometry"
-            name, wkt_geometry = line.split()
+            name, wkt_geometry = line.split(' ', 1)
+            self.markets[name] = Market(name, wkt.loads(wkt_geometry))
             print(f"Added market {name} at {wkt_geometry}.")
+
+        def do_weather(self, line):
+            "Prints the weather report"
+            location = line
+            if location in self.mines:
+                target_location = self.mines[location].get_location()
+                self.topography.print_weather_report(target_location)
+            elif location in self.markets:
+                target_location = self.markets[location].get_location()
+                self.topography.print_weather_report(target_location)
+            else:
+                print(f"Could not find weather for location {location}!")
+                return
 
         def do_exit(self, _):
             "Exit the game"
@@ -669,13 +899,12 @@ if __name__ == "__main__":
 
 # Options to improve on your own:
 #
-# - Use the event class you created as the assignment of lesson 4 and extend it
-#   with polygon geometries. For each event occurrence, check whether the
-#   polygon of the event intersects with the trading route.
-# - Calculate the travel time by using a reasonable distance per day ratio
-#   (consider medieval boat shipping!).
+# - The snow is accumulating, it does not melt. Update the raster calculator
+#   formula to allow melting of 10% of the snow if it is under the snow line.
+# - Use the weather data to influence the cost of the salt trade. If there is
+#   snow, the shipping cost will increase.
 
 # Next week:
 #
-# - Use geospatial raster data for additional calculations (e.g. using a digital
-#   elevation model).
+# - Coordinate transformations and handling geometries with different coordinate
+#   reference systems.

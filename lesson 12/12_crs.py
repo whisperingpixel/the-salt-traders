@@ -22,7 +22,7 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                  LESSON 8
+#                                  LESSON 12
 # Expected learning outcomes:
 #  - Handle coordinate reference systems (CRS)
 #  - Reproject data from one CRS to another
@@ -42,8 +42,6 @@ import xrspatial
 import rioxarray
 import random
 import sys
-
-# TODO: Check new imports
 from shapely.ops import transform
 from pyproj import Transformer
 
@@ -868,14 +866,12 @@ if __name__ == "__main__":
                 print(f"Could not find route to destination {destination}!")
                 return
 
-            # TODO: Transform the stock and target locations to a equal area
-            #       coordinate reference system (CRS), e.g. 3035 and perform the
-            #       distance calculation in the new CRS.
-            #       Learning objective: Handling CRS and perform coordinate
-            #       transformations.
             transformer = Transformer.from_crs("EPSG:4326", "EPSG:3035", always_xy=True)
 
-            distance = stock_location.distance(target_location)
+            stock_location_reprojected = transform(transformer.transform, stock_location)
+            target_location_reprojected = transform(transformer.transform, target_location)
+
+            distance = stock_location_reprojected.distance(target_location_reprojected)
 
             shipping_cost = distance * config["trading"]["costs"]["shipping_cost"]
             print(f"The distance between your stock and the target {destination} is {distance} m! " +

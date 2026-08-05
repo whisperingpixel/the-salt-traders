@@ -22,7 +22,7 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                  LESSON 4
+#                                  LESSON 8
 # Expected learning outcomes:
 #  - Creating and instantiating classes
 #  - Using class methods

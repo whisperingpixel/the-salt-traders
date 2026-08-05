@@ -22,47 +22,46 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                  LESSON 3
+#                                  LESSON 6
 # Expected learning outcomes:
-#  - Passing arguments to the program
-#  - Command-line interfaces
+#  - File handling
+#  - YAML
+#  - Handling errors and exceptions
+#  - Documentation
 #
 # Author: Martin Sudmanns (martin.sudmanns@plus.ac.at)
 # Date: 22.04.2026
 #
 ################################################################################
 
+import random
 import sys
-import yaml
-import cmd
-import argparse
+import yaml # Install this lib using pyyaml, e.g. python3 -m pip install pyyaml
 
-################################################################################
+###############################################################################
 #
 # Variables and constants
 #
-################################################################################
-
-#
-# Command-line input
-#
-parser = argparse.ArgumentParser()
-parser.add_argument('--config', type=str, default='config.yml')
-parser.add_argument('--gold', type=float, default=1500)
-parser.add_argument('--salt', type=float, default=0)
-args = parser.parse_args()
+###############################################################################
 
 #
 # Initial state of the stock
 #
-gold = args.gold
-salt = args.salt
+stock = {
+    "gold": 1_500.0,
+    "salt": 0
+}
+
+#
+# Simulation parameters
+#
+MAX_ITER = 100
 
 #
 # Configuration
 #
 try:
-    with open(args.config, 'r') as f:
+    with open('config.yml', 'r') as f:
         config = yaml.safe_load(f)
 except FileNotFoundError:
     print("File doesn't exist")
@@ -71,11 +70,11 @@ except PermissionError:
 except OSError as e:
     print(f"OS error: {e}")
 
-################################################################################
+###############################################################################
 #
 # Function definitions
 #
-################################################################################
+###############################################################################
 
 def buy_salt(amount, mine):
     """Function to buy salt
@@ -84,18 +83,18 @@ def buy_salt(amount, mine):
 
     Parameters
     ----------
-    amount : float
+    amount : int
         The amount of salt that should be bought.
     mine : str
         The name of the mine.
     """
 
-    if (salt + amount) > config["trading"]["stock"]["max"]:
+    if (stock.salt + amount) > config["trading"]["stock"]["max"]:
         raise Exception("Can not buy salt, not enough room in the stock")
 
     cost_per_kg = config["trading"]["costs"]["buy_cost"] + config["trading"]["costs"]["shipping_cost"]
     total_cost = cost_per_kg * amount
-    if total_cost > gold:
+    if total_cost > stock.gold:
         raise Exception("Can not afford salt, not enough gold")
 
     print(f"Bought {amount}kg from {mine} for {total_cost}g")
@@ -109,13 +108,13 @@ def sell_salt(amount, market):
 
     Parameters
     ----------
-    amount : float
+    amount : int
         The amount of salt that should be sold.
     market : str
         The name of the market of a city.
     """
 
-    if(amount > salt):
+    if(amount > stock.salt):
         raise Exception(f"You can not sell more than you have!")
 
     revenue = (config["trading"]["revenue"]["price"] - config["trading"]["costs"]["shipping_cost"]) * amount
@@ -130,88 +129,72 @@ def is_bankrupt(gold):
 
     Parameters
     ----------
-    gold : float
+    gold : int
         The amount of gold in your stock.
     """
 
-    return gold <= 0.0
+    return gold <= 0
 
-################################################################################
+###############################################################################
 #
 # Start of the program.
 # This is the heart of the mechanism.
 #
-################################################################################
+###############################################################################
 
 if __name__ == "__main__":
+    #
+    # Running the game
+    #
+    iteration = 0
 
-    class TheSaltTraders(cmd.Cmd):
-        intro = """
-        Welcome to the world of salt, merchant!
+    while iteration < MAX_ITER:
 
-        You can see your stock by typing 'list_stock'. Type 'purchase <amount> <mine>'
-        to purchase salt from a mine. For example: 'purchase 100 Dürrnberg' to
-        purchase 100kg from the Dürrnberg mine. Type 'sell <amount> <market>'
-        to sell salt to a market. For example: 'sell 100 Passau' to sell 100kg
-        of salt to Passau.
-        """
-        prompt = "The Salt Traders> "
+        print(f"Next iteration: {iteration}/{MAX_ITER}")
+        print(f"You have {stock.salt}kg of salt and {stock.gold} gold")
 
-        def do_list_stock(self, _):
-            """ List your stock """
-            print(f"You have {salt}kg of salt and {gold} gold")
-
-        def do_purchase(self, line):
-            """Purchase salt from a mine"""
-            amount, mine = line.split()
-            amount = int(amount)
-
-            global salt
-            global gold
-
+        for mine in config["mines"]:
             try:
-                cost = buy_salt(amount, mine)
-                salt = salt + amount
-                gold = gold - cost
+                salt_to_purcase = random.randint(50,150)
+                cost = buy_salt(salt_to_purcase, mine)
+                stock.salt = stock.salt + salt_to_purcase
+                stock.gold = stock.gold - cost
             except Exception as e:
                 print(e)
 
-            if is_bankrupt(gold):
-                print("You are bankrupt")
-                sys.exit()
-
-        def do_sell(self, line):
-            """Sell salt to a market in a city"""
-
-            amount, market = line.split()
-            amount = int(amount)
-
-            global salt
-            global gold
-
+        for market in config["markets"]:
             try:
-                revenue = sell_salt(amount, market)
-                gold = gold + revenue
-                salt = salt - amount
+                salt_to_sell = random.randint(30, 70)
+                revenue = sell_salt(salt_to_sell, market)
+                stock.gold = stock.gold + revenue
+                stock.salt = stock.salt - salt_to_sell
             except Exception as e:
                 print(e)
 
-        def do_exit(self, _):
-            "Exit the game"
-            return True
+        if is_bankrupt(stock.gold):
+            print("You are bankrupt")
+            sys.exit()
+
+        iteration = iteration + 1
+        input()
 
 
-    TheSaltTraders().cmdloop()
-
-
-# Options to improve on your own:
+# Assignment for next week:
 #
-# - Add a function that lists available markets and mines.
-# - Add checks that only existing mines and markets can be used.
-# - If you have programmed random events and the bank from the previous
-#   exercise, add the command-line interfaces to it.
+# - Add random events in an iteration, which could be an attack of outlaws that
+#   steal the shipment or a broken boat, which means that the salt gets lost.
+
+# Options to improve on your own (no assignment):
+#
+# - Add a random disaster (e.g. flooding, mine or bridge accident) that prevents
+#   salt from being purchased or sold. This event can happen at a random chance
+#   during an event. Money might be necessary to fix it.
+# - Add a bank that can give a credit to buy salt or recover from the disaster,
+#   but the money needs to be paid back.
+# - Add randomly an option for war outbreak that increases the shipping cost
+#   until the war is over. Peace may be also randomly, but only if there is
+#   a war.
 
 # Next week:
 #
-# - Using an object-oriented programming style to extend the program more
-#   easily.
+# - Create an interactive program with a command-line interface!

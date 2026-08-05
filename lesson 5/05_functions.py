@@ -22,7 +22,7 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                  LESSON 1
+#                                  LESSON 5
 # Expected learning outcomes:
 #  - Creating and using functions in Python.
 #
@@ -41,7 +41,7 @@ import sys
 ###############################################################################
 
 #
-# Cities and mines
+# Markets and mines
 #
 MINES = ["Dürrnberg", "Berchtesgaden"]
 MARKETS = ["Salzburg", "Laufen", "Passau"]
@@ -57,8 +57,10 @@ MAX_STOCK = 100_000    # kg
 #
 # Initial state of the stock
 #
-gold = 1500.0
-salt = 0
+stock = {
+    "gold": 1_500.0,
+    "salt": 0
+}
 
 #
 # Simulation / game parameters
@@ -73,13 +75,13 @@ MAX_ITER = 100
 
 def buy_salt(amount, mine):
 
-    if (salt + amount) > MAX_STOCK:
+    if (stock.salt + amount) > MAX_STOCK:
         print("Can not buy salt, not enough room in the stock")
         return
 
     cost_per_kg = BUY_COST + SHIPPING_COST
     total_cost = cost_per_kg * amount
-    if total_cost > gold:
+    if total_cost > stock.gold:
         print("Can not afford salt, not enough gold")
         return
 
@@ -89,7 +91,7 @@ def buy_salt(amount, mine):
 
 def sell_salt(amount, market):
 
-    if(amount > salt):
+    if(amount > stock.salt):
         print(f"You can not sell more than you have!")
         return
 
@@ -117,21 +119,21 @@ if __name__ == "__main__":
     while iteration < MAX_ITER:
 
         print(f"Next iteration: {iteration}/{MAX_ITER}")
-        print(f"You have {salt}kg of salt and {gold} gold")
+        print(f"You have {stock.salt}kg of salt and {stock.gold} gold")
 
         for mine in MINES:
             salt_to_purcase = random.randint(50,150)
             cost = buy_salt(salt_to_purcase, mine)
-            salt = salt + salt_to_purcase
-            gold = gold - cost
+            stock.salt = stock.salt + salt_to_purcase
+            stock.gold = stock.gold - cost
 
         for market in MARKETS:
             salt_to_sell = random.randint(30, 70)
             revenue = sell_salt(salt_to_sell, market)
-            gold = gold + revenue
-            salt = salt - salt_to_sell
+            stock.gold = stock.gold + revenue
+            stock.salt = stock.salt - salt_to_sell
 
-        if is_bankrupt(gold):
+        if is_bankrupt(stock.gold):
             print("You are bankrupt")
             sys.exit()
 
@@ -140,10 +142,10 @@ if __name__ == "__main__":
 
 # Options to improve on your own:
 #
-# - add more cities
+# - add more markets
 # - add capacities for mines
-# - add market saturation for cities
-# - add different shipping costs for mines and cities (we will do that later based
+# - add market saturation
+# - add different shipping costs for mines and markets (we will do that later based
 #   on their location!)
 # - adjust purchasing and selling based on the limits we have
 

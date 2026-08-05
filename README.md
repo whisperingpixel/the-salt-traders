@@ -29,15 +29,19 @@ At the bottom of each file are either optional improvements or assignments. The 
 
 Part / Lesson | Expected learning outcomes
 ---------|-------------------
- 1 | Creating and using functions in Python.
- 2 | File handling, YAML configuration files, handling errors and exceptions, documentation
- 3 | Passing arguments to the program, command-line interfaces
- 4 | Creating and instantiating classes, using class methods
- 5 | Class inheritance, composition
- 6 | Geospatial vector data
- 7 | Geospatial raster data
- 8 | Coordinate systems and coordinate transformation
- 9 | Finalisation and playing the game
+ 1 | Variables, primitive data types, and expressions
+ 2 | Lists, dictionaries, and advanced data types
+ 3 | Conditions and loops
+ 4 | Git and code management
+ 5 | Creating and using functions in Python
+ 6 | File handling, YAML configuration files, handling errors and exceptions, documentation
+ 7 | Passing arguments to the program, command-line interfaces
+ 8 | Creating and instantiating classes, using class methods
+ 9 | Class inheritance, composition
+ 10 | Geospatial vector data
+ 11 | Geospatial raster data
+ 12 | Coordinate systems and coordinate transformation
+ 13 | Finalisation and playing the game
 
 ## Trade-offs and special cases
 

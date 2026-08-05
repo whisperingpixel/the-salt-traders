@@ -22,7 +22,7 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                  LESSON 3
+#                                  LESSON 7
 # Expected learning outcomes:
 #  - Passing arguments to the program
 #  - Command-line interfaces
@@ -34,8 +34,6 @@
 
 import sys
 import yaml
-
-# TODO: Check new imports
 import cmd
 import argparse
 
@@ -46,26 +44,25 @@ import argparse
 ################################################################################
 
 #
+# Command-line input
+#
+parser = argparse.ArgumentParser()
+parser.add_argument('--config', type=str, default='config.yml')
+parser.add_argument('--gold', type=float, default=1500)
+parser.add_argument('--salt', type=float, default=0)
+args = parser.parse_args()
+
+#
 # Initial state of the stock
 #
-
-# TODO: Replace the hard-coded inital parameters with a command-line input
-#       Learning objectives: Learn how to create a program that takes arguments
-#       to alter the behaviour (command-line arguments).
-
-gold = 1500.0
-salt = 0
+gold = args.gold
+salt = args.salt
 
 #
 # Configuration
 #
-
-# TODO: Replace the hard-coded 'config.yml' file with a command-line input
-#       Learning objectives: Learn how to create a program that takes arguments
-#       to alter the behaviour (command-line arguments).
-
 try:
-    with open('config.yml', 'r') as f:
+    with open(args.config, 'r') as f:
         config = yaml.safe_load(f)
 except FileNotFoundError:
     print("File doesn't exist")
@@ -87,7 +84,7 @@ def buy_salt(amount, mine):
 
     Parameters
     ----------
-    amount : int
+    amount : float
         The amount of salt that should be bought.
     mine : str
         The name of the mine.
@@ -112,7 +109,7 @@ def sell_salt(amount, market):
 
     Parameters
     ----------
-    amount : int
+    amount : float
         The amount of salt that should be sold.
     market : str
         The name of the market of a city.
@@ -133,11 +130,11 @@ def is_bankrupt(gold):
 
     Parameters
     ----------
-    gold : int
+    gold : float
         The amount of gold in your stock.
     """
 
-    return gold <= 0
+    return gold <= 0.0
 
 ################################################################################
 #
@@ -148,11 +145,63 @@ def is_bankrupt(gold):
 
 if __name__ == "__main__":
 
-    # TODO: Implement a command-line-based interactive programm.
-    # NOTE: Remove the 'pass' keyword!
-    #       Learning objective: Create an interactive program in which the user
-    #       can alter the execution.
-    pass
+    class TheSaltTraders(cmd.Cmd):
+        intro = """
+        Welcome to the world of salt, merchant!
+
+        You can see your stock by typing 'list_stock'. Type 'purchase <amount> <mine>'
+        to purchase salt from a mine. For example: 'purchase 100 Dürrnberg' to
+        purchase 100kg from the Dürrnberg mine. Type 'sell <amount> <market>'
+        to sell salt to a market. For example: 'sell 100 Passau' to sell 100kg
+        of salt to Passau.
+        """
+        prompt = "The Salt Traders> "
+
+        def do_list_stock(self, _):
+            """ List your stock """
+            print(f"You have {salt}kg of salt and {gold} gold")
+
+        def do_purchase(self, line):
+            """Purchase salt from a mine"""
+            amount, mine = line.split()
+            amount = int(amount)
+
+            global salt
+            global gold
+
+            try:
+                cost = buy_salt(amount, mine)
+                salt = salt + amount
+                gold = gold - cost
+            except Exception as e:
+                print(e)
+
+            if is_bankrupt(gold):
+                print("You are bankrupt")
+                sys.exit()
+
+        def do_sell(self, line):
+            """Sell salt to a market in a city"""
+
+            amount, market = line.split()
+            amount = int(amount)
+
+            global salt
+            global gold
+
+            try:
+                revenue = sell_salt(amount, market)
+                gold = gold + revenue
+                salt = salt - amount
+            except Exception as e:
+                print(e)
+
+        def do_exit(self, _):
+            "Exit the game"
+            return True
+
+
+    TheSaltTraders().cmdloop()
 
 
 # Options to improve on your own:

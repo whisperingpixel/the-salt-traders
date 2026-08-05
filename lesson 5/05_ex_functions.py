@@ -22,7 +22,7 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                  LESSON 1
+#                                  LESSON 5
 # Expected learning outcomes:
 #  - Creating and using functions in Python.
 #
@@ -42,7 +42,7 @@ import sys
 ###############################################################################
 
 #
-# Cities and mines
+# Markets and mines
 #
 MINES = ["Dürrnberg", "Berchtesgaden"]
 MARKETS = ["Salzburg", "Laufen", "Passau"]
@@ -58,8 +58,10 @@ MAX_STOCK = 100_000    # kg
 #
 # Initial state of the stock
 #
-gold = 1500.0
-salt = 0
+stock = {
+    "gold": 1_500.0,
+    "salt": 0
+}
 
 #
 # Simulation / game parameters
@@ -94,7 +96,7 @@ if __name__ == "__main__":
     while iteration < MAX_ITER:
 
         print(f"Next iteration: {iteration}/{MAX_ITER}")
-        print(f"You have {salt}kg of salt and {gold} gold")
+        print(f"You have {stock.salt}kg of salt and {stock.gold} gold")
 
         for mine in MINES:
             pass
@@ -113,10 +115,10 @@ if __name__ == "__main__":
 
 # Options to improve on your own:
 #
-# - add more cities
+# - add more markets
 # - add capacities for mines
-# - add market saturation for cities
-# - add different shipping costs for mines and cities (we will do that later based
+# - add market saturation
+# - add different shipping costs for mines and markets (we will do that later based
 #   on their location!)
 # - adjust purchasing and selling based on the limits we have
 

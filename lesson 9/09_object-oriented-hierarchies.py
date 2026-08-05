@@ -22,7 +22,7 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                  LESSON 5
+#                                  LESSON 9
 # Expected learning outcomes:
 #  - Creating hierachies of classes
 #  - Using class composition

@@ -22,7 +22,7 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                  LESSON 2
+#                                  LESSON 6
 # Expected learning outcomes:
 #  - File handling
 #  - YAML
@@ -49,8 +49,10 @@ import yaml # Install this lib using pyyaml, e.g. python3 -m pip install pyyaml
 #
 # Initial state of the stock
 #
-gold = 1500.0
-salt = 0
+stock = {
+    "gold": 1_500.0,
+    "salt": 0
+}
 
 #
 # Simulation parameters
@@ -75,7 +77,7 @@ def buy_salt(amount, mine):
     # TODO: Add a proper function documentation.
     #       Learning objective: Learn how to properly document a function and
     #       use the documentation in an IDE
-    if (salt + amount) > config["trading"]["stock"]["max"]:
+    if (stock.salt + amount) > config["trading"]["stock"]["max"]:
         # TODO: Replace the 'print' statement with an exception.
         #       Learning objective: Learn how to use exceptions for error
         #       handling.
@@ -84,7 +86,7 @@ def buy_salt(amount, mine):
 
     cost_per_kg = config["trading"]["costs"]["buy_cost"] + config["trading"]["costs"]["shipping_cost"]
     total_cost = cost_per_kg * amount
-    if total_cost > gold:
+    if total_cost > stock.gold:
         # TODO: Replace the 'print' statement with an exception.
         #       Learning objective: Learn how to use exceptions for error
         #       handling.
@@ -100,7 +102,7 @@ def sell_salt(amount, market):
     #       Learning objective: Learn how to properly document a function and
     #       use the documentation in an IDE
 
-    if(amount > salt):
+    if(amount > stock.salt):
         # TODO: Replace the 'print' statement with an exception.
         #       Learning objective: Learn how to use exceptions for error
         #       handling.
@@ -134,7 +136,7 @@ if __name__ == "__main__":
     while iteration < MAX_ITER:
 
         print(f"Next iteration: {iteration}/{MAX_ITER}")
-        print(f"You have {salt}kg of salt and {gold} gold")
+        print(f"You have {stock.salt}kg of salt and {stock.gold} gold")
 
         for mine in config["mines"]:
             # TODO: Catch the exception
@@ -142,8 +144,8 @@ if __name__ == "__main__":
             #       handling.
             salt_to_purcase = random.randint(50,150)
             cost = buy_salt(salt_to_purcase, mine)
-            salt = salt + salt_to_purcase
-            gold = gold - cost
+            stock.salt = stock.salt + salt_to_purcase
+            stock.gold = stock.gold - cost
 
 
         for market in config["markets"]:
@@ -152,10 +154,10 @@ if __name__ == "__main__":
             #       handling.
             salt_to_sell = random.randint(30, 70)
             revenue = sell_salt(salt_to_sell, market)
-            gold = gold + revenue
-            salt = salt - salt_to_sell
+            stock.gold = stock.gold + revenue
+            stock.salt = stock.salt - salt_to_sell
 
-        if is_bankrupt(gold):
+        if is_bankrupt(stock.gold):
             print("You are bankrupt")
             sys.exit()
 

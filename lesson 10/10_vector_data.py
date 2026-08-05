@@ -22,15 +22,15 @@
 #       more complex in the next parts but will remain simplified for teaching
 #       purposes.
 #
-#                                  LESSON 7
+#                                  LESSON 10
 # Expected learning outcomes:
-#  - Read geospatial raster files into in-memory xarray data structures
-#  - Extract values of raster at a geospatial location
-#  - Reclassify raster values
-#  - Perform mathematical operations (raster calculator)
+#  - Instantiate Shapely geometries (Point, Linestring)
+#  - Use Well-Known Text (WKT) to instantiate Shapely geometries
+#  - Calculate geometric properties of Shapely geometries
+#  - Calculate geometric relationships between Shapely geometries
 #
 # Author: Martin Sudmanns (martin.sudmanns@plus.ac.at)
-# Date: 19.05.2026
+# Date: 06.05.2026
 #
 ################################################################################
 
@@ -39,13 +39,6 @@ import cmd
 import argparse
 import abc
 from shapely import Point, LineString, distance, wkt
-import random
-import sys
-
-# TODO: Check new imports
-import xarray as xr
-import xrspatial
-import rioxarray
 
 ###############################################################################
 #
@@ -382,7 +375,8 @@ class Merchant():
         Returns
         -------
         str
-            The name of the merchant."""
+            The name of the merchant.
+        """
         return self.name
 
 
@@ -415,7 +409,8 @@ class TradeRoute(abc.ABC):
         Returns the length of the route
     """
 
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.shipping_cost = config["trading"]["costs"]["shipping_cost"]
 
     def print_name(self):
@@ -428,7 +423,8 @@ class TradeRoute(abc.ABC):
         Returns
         -------
         str
-            The name of the route."""
+            The name of the route.
+        """
         return self.name
 
     def get_merchant_name(self):
@@ -495,13 +491,10 @@ class PurchaseRoute(TradeRoute):
     ----------
     trade(amount)
         Buys the amount of salt from the mine and deposits it in our stock.
-    get_length()
-        Returns the length of the route
     """
 
     def __init__(self, name, mine, stock):
-        super().__init__()
-        self.name = name
+        super().__init__(name)
         self.mine = mine
         self.stock = stock
         self.route = LineString([mine.get_location(), stock.get_location()])
@@ -534,17 +527,15 @@ class SellRoute(TradeRoute):
         The Market for selling the salt.
     stock : Stock
         Our Stock.
+
     Methods
     ----------
     trade(amount)
         Sells the amount of salt at the market.
-    get_length()
-        Returns the length of the route
     """
 
     def __init__(self, name, market, stock):
-        super().__init__()
-        self.name = name
+        super().__init__(name)
         self.market = market
         self.stock = stock
         self.route = LineString([market.get_location(), stock.get_location()])
@@ -562,212 +553,6 @@ class SellRoute(TradeRoute):
         self.stock.add_gold(revenue)
         self.stock.remove_salt(amount)
         print(f"Sold {amount}kg of salt for {revenue} gold.")
-
-
-class Topography():
-    """
-    Class for spatial calculations and deriving information for the mines and
-    the markets. Basic information for topography (based on a digital elevation
-    model) and weather (precipitation including snow and rain) is provided.
-
-    Attributes
-    ----------
-    dem : xarray Dataset
-        xarray raster Dataset containing altitude values in meter. To be loaded
-        from a dem raster file.
-    snow_depth : xarray Dataset
-        xarray raster Dataset containing the snow depth in cm.
-    precipitation : xarray Dataset
-        xarray raster Dataset containing the precipitation values. To be loaded
-        from a simulated raster file using a random choice from one of tree
-        files.
-    SN_COND_MSG: dict
-        Dictionary with text messages for the snow conditions.
-    PR_COND_MSG: dict
-        Dictionary with text messages for the precipitation conditions.
-
-    Methods
-    ----------
-    get_altitude(point)
-        Returns the altitude of a given location passed as a Shapely Point.
-    get_snow_depth(point)
-        Returns the altitude of a given location passed as a Shapely Point.
-    print_weather_report(point)
-        Returns the weather report of a given location passed as a Shapely
-        Point.
-    """
-
-    def __init__(self, base_dir):
-
-        self._base_data_dir = base_dir + '/'
-
-        try:
-
-            # TODO: Load the digital elevation model (DEM) using the rioxarray
-            #       module. Use band 1 (the only one) to create an xarray
-            #       dataset.
-            #       Learning objective: Learn how to read a raster file in
-            #       memory.
-
-            # TODO: Instantiate an empty array of the same shape as the DEM
-            #       using xarray.
-            #       Learning objective: Use the xarray API.
-
-            self._weather_update()
-        except Exception as e:
-            print(e)
-            sys.exit()
-
-        self.SN_COND_MSG = {
-            0: "We are below the snow line, precipitation is rain",
-            1: "We are above the snow line, precipitation is snow"
-        }
-
-        self.PR_COND_MSG = {
-            0: "It is dry as the overcooked steak we had for lunch. Btw, we should get a new cook",
-            1: "Expect some light precipitation. It will be likely not enough to interrupt our business",
-            2: "Precipitation will be coming",
-            3: "We expect heavy precipitation. Brace yourself",
-            4: "We have a serious problem, and this time it's not the cook"
-        }
-
-    def _weather_update(self):
-        """ Updates the weather information. This includes selecting randomly a
-            file for the precipitation, updating the snowline and the snow
-            depth.
-        """
-
-        #
-        # Reading one of three precipitation raster files. The precipitation
-        # values have been simulated.
-        #
-        try:
-            pr_file = self._base_data_dir + "precipitation_scenario_" + str(random.randint(1,3)) + ".tif"
-
-            # TODO: Load the selected precipitation scenario using the rioxarray
-            #       module. Use band 1 (the only one) to create an xarray
-            #       dataset.
-            #       Learning objective: Learn how to read a raster file in
-            #       memory.
-        except Exception as e:
-            print(e)
-            sys.exit()
-
-        #
-        # Define a random snow line altitude. Above this altitude, the
-        # precipitation will be snow, below this altitude it will be rain.
-        #
-        snowline_altitude = random.randint(100, 1000)
-
-        #
-        # Set all values in the raster cell to 0 if they are below the snow line
-        # and to 1 if they are above.
-        #
-
-        # TODO: Create a new array with the snowline by selecting all values of
-        #       the DEM higher than the snowline_altitude value.
-        #       Learning objective: Filter pixel values of a raster using the
-        #       xarray API.
-
-        #
-        # Calculating the snow depth by adding to the existing one 10% of the
-        # precipitation if the precipitation is above the snowline.
-        #
-
-        # TODO: Update the snow_depth array by pixel-wise addition of the snow
-        #       amount to the existing values. Assume 10% of the precipitation
-        #       value will be the snow in mm.
-        #       Learning objective: Calculating with arrays using xarray.
-
-        #
-        # Reclassify the precipitation values into code ranging from 0 to 4:
-        #   0 - No precipitation
-        #   1 - light precipitation
-        #   2 - medium precipitation
-        #   3 - heavy precipitation
-        #   4 - very heavy precipitation
-        #
-
-        # TODO: Reclassify the precipitation values using the xrspatial package.
-        #       Use the code from the comment above-
-        #       Learning objective: Reclassifying and coding raster cells based
-        #       on their value.
-
-    def _get_value(self, dataset, point):
-        """ Returns the value of a certain location. The location needs to be
-        passed as Shapely point.
-
-        Parameters
-        ----------
-        point : Point
-            The location as Shapely point.
-
-        Returns
-        -------
-        object
-            Raster value of the point location. Type depends on the
-            raster data type (e.g. str, int, list).
-        """
-
-        # TODO: Extract the raster value at the custom point. Use the "nearest"
-        #       method.
-        #       Learning objective: Using the xarray API to select a raster
-        #       value at a certain point.
-
-    def get_altitude(self, point):
-        """ Returns the altitude at a certain location. The location needs to
-        be passed as Shapely point.
-
-        Parameters
-        ----------
-        point : Point
-            The location as Shapely point.
-
-        Returns
-        -------
-        object
-            Raster value of the point location. Type depends on the
-            raster data type (e.g. str, int, list).
-        """
-        return self._get_value(self.dem, point)
-
-    def get_snow_depth(self, point):
-        """ Returns the snow depth at a certain location. The location needs to
-        be passed as Shapely point.
-
-        Parameters
-        ----------
-        point : Point
-            The location as Shapely point.
-
-        Returns
-        -------
-        object
-            Raster value of the point location. Type depends on the
-            raster data type (e.g. str, int, list).
-        """
-        return self._get_value(self.snow_depth, point)
-
-    def print_weather_report(self, point):
-        """ Prints the weather report of a certain location to the screen. The
-        location needs to be passed a Shapely point.
-
-        Parameters
-        ----------
-        point : Point
-            The location as Shapely point.
-        """
-        self._weather_update()
-
-        snow_condition = self._get_value(self.snowline, point)
-        rain_condition = self._get_value(self.precipitation, point)
-
-        print(
-            f"The location is on {self.get_altitude(point):.2f}m above sea level. " +
-            self.SN_COND_MSG.get(int(snow_condition)) + ". " +
-            f"There is {self.get_snow_depth(point):.2f} cm of snow. " +
-            self.PR_COND_MSG.get(int(rain_condition)) + ". "
-        )
 
 
 ###############################################################################
@@ -792,8 +577,7 @@ if __name__ == "__main__":
         route. You can hire a merchant by typing 'hire_merchant <merchant_name> <route_name>'
         and fire a merchant by typing 'fire_merchant <merchant_name>'. Add a new
         market by typing 'add_market <name> POINT(<latitude> <longitude>)', e.g.
-        'add_market Burghausen POINT(48.16925 12.83139)'. Get the weather report
-        by typing 'weather <name>' where <name> is any market or mine.
+        'add_market Burghausen POINT(48.16925 12.83139)'.
         """
         prompt = "The Salt Traders> "
 
@@ -826,8 +610,6 @@ if __name__ == "__main__":
             self.merchants.append(Merchant("Karl", 0.1, 1))
             self.merchants.append(Merchant("Freya", 0.2, 3))
             self.merchants.append(Merchant("Ulrich", 0.1, 2))
-
-            self.dem = Topography('../data')
 
         def do_list_stock(self, _):
             "List your stock"
@@ -899,19 +681,6 @@ if __name__ == "__main__":
             self.markets[name] = Market(name, wkt.loads(wkt_geometry))
             print(f"Added market {name} at {wkt_geometry}.")
 
-        def do_weather(self, line):
-            "Prints the weather report"
-            location = line
-            if location in self.mines:
-                target_location = self.mines[location].get_location()
-                self.dem.print_weather_report(target_location)
-            elif location in self.markets:
-                target_location = self.markets[location].get_location()
-                self.dem.print_weather_report(target_location)
-            else:
-                print(f"Could not find weather for location {location}!")
-                return
-
         def do_exit(self, _):
             "Exit the game"
             return True
@@ -921,12 +690,13 @@ if __name__ == "__main__":
 
 # Options to improve on your own:
 #
-# - The snow is accumulating, it does not melt. Update the raster calculator
-#   formula to allow melting of 10% of the snow if it is under the snow line.
-# - Use the weather data to influence the cost of the salt trade. If there is
-#   snow, the shipping cost will increase.
+# - Use the event class you created as the assignment of lesson 4 and extend it
+#   with polygon geometries. For each event occurrence, check whether the
+#   polygon of the event intersects with the trading route.
+# - Calculate the travel time by using a reasonable distance per day ratio
+#   (consider medieval boat shipping!).
 
 # Next week:
 #
-# - Coordinate transformations and handling geometries with different coordinate
-#   reference systems.
+# - Use geospatial raster data for additional calculations (e.g. using a digital
+#   elevation model).
