@@ -5,7 +5,7 @@
 ################################################################################
 #
 # This program is part of the exercise "Basics of Software Development Practice"
-# at the Department of Geoinformatics (University of Salzburg) in Summer 2026.
+# at the Department of Geoinformatics (University of Salzburg).
 # It consists of several parts that build upon each other.
 #
 # Background: The medieval salt trade was the foundation of Salzburg's wealth
