@@ -14,12 +14,7 @@ Note: The salt trade represented here is largely simplified. The complexity incr
 
 ## Prerequisites
 
-These lessons expect a basic knowledge of a programming / scripting language. In the class "Practice Software Development" this has been covered in the first sessions. The expectations are:
-
-- Declaring / initialising variables
-- Data types
-- Lists / dictionaries
-- For and while loops
+The lessons start from scratch, i.e, no programming knowledge is required. However, a general understanding of how a computer works is necessary. A technical prerequisiste is that a Python interpreter and a programming environment is installed.
 
 ## Lessons
 
