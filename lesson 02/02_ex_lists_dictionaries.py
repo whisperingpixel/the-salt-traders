@@ -80,7 +80,7 @@ MAX_STOCK = 100_000    # kg
 #
 
 # TODO: Access the first element of the mines list to get the name of the mine
-#       Learning objective: Accessing values in dictionaries.
+#       Learning objective: Accessing values in lists.
 mine = ...
 
 salt_to_purchase = random.randint(10,100)
