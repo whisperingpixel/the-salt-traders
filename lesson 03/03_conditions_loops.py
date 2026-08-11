@@ -123,7 +123,14 @@ while iteration < MAX_ITER:
 
     iteration += 1
 
-# Options to improve on your own:
+# Assignment for next week:
+#
+# - Create a random event within the while loop. This event may interrupt the buying
+#   or selling of salt. Examples are attack of outlaws, a broken ship etc. Use
+#   an if-statement to check whether there is an outbreak or not and then update
+#   (or prevent an update of) the stock accordingly.
+
+# Options to improve on your own (no assignment):
 #
 # - Instead of purchasing all salt first and then selling to all market, extend
 #   the script to purchase from a mine, then sell it to a random market. If the

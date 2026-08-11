@@ -669,7 +669,7 @@ if __name__ == "__main__":
 
 # Options to improve on your own:
 #
-# - Use the event class you created as the assignment of lesson 4 and extend it
+# - Use the event class you created as the assignment of lesson 8 and extend it
 #   with polygon geometries. For each event occurrence, check whether the
 #   polygon of the event intersects with the trading route.
 # - Calculate the travel time by using a reasonable distance per day ratio

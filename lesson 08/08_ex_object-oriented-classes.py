@@ -158,12 +158,12 @@ if __name__ == "__main__":
 
 # Assignment for next week:
 #
-# - Add a class for events (as in the assignment in lesson 2) that can block
+# - Add a class for events (as in the assignment in lesson 6) that can block
 #   buying or selling salt. Instantiate the classes with probabilities for an
-#   outbreak. Add a method that checks whether or not an outbreak happened when 
+#   outbreak. Add a method that checks whether or not an outbreak happened when
 #   a do_sell or do_purchase command is executed.
 
-# Options to improve on your own:
+# Options to improve on your own (no assignment):
 # - Add more markets.
 # - Add a class bank that can give a credit to buy salt,
 #   but the money needs to be paid back.
