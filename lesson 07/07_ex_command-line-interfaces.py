@@ -96,7 +96,7 @@ def buy_salt(amount, mine):
     if (salt + amount) > config["trading"]["stock"]["max"]:
         raise Exception("Can not buy salt, not enough room in the stock")
 
-    cost_per_kg = config["trading"]["costs"]["buy_cost"] + config["trading"]["costs"]["shipping_cost"]
+    cost_per_kg = config["trading"]["costs"]["buying_cost"] + config["trading"]["costs"]["shipping_cost"]
     total_cost = cost_per_kg * amount
     if total_cost > gold:
         raise Exception("Can not afford salt, not enough gold")

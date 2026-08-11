@@ -128,7 +128,7 @@ class Mine():
             The cost of the salt that was purchased.
         """
 
-        cost = amount * config["trading"]["costs"]["buy_cost"]
+        cost = amount * config["trading"]["costs"]["buying_cost"]
         return cost
 
     def get_location(self):

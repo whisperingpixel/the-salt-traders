@@ -50,9 +50,9 @@ MARKETS = ["Salzburg", "Laufen", "Passau"]
 #
 # Trading
 #
-BUY_COST = 5.0      # gold per kg
+BUYING_COST = 5.0      # gold per kg
 SHIPPING_COST = 1.5     # gold per kg
-SELL_PRICE = 10.0   # gold per kg
+SELLING_PRICE = 10.0   # gold per kg
 MAX_STOCK = 100_000    # kg
 
 #

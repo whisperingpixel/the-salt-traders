@@ -50,9 +50,9 @@ salt = 0
 #
 # Trading
 #
-BUY_COST = 5.0      # gold per kg
+BUYING_COST = 5.0      # gold per kg
 SHIPPING_COST = 1.5     # gold per kg
-SELL_PRICE = 10.0   # gold per kg
+SELLING_PRICE = 10.0   # gold per kg
 MAX_STOCK = 100_000    # kg
 
 #
@@ -60,7 +60,7 @@ MAX_STOCK = 100_000    # kg
 #
 salt_to_purchase = random.randint(10,100)
 
-total_cost = salt_to_purchase * (BUY_COST + SHIPPING_COST)
+total_cost = salt_to_purchase * (BUYING_COST + SHIPPING_COST)
 gold = gold - total_cost
 salt = salt + salt_to_purchase
 
@@ -71,7 +71,7 @@ print(f"You purchased {salt_to_purchase} kg of salt, which costed {total_cost} g
 #
 salt_to_sell = random.randint(10, 100)
 
-total_revenue = (salt_to_sell * SELL_PRICE) - (salt_to_sell * SHIPPING_COST)
+total_revenue = (salt_to_sell * SELLING_PRICE) - (salt_to_sell * SHIPPING_COST)
 gold += total_revenue
 salt -= salt_to_sell
 

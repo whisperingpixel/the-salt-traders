@@ -61,9 +61,9 @@ stock = {
 #
 # Trading
 #
-BUY_COST = 5.0      # gold per kg
+BUYING_COST = 5.0      # gold per kg
 SHIPPING_COST = 1.5     # gold per kg
-SELL_PRICE = 10.0   # gold per kg
+SELLING_PRICE = 10.0   # gold per kg
 MAX_STOCK = 100_000    # kg
 
 #
@@ -81,7 +81,7 @@ while iteration < MAX_ITER:
             print(f"You don't have enough capacity in your stock.")
             continue
 
-        total_cost = salt_to_purchase * (BUY_COST + SHIPPING_COST)
+        total_cost = salt_to_purchase * (BUYING_COST + SHIPPING_COST)
 
         if (total_cost > stock.gold):
             print(f"You can not afford buying this amount of salt.")
@@ -110,7 +110,7 @@ while iteration < MAX_ITER:
             print(f"You sold all of your salt")
             break
 
-        total_revenue = (salt_to_sell * SELL_PRICE) - (salt_to_sell * SHIPPING_COST)
+        total_revenue = (salt_to_sell * SELLING_PRICE) - (salt_to_sell * SHIPPING_COST)
         stock.gold += total_revenue
         stock.salt -= salt_to_sell
 

@@ -55,8 +55,8 @@ import random
 #
 
 # TODO: Define and initialize constants (i.e. assign values to them). The
-#       variables are 'BUY_COST' (value: 5.0), 'SHIPPING_COST' (value: 1.5),
-#       'SELL_PRICE (value: 10.0) and 'MAX_STOCK' (value 100000).
+#       variables are 'BUYING_COST' (value: 5.0), 'SHIPPING_COST' (value: 1.5),
+#       'SELLING_PRICE (value: 10.0) and 'MAX_STOCK' (value 100000).
 #       Learning objective: Learn how to define and initialize constants.
 
 #
@@ -70,7 +70,7 @@ import random
 salt_to_purchase = ...
 
 # TODO: Calculate the total cost of the purchase based on the amount of salt,
-#       BUY_COST and SHIPPING_COST. Store it in a new variable.
+#       BUYING_COST and SHIPPING_COST. Store it in a new variable.
 #       Learning objective: Use expressions to calculate values and store them
 #       in a variable.
 
@@ -95,7 +95,7 @@ total_cost = ...
 salt_to_sell = ...
 
 # TODO: Calculate the total revenue of the sold salt based on the amount of salt,
-#       SELL_PRICE and SHIPPING_COST. Store it in a new variable.
+#       SELLING_PRICE and SHIPPING_COST. Store it in a new variable.
 #       Learning objective: Use expressions to calculate values and store them
 #       in a variable.
 

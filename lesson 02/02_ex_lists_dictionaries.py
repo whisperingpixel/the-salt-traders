@@ -70,9 +70,9 @@ stock = ...
 #
 # Trading
 #
-BUY_COST = 5.0      # gold per kg
+BUYING_COST = 5.0      # gold per kg
 SHIPPING_COST = 1.5     # gold per kg
-SELL_PRICE = 10.0   # gold per kg
+SELLING_PRICE = 10.0   # gold per kg
 MAX_STOCK = 100_000    # kg
 
 #
@@ -85,7 +85,7 @@ mine = ...
 
 salt_to_purchase = random.randint(10,100)
 
-total_cost = salt_to_purchase * (BUY_COST + SHIPPING_COST)
+total_cost = salt_to_purchase * (BUYING_COST + SHIPPING_COST)
 
 # TODO: Update the gold and salt attributes in the stock dictionary.
 #       Learning objective: Accessing and updating values in dictionaries.
@@ -103,7 +103,7 @@ print(f"You bought {salt_to_purchase} kg of salt from {mine}. The purchase coste
 market = ...
 salt_to_sell = random.randint(10, 100)
 
-total_revenue = (salt_to_sell * SELL_PRICE) - (salt_to_sell * SHIPPING_COST)
+total_revenue = (salt_to_sell * SELLING_PRICE) - (salt_to_sell * SHIPPING_COST)
 
 # TODO: Update the gold and salt attributes in the stock dictionary.
 #       Learning objective: Accessing and updating values in dictionaries.

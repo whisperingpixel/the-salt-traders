@@ -84,7 +84,7 @@ def buy_salt(amount, mine):
         print("Can not buy salt, not enough room in the stock")
         return
 
-    cost_per_kg = config["trading"]["costs"]["buy_cost"] + config["trading"]["costs"]["shipping_cost"]
+    cost_per_kg = config["trading"]["costs"]["buying_cost"] + config["trading"]["costs"]["shipping_cost"]
     total_cost = cost_per_kg * amount
     if total_cost > stock.gold:
         # TODO: Replace the 'print' statement with an exception.

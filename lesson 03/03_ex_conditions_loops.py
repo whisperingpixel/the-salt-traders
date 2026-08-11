@@ -61,9 +61,9 @@ stock = {
 #
 # Trading
 #
-BUY_COST = 5.0      # gold per kg
+BUYING_COST = 5.0      # gold per kg
 SHIPPING_COST = 1.5     # gold per kg
-SELL_PRICE = 10.0   # gold per kg
+SELLING_PRICE = 10.0   # gold per kg
 MAX_STOCK = 100_000    # kg
 
 #
@@ -89,7 +89,7 @@ salt_to_purchase = random.randint(10,100)
 #                           loop (skip).
 
 
-total_cost = salt_to_purchase * (BUY_COST + SHIPPING_COST)
+total_cost = salt_to_purchase * (BUYING_COST + SHIPPING_COST)
 
 # TODO: Implement a check using 'if' to test whether we can afford the purchase.
 #       If this is the case, stop and continue with the next iteraton.
@@ -127,7 +127,7 @@ salt_to_sell = random.randint(10, 100)
 #       Learning objective: Using if conditions for testing and changing the
 #                           loop (break).
 
-total_revenue = (salt_to_sell * SELL_PRICE) - (salt_to_sell * SHIPPING_COST)
+total_revenue = (salt_to_sell * SELLING_PRICE) - (salt_to_sell * SHIPPING_COST)
 stock.gold += total_revenue
 stock.salt -= salt_to_sell
 
