@@ -77,16 +77,16 @@ MAX_STOCK = 100_000    # kg
 
 # TODO: Create a for loop to iterate over the mines to purchase salt from each
 #       mine.
-#       Learning objective: Creating for-loops in Python to iterate over all 
+#       Learning objective: Creating for-loops in Python to iterate over all
 #                           elements in a list.
 
 salt_to_purchase = random.randint(10,100)
 
 # TODO: Implement a check using 'if' to test whether the new amount of salt
-#       would exceed the capacity of the stock (in the constant MAX_STOCK). If 
+#       would exceed the capacity of the stock (in the constant MAX_STOCK). If
 #       this is the case, stop and continue with the next iteraton.
 #       Learning objective: Using if conditions for testing and changing the
-#                           loop (skip). 
+#                           loop (skip).
 
 
 total_cost = salt_to_purchase * (BUY_COST + SHIPPING_COST)
@@ -94,12 +94,12 @@ total_cost = salt_to_purchase * (BUY_COST + SHIPPING_COST)
 # TODO: Implement a check using 'if' to test whether we can afford the purchase.
 #       If this is the case, stop and continue with the next iteraton.
 #       Learning objective: Using if conditions for testing and changing the
-#                           loop (skip). 
+#                           loop (skip).
 
 # TODO: Implement a check using 'if' to test whether we are bankrupt.
 #       If this is the case, stop with all iterations.
 #       Learning objective: Using if conditions for testing and changing the
-#                           loop (break). 
+#                           loop (break).
 
 stock.gold = stock.gold - total_cost
 stock.salt = stock.salt + salt_to_purchase
@@ -112,7 +112,7 @@ print(f"You bought {salt_to_purchase} kg of salt from {mine}. The purchase coste
 
 # TODO: Create a for loop to iterate over the markets to sell salt to each
 #       market.
-#       Learning objective: Creating for-loops in Python to iterate over all 
+#       Learning objective: Creating for-loops in Python to iterate over all
 #                           elements in a list.
 
 salt_to_sell = random.randint(10, 100)
@@ -120,12 +120,12 @@ salt_to_sell = random.randint(10, 100)
 # TODO: Implement a check using 'if' to test whether we have enough salt to sell.
 #       If this is the case, stop and continue with the next iteraton.
 #       Learning objective: Using if conditions for testing and changing the
-#                           loop (skip). 
+#                           loop (skip).
 
 # TODO: Implement a check using 'if' to test whether we sold all our salt.
 #       If this is the case, stop with all iteratons.
 #       Learning objective: Using if conditions for testing and changing the
-#                           loop (break). 
+#                           loop (break).
 
 total_revenue = (salt_to_sell * SELL_PRICE) - (salt_to_sell * SHIPPING_COST)
 stock.gold += total_revenue
@@ -138,8 +138,14 @@ print(f"You earned {total_revenue} gold by selling {salt_to_sell} kg of salt in 
 #
 print(f"you have {stock.gold} gold and {stock.salt} kg of salt in your stock")
 
+# Assignment for next week:
+#
+# - Create a random event within the while loop. This event may interrupt the buying
+#   or selling of salt. Examples are attack of outlaws, a broken ship etc. Use
+#   an if-statement to check whether there is an outbreak or not and then update
+#   (or prevent an update of) the stock accordingly.
 
-# Options to improve on your own:
+# Options to improve on your own (no assignment):
 #
 # - Instead of purchasing all salt first and then selling to all market, extend
 #   the script to purchase from a mine, then sell it to a random market. If the
