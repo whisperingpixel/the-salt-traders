@@ -1,5 +1,5 @@
 # Git - Exercises
-In this exercise, you will create a repository on the university's Gitlab, clone the repository, make some changes on your local desktop and push them to Git.
+In this exercise, you will create a repository on the university's Gitlab, clone the repository, make some changes on your local desktop and push them to Gitlab.
 However, you will first take a look at the Git repository of this course and explore the readme.md-file, the licence and the commits.
 
 ## Part 1: Explore the Salt Traders Git
@@ -10,10 +10,8 @@ Explore the page and answer the following questions:
 - Which license belongs to the project?
 - Why is it important to add a license?
 - How many commits are there?
-- How does Prof. Sudmanns format his commit messages?
+- How are the commit messages formulated?
 - Are any commit messages not sufficiently informative and concise?
-
-
 
 ## Part 2: Work with Git
 
@@ -44,7 +42,7 @@ Explore the page and answer the following questions:
 <img width="1301" height="687" alt="image" src="https://github.com/user-attachments/assets/51f0a8ba-1a2e-4ff1-a2b4-2f92d7226a18" />
 
 - Open the ‘source control’ window
-- Write an appropriate commit message 
+- Write an appropriate commit message
 - Select ‘commit and push to ‘main’
 <img width="1301" height="683" alt="image" src="https://github.com/user-attachments/assets/c3175707-9092-48e3-8e89-0239869fc5cd" />
 
@@ -62,7 +60,7 @@ First, create a pair of keys. Open the command prompt by typing 'command prompt'
 The command prompt window will open.
 <img width="1114" height="624" alt="image" src="https://github.com/user-attachments/assets/a4d697b9-4854-4304-8e9a-bb9bf4951fdd" />
 Type 'ssh-keygen' and hit </kbd>Enter</kbd>.
-The terminal asks for a file to save the key. 
+The terminal asks for a file to save the key.
 Hit </kbd>Enter</kbd> to save the key in the default location, which is also shown in the terminal.
 Now, the terminal asks for a passphrase.
 The passphrase is an extra layer of security to ensure that only you, who knows the passphrase, uses your private key.
@@ -138,7 +136,7 @@ We will specify that we do not want Git to include our data folder and the .txt-
 <img width="246" height="296" alt="image" src="https://github.com/user-attachments/assets/4eccc305-49d9-40db-b1b5-5eb81e1f0838" />
 
 Go back to Visual Studio Code and navigate to your local repo.
-Before committing, you have to tell Git your username and email address. 
+Before committing, you have to tell Git your username and email address.
 This information is essential and saved with each commit, so that it is clear which person made each commit in your project.
 To do this, open 'Terminal' from the top menu.
 
@@ -149,7 +147,7 @@ In the terminal, run the following lines, with your name and email address:
 git config --global user.name "John Doe"
 git config --global user.email johndoe@example.com
 '''
-Now, open the 'Source Control' window. 
+Now, open the 'Source Control' window.
 Note that the changes we made, are included here, except for the changes that should be ignored.
 <img width="492" height="272" alt="image" src="https://github.com/user-attachments/assets/8eb26eb8-d7b8-430b-9f9d-2f11993470fc" />
 
