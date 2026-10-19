@@ -74,8 +74,8 @@ mine = mines[0]
 salt_to_purchase = random.randint(10,100)
 
 total_cost = salt_to_purchase * (BUYING_COST + SHIPPING_COST)
-stock.gold = stock.gold - total_cost
-stock.salt = stock.salt + salt_to_purchase
+stock["gold"] = stock["gold"] - total_cost
+stock["salt"] = stock["salt"] + salt_to_purchase
 
 print(f"You bought {salt_to_purchase} kg of salt from {mine}. The purchase costed {total_cost} gold!")
 
@@ -87,15 +87,15 @@ market = random.choice(markets)
 salt_to_sell = random.randint(10, 100)
 
 total_revenue = (salt_to_sell * SELLING_PRICE) - (salt_to_sell * SHIPPING_COST)
-stock.gold += total_revenue
-stock.salt -= salt_to_sell
+stock["gold"] += total_revenue
+stock["salt"] -= salt_to_sell
 
 print(f"You earned {total_revenue} gold by selling {salt_to_sell} kg of salt in {market}!")
 
 #
 # Output (print) the amount of gold and salt in the stock
 #
-print(f"you have {stock.gold} gold and {stock.salt} kg of salt in your stock")
+print(f"you have {stock['gold']} gold and {stock['salt']} kg of salt in your stock")
 
 # Options to improve on your own:
 #
