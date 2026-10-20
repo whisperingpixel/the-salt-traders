@@ -89,12 +89,12 @@ def buy_salt(amount, mine):
         The name of the mine.
     """
 
-    if (stock.salt + amount) > config["trading"]["stock"]["max"]:
+    if (stock["salt"] + amount) > config["trading"]["stock"]["max"]:
         raise Exception("Can not buy salt, not enough room in the stock")
 
     cost_per_kg = config["trading"]["costs"]["buying_cost"] + config["trading"]["costs"]["shipping_cost"]
     total_cost = cost_per_kg * amount
-    if total_cost > stock.gold:
+    if total_cost > stock["gold"]:
         raise Exception("Can not afford salt, not enough gold")
 
     print(f"Bought {amount}kg from {mine} for {total_cost}g")
@@ -114,7 +114,7 @@ def sell_salt(amount, market):
         The name of the market of a city.
     """
 
-    if(amount > stock.salt):
+    if(amount > stock["salt"]):
         raise Exception(f"You can not sell more than you have!")
 
     revenue = (config["trading"]["revenue"]["price"] - config["trading"]["costs"]["shipping_cost"]) * amount
@@ -151,14 +151,14 @@ if __name__ == "__main__":
     while iteration < MAX_ITER:
 
         print(f"Next iteration: {iteration}/{MAX_ITER}")
-        print(f"You have {stock.salt}kg of salt and {stock.gold} gold")
+        print(f"You have {stock["salt"]}kg of salt and {stock["gold"]} gold")
 
         for mine in config["mines"]:
             try:
                 salt_to_purcase = random.randint(50,150)
                 cost = buy_salt(salt_to_purcase, mine)
-                stock.salt = stock.salt + salt_to_purcase
-                stock.gold = stock.gold - cost
+                stock["salt"] = stock["salt"] + salt_to_purcase
+                stock["gold"] = stock["gold"] - cost
             except Exception as e:
                 print(e)
 
@@ -166,12 +166,12 @@ if __name__ == "__main__":
             try:
                 salt_to_sell = random.randint(30, 70)
                 revenue = sell_salt(salt_to_sell, market)
-                stock.gold = stock.gold + revenue
-                stock.salt = stock.salt - salt_to_sell
+                stock["gold"] = stock["gold"] + revenue
+                stock["salt"] = stock["salt"] - salt_to_sell
             except Exception as e:
                 print(e)
 
-        if is_bankrupt(stock.gold):
+        if is_bankrupt(stock["gold"]):
             print("You are bankrupt")
             sys.exit()
 

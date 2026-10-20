@@ -77,22 +77,22 @@ while iteration < MAX_ITER:
     for mine in MINES:
         salt_to_purchase = random.randint(10,100)
 
-        if (stock.salt + salt_to_purchase > MAX_STOCK):
+        if (stock["salt"] + salt_to_purchase > MAX_STOCK):
             print(f"You don't have enough capacity in your stock.")
             continue
 
         total_cost = salt_to_purchase * (BUYING_COST + SHIPPING_COST)
 
-        if (total_cost > stock.gold):
+        if (total_cost > stock["gold"]):
             print(f"You can not afford buying this amount of salt.")
             continue
 
-        if (stock.gold <= 0):
+        if (stock["gold"] <= 0):
             print("You don't have enough money to purchase anything.")
             break
 
-        stock.gold = stock.gold - total_cost
-        stock.salt = stock.salt + salt_to_purchase
+        stock["gold"] = stock["gold"] - total_cost
+        stock["salt"] = stock["salt"] + salt_to_purchase
 
         print(f"You bought {salt_to_purchase} kg of salt from {mine}. The purchase costed {total_cost} gold!")
 
@@ -102,24 +102,24 @@ while iteration < MAX_ITER:
     for market in MARKETS:
         salt_to_sell = random.randint(10, 100)
 
-        if (salt_to_sell > stock.salt):
+        if (salt_to_sell > stock["salt"]):
             print(f"You don't have enough salt to sell in your stock")
             continue
 
-        if (stock.salt <= 0):
+        if (stock["salt"] <= 0):
             print(f"You sold all of your salt")
             break
 
         total_revenue = (salt_to_sell * SELLING_PRICE) - (salt_to_sell * SHIPPING_COST)
-        stock.gold += total_revenue
-        stock.salt -= salt_to_sell
+        stock["gold"] += total_revenue
+        stock["salt"] -= salt_to_sell
 
         print(f"You earned {total_revenue} gold by selling {salt_to_sell} kg of salt in {market}!")
 
     #
     # Output (print) the amount of gold and salt in the stock
     #
-    print(f"you have {stock.gold} gold and {stock.salt} kg of salt in your stock")
+    print(f"you have {stock["gold"]} gold and {stock["salt"]} kg of salt in your stock")
 
     iteration += 1
 
