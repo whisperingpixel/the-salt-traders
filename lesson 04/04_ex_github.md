@@ -16,46 +16,43 @@ Explore the page and answer the following questions:
 ## Part 2: Work with Git
 
 ### Log in and create a repository
-- Go to <https://git.sbg.ac.at/>  in your browser
-- Log in with your student account
+- Go to <https://github.com/>  in your browser
+- Click on "Sign up" and follow the steps to create an account. Use your private Email instead of your student Email, so that you can use your Github account in the future as well.
+- After Email verification, sign in. You will now be redirected to your "dashboard". 
+- Open the side menu and click on “All repositories”
 
-<img width="991" height="790" alt="image" src="https://github.com/user-attachments/assets/6a345634-3940-43c4-9c5d-06e8bfd70853" />
+<img width="1855" height="630" alt="image" src="https://github.com/user-attachments/assets/c7e6bdb1-4bb7-44cd-9bf2-1b615b1fd512" />
 
-- Click on “Projects”
-- Click on “Create a project”
+- Click on “New repository”
 
-<img width="1301" height="691" alt="image" src="https://github.com/user-attachments/assets/325cd279-816b-48a6-a2c3-006b3992d588" />
+<img width="2521" height="403" alt="image" src="https://github.com/user-attachments/assets/4d531b2e-0734-4b6f-b852-b20ca419dc1d" />
 
-- Select “Create blank project”
+- Fill in the details, including a name, description and configuration settings. Select private visibility, so that your repository is not visible to everyone. Add a README, but do not add .gitignore. We will do that later as an exercise. Lastly, it is important to select a license. The GNU Affero General Public Licence v3.0 can be used for free and open source software.
+- When finished, select ‘Create repository’
 
-<img width="1301" height="683" alt="image" src="https://github.com/user-attachments/assets/552ecde3-7355-4f84-86e7-c2d57fe15391" />
+<img width="2526" height="1037" alt="image" src="https://github.com/user-attachments/assets/0f87879e-2104-45be-8d7e-609a3a401bb4" />
 
-- Fill in the details
-- Select ‘create project’
+- You will now be redirected to the homepage of the repository.
 
-<img width="1301" height="691" alt="image" src="https://github.com/user-attachments/assets/5a75133c-e2fe-4743-9eb3-955f431dca48" />
+<img width="1629" height="634" alt="image" src="https://github.com/user-attachments/assets/76f1137d-867d-457b-9bab-0e675efcfe32" />
 
-- Click on the README.md-file, select “Edit” and “Open in Web IDE”
+
+- Click on the README.md-file and select “Edit this file”.
 - Now, update the README.md-file:
-  - Delete everything above ‘## Name’
-  - Write 1 sentence under ‘## Name’
-  - Write your name under ‘## Authors and acknowledgment’
+  - Add some information about the repository
+  - Add your name and affiliation
+  - Make sure the file is nicely formatted. More information on Markdown formatting can be found online, e.g.: [on this website](https://www.markdownguide.org/cheat-sheet/).
+  - Switch from "Edit" to "Preview" mode to see what the README will look like on the homepage of your repository.
 
-<img width="1301" height="691" alt="image" src="https://github.com/user-attachments/assets/05d7c6cd-3e3d-4a0f-bf64-2c6b1ebe25f9" />
+<img width="2528" height="526" alt="image" src="https://github.com/user-attachments/assets/11b72b34-e9f3-40aa-9589-b4495297496d" />
 
-- Browse to ‘save’
+- When finished, select "Commit changes" and write an appropriate commit message before again clicking "Commit changes".
 
-<img width="1301" height="687" alt="image" src="https://github.com/user-attachments/assets/51f0a8ba-1a2e-4ff1-a2b4-2f92d7226a18" />
+<img width="661" height="670" alt="image" src="https://github.com/user-attachments/assets/8565a8d5-0239-423d-9d86-ef995c0e7d0a" />
 
-- Open the ‘source control’ window
-- Write an appropriate commit message
-- Select ‘commit and push to ‘main’
+- You can now safely return to the project homepage and you should see there your updated README.
 
-<img width="1301" height="683" alt="image" src="https://github.com/user-attachments/assets/c3175707-9092-48e3-8e89-0239869fc5cd" />
-
-- Select ‘Go to project’ to close the editor
-
-<img width="1283" height="681" alt="image" src="https://github.com/user-attachments/assets/7c569db4-4c8f-4797-9b8a-507fdfa0da26" />
+<img width="2523" height="1017" alt="image" src="https://github.com/user-attachments/assets/6fcaeeb5-6db4-4e7b-9e2e-65092c824e3f" />
 
 
 ### Create SSH keys
@@ -94,35 +91,37 @@ The key should start with ssh, followed by a random sequence of characters and e
 Now, open your browser and navigate back to your project homepage on the university's Gitlab.
 
 ### Add the key to Git
-- On the project homepage, click on ‘Code’ and select 'Add SSH Key'.
+- Navigate to the page with your account settings.
 
-<img width="1283" height="679" alt="image" src="https://github.com/user-attachments/assets/dd11327d-6859-4890-94fa-f524cd0139a0" />
+<img width="388" height="819" alt="image" src="https://github.com/user-attachments/assets/5edd9c40-22f8-4e96-8046-d3f1fc859259" />
 
-- On the next screen, click 'Add new key'.
+- In your account settings, click 'New SSH Key'.
 
-<img width="1309" height="519" alt="image" src="https://github.com/user-attachments/assets/0c3e0cbd-a821-430f-9281-e711f0ef8ef2" />
+<img width="2528" height="986" alt="image" src="https://github.com/user-attachments/assets/97b0d9e3-85c8-435c-b761-87598003fbb5" />
 
-- Fill in the key and a title (which helps to remember which machine it belongs to).
-- Leave the 'Usage type' as is and add an expiration date, which is an extra layer of security.
-- Once finished, click 'Add key'.
+- Insert the value of your key, which you have created and opened in Notepad previously, and a title (which helps to remember which machine it belongs to).
+- Leave the 'Key type' as "Authentication Key".
+- Once finished, click 'Add key'. Github will show a message: *You have succesfully added the key 'name_of_key'* and the key should now be visible in your account settings.
 
-<img width="1294" height="1135" alt="image" src="https://github.com/user-attachments/assets/6abebcc0-73bd-40ae-8902-1a0754a16cbf" />
+Now, navigate back to your project homepage.
 
-Navigate back to your project homepage.
+- CLick on the green "Code"-menu and copy the URL that is displayed under SSH.
 
-- Copy the link under ‘Clone with SSH’.
+<img width="2527" height="985" alt="image" src="https://github.com/user-attachments/assets/34bcd520-9ccd-4929-88ee-2bd62cb2e58b" />
 
-<img width="1428" height="869" alt="image" src="https://github.com/user-attachments/assets/6a893a9b-b191-48a4-a037-110cc14a9185" />
 
 ### Clone the repository
 - Open Visual Studio Code, open the ‘source control’ window and select ‘clone repository’
 
 <img width="1083" height="681" alt="image" src="https://github.com/user-attachments/assets/0d32f495-c975-4f4d-a21a-225c3334b84f" />
 
-- Paste the link, which you just copied, and choose a folder.
+- Paste the link, which you just copied, and press Enter.
+- You will be redirected to Github in your browser, where you have to authorize Visual Studio Code.
+- Go back to Visual Studio Code and, if needed, again clone the repository with the URL.
+- Choose a folder.
 - Select 'Yes' when Visual Studio Code shows the fingerprint.
 - If you have set a passphrase, Visual Studio Code will now ask for it.
-Visual Studio Code will open your repository. Browse through the Windows file explorer to ensure that your README.md-file is indeed saved on your desktop now.
+Visual Studio Code will open your repository. Browse through the Windows file explorer to ensure that your README.md-file is indeed saved on your desktop now, together with a folder called '.git' and a license file.
 Congratulations, you have just cloned your Git repository using a secure connection between your desktop and Git!
 
 ### Make some changes, commits and pushes
@@ -139,12 +138,7 @@ You can leave the files empty or add a few random lines.
 Before committing these changes, we create a .gitignore file to make sure that our big data files are not included in our commits.
 A .gitignore file is used to prevent large (binary) files from taking up all space in your Git repository.
 - In the Windows file explorer, navigate to the local repository and create a file by clicking on the right mouse button and selecting 'New' and 'Text Document'.
-
-<img width="1123" height="826" alt="image" src="https://github.com/user-attachments/assets/9ff28f89-e7db-4de3-877d-23b7b5b23e39" />
-
 - Rename the file to '.gitignore'. The file type will change to GITIGNORE.
-
-<img width="1082" height="212" alt="image" src="https://github.com/user-attachments/assets/09014ca3-ef4b-4597-9518-a307b374d3ff" />
 
 In this file, you can specify which files should be ignored by Git.
 Each line points to a single file, folder or to multiple files, by using a file pattern.
@@ -161,9 +155,10 @@ We will specify that we do not want Git to include our data folder and the .txt-
 /output/*txt
 ```
 
-Now, your folder structure should look like this:
+Now, your folder should look like this:
 
-<img width="246" height="296" alt="image" src="https://github.com/user-attachments/assets/4eccc305-49d9-40db-b1b5-5eb81e1f0838" />
+<img width="636" height="240" alt="image" src="https://github.com/user-attachments/assets/edcfee58-87a4-4911-8921-cb28acc7702a" />
+
 
 Go back to Visual Studio Code and navigate to your local repo.
 Before committing, you have to tell Git your username and email address.
@@ -190,9 +185,10 @@ Also do this for the other changes.
 The commits will appear under 'Graph' in the 'Source Control' Menu.
 Finally, select 'Push' to push the changes to your remote Git repository.
 
-<img width="531" height="875" alt="image" src="https://github.com/user-attachments/assets/35e2febc-3b1d-4a7b-ab45-cc762c432dd5" />
+<img width="430" height="809" alt="image" src="https://github.com/user-attachments/assets/839fa4fd-8325-4ea5-967e-7dc577e720ab" />
 
 Now, go back to your browser and the remote repository to confirm that:
 - Your files have been succesfully uploaded.
 - The data folder is not uploaded.
 - The file 'big_output.txt' is not uploaded, but 'table.csv' is.
+If you have already started working on the assignment, you can already make a first commit.
