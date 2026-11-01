@@ -101,8 +101,8 @@ total_cost = salt_to_purchase * (BUYING_COST + SHIPPING_COST)
 #       Learning objective: Using if conditions for testing and changing the
 #                           loop (break).
 
-stock.gold = stock.gold - total_cost
-stock.salt = stock.salt + salt_to_purchase
+stock["gold"] = stock["gold"] - total_cost
+stock["salt"] = stock["salt"] + salt_to_purchase
 
 print(f"You bought {salt_to_purchase} kg of salt from {mine}. The purchase costed {total_cost} gold!")
 
@@ -128,15 +128,15 @@ salt_to_sell = random.randint(10, 100)
 #                           loop (break).
 
 total_revenue = (salt_to_sell * SELLING_PRICE) - (salt_to_sell * SHIPPING_COST)
-stock.gold += total_revenue
-stock.salt -= salt_to_sell
+stock["gold"] += total_revenue
+stock["salt"] -= salt_to_sell
 
 print(f"You earned {total_revenue} gold by selling {salt_to_sell} kg of salt in {market}!")
 
 #
 # Output (print) the amount of gold and salt in the stock
 #
-print(f"you have {stock.gold} gold and {stock.salt} kg of salt in your stock")
+print(f"you have {stock["gold"]} gold and {stock["salt"]} kg of salt in your stock")
 
 # Assignment for next week:
 #
