@@ -33,30 +33,31 @@ Explore the page and answer the following questions:
 - Fill in the details
 - Select ‘create project’
 
-<img width="1301" height="691" alt="image" src="https://github.com/user-attachments/assets/5a75133c-e2fe-4743-9eb3-955f431dca48" />
+<img width="1537" height="726" alt="image" src="https://github.com/user-attachments/assets/6b31553f-13bb-4e2d-94ec-6e024c3ac6c1" />
+<img width="1549" height="402" alt="image" src="https://github.com/user-attachments/assets/5875ea47-26b5-4f43-a0f3-0245daa63907" />
+
 
 - Click on the README.md-file, select “Edit” and “Open in Web IDE”
 - Now, update the README.md-file:
-  - Delete everything above ‘## Name’
-  - Write 1 sentence under ‘## Name’
-  - Write your name under ‘## Authors and acknowledgment’
+  - Delete all placeholder text
+  - Write a short description of the repository (feel free to make it more elaborate than in the example)
+  - In the bottom, include your name and affiliation
+  - Make sure the file is nicely formatted. More information on Markdown formatting can be found online, e.g.: on this [website](https://www.markdownguide.org/cheat-sheet/).
 
-<img width="1301" height="691" alt="image" src="https://github.com/user-attachments/assets/05d7c6cd-3e3d-4a0f-bf64-2c6b1ebe25f9" />
+<img width="1903" height="902" alt="image" src="https://github.com/user-attachments/assets/87a1fa6d-60c9-4c7a-b01c-81e9c484ec59" />
 
-- Browse to ‘save’
+- Save your edits in the file menu
 
-<img width="1301" height="687" alt="image" src="https://github.com/user-attachments/assets/51f0a8ba-1a2e-4ff1-a2b4-2f92d7226a18" />
+<img width="1911" height="905" alt="image" src="https://github.com/user-attachments/assets/bc76714e-505b-420b-8ce3-795368cd5ffd" />
 
 - Open the ‘source control’ window
 - Write an appropriate commit message
 - Select ‘commit and push to ‘main’
 
-<img width="1301" height="683" alt="image" src="https://github.com/user-attachments/assets/c3175707-9092-48e3-8e89-0239869fc5cd" />
+<img width="1912" height="907" alt="image" src="https://github.com/user-attachments/assets/287bea17-894d-40c4-8248-a10c15912493" />
 
-- Select ‘Go to project’ to close the editor
-
-<img width="1283" height="681" alt="image" src="https://github.com/user-attachments/assets/7c569db4-4c8f-4797-9b8a-507fdfa0da26" />
-
+- After pushing, your changes are saved in your repository. You can now close the editor and return to the project homepage.
+- The next step is to clone your repository to your local workstation.
 
 ### Create SSH keys
 First, we ensure that the remote host and your local desktop have a safe way to communicate, by using a private and a public SSH key. 
@@ -94,13 +95,14 @@ The key should start with ssh, followed by a random sequence of characters and e
 Now, open your browser and navigate back to your project homepage on the university's Gitlab.
 
 ### Add the key to Git
-- On the project homepage, click on ‘Code’ and select 'Add SSH Key'.
+- Navigate to the user settings by selecting 'Preferences' in the pop-up menu that appears when you click on your profile picture in the top right corner.
 
-<img width="1283" height="679" alt="image" src="https://github.com/user-attachments/assets/dd11327d-6859-4890-94fa-f524cd0139a0" />
+<img width="1897" height="971" alt="image" src="https://github.com/user-attachments/assets/548fb253-c15a-4545-8aab-aa777affd1f9" />
 
+- Click on 'Access' in the menu and select 'SSH Keys'.
 - On the next screen, click 'Add new key'.
 
-<img width="1309" height="519" alt="image" src="https://github.com/user-attachments/assets/0c3e0cbd-a821-430f-9281-e711f0ef8ef2" />
+<img width="1897" height="930" alt="image" src="https://github.com/user-attachments/assets/975084a0-fd12-4e0f-8efd-256aff8ac142" />
 
 - Fill in the key and a title (which helps to remember which machine it belongs to).
 - Leave the 'Usage type' as is and add an expiration date, which is an extra layer of security.
@@ -112,7 +114,7 @@ Navigate back to your project homepage.
 
 - Copy the link under ‘Clone with SSH’.
 
-<img width="1428" height="869" alt="image" src="https://github.com/user-attachments/assets/6a893a9b-b191-48a4-a037-110cc14a9185" />
+<img width="1906" height="941" alt="image" src="https://github.com/user-attachments/assets/0243f5bc-aa8b-4bea-b832-8b53f85662db" />
 
 ### Clone the repository
 - Open Visual Studio Code, open the ‘source control’ window and select ‘clone repository’
@@ -190,7 +192,7 @@ Also do this for the other changes.
 The commits will appear under 'Graph' in the 'Source Control' Menu.
 Finally, select 'Push' to push the changes to your remote Git repository.
 
-<img width="531" height="875" alt="image" src="https://github.com/user-attachments/assets/35e2febc-3b1d-4a7b-ab45-cc762c432dd5" />
+<img width="430" height="809" alt="image" src="https://github.com/user-attachments/assets/9da12064-a415-4e38-922c-9b5e32bd3400" />
 
 Now, go back to your browser and the remote repository to confirm that:
 - Your files have been succesfully uploaded.
