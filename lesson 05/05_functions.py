@@ -75,13 +75,13 @@ MAX_ITER = 100
 
 def buy_salt(amount, mine):
 
-    if (stock.salt + amount) > MAX_STOCK:
+    if (stock["salt"] + amount) > MAX_STOCK:
         print("Can not buy salt, not enough room in the stock")
         return
 
     cost_per_kg = BUYING_COST + SHIPPING_COST
     total_cost = cost_per_kg * amount
-    if total_cost > stock.gold:
+    if total_cost > stock["gold"]:
         print("Can not afford salt, not enough gold")
         return
 
@@ -91,7 +91,7 @@ def buy_salt(amount, mine):
 
 def sell_salt(amount, market):
 
-    if(amount > stock.salt):
+    if(amount > stock["salt"]):
         print(f"You can not sell more than you have!")
         return
 
@@ -119,21 +119,21 @@ if __name__ == "__main__":
     while iteration < MAX_ITER:
 
         print(f"Next iteration: {iteration}/{MAX_ITER}")
-        print(f"You have {stock.salt}kg of salt and {stock.gold} gold")
+        print(f"You have {stock["salt"]}kg of salt and {stock["gold"]} gold")
 
         for mine in MINES:
             salt_to_purcase = random.randint(50,150)
             cost = buy_salt(salt_to_purcase, mine)
-            stock.salt = stock.salt + salt_to_purcase
-            stock.gold = stock.gold - cost
+            stock["salt"] = stock["salt"] + salt_to_purcase
+            stock["gold"] = stock["gold"] - cost
 
         for market in MARKETS:
             salt_to_sell = random.randint(30, 70)
             revenue = sell_salt(salt_to_sell, market)
-            stock.gold = stock.gold + revenue
-            stock.salt = stock.salt - salt_to_sell
+            stock["gold"] = stock["gold"] + revenue
+            stock["salt"] = stock["salt"] - salt_to_sell
 
-        if is_bankrupt(stock.gold):
+        if is_bankrupt(stock["gold"]):
             print("You are bankrupt")
             sys.exit()
 

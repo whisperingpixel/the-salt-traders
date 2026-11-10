@@ -113,7 +113,7 @@ print(f"You earned {total_revenue} gold by selling {salt_to_sell} kg of salt in 
 #
 # Output (print) the amount of gold and salt in the stock
 #
-print(f"you have {stock.gold} gold and {stock.salt} kg of salt in your stock")
+print(f"you have {stock["gold"]} gold and {stock["salt"]} kg of salt in your stock")
 
 # Options to improve on your own:
 #

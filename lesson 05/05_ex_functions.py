@@ -96,7 +96,7 @@ if __name__ == "__main__":
     while iteration < MAX_ITER:
 
         print(f"Next iteration: {iteration}/{MAX_ITER}")
-        print(f"You have {stock.salt}kg of salt and {stock.gold} gold")
+        print(f"You have {stock["salt"]}kg of salt and {stock["gold"]} gold")
 
         for mine in MINES:
             pass
