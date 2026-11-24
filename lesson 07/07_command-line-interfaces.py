@@ -55,8 +55,10 @@ args = parser.parse_args()
 #
 # Initial state of the stock
 #
-gold = args.gold
-salt = args.salt
+stock = {
+    "gold": args.gold,
+    "salt": args.salt
+}
 
 #
 # Configuration
@@ -90,12 +92,12 @@ def buy_salt(amount, mine):
         The name of the mine.
     """
 
-    if (salt + amount) > config["trading"]["stock"]["max"]:
+    if (stock["salt"] + amount) > config["trading"]["stock"]["max"]:
         raise Exception("Can not buy salt, not enough room in the stock")
 
     cost_per_kg = config["trading"]["costs"]["buying_cost"] + config["trading"]["costs"]["shipping_cost"]
     total_cost = cost_per_kg * amount
-    if total_cost > gold:
+    if total_cost > stock["gold"]:
         raise Exception("Can not afford salt, not enough gold")
 
     print(f"Bought {amount}kg from {mine} for {total_cost}g")
@@ -115,7 +117,7 @@ def sell_salt(amount, market):
         The name of the market of a city.
     """
 
-    if(amount > salt):
+    if(amount > stock["salt"]):
         raise Exception(f"You can not sell more than you have!")
 
     revenue = (config["trading"]["revenue"]["price"] - config["trading"]["costs"]["shipping_cost"]) * amount
@@ -146,6 +148,7 @@ def is_bankrupt(gold):
 if __name__ == "__main__":
 
     class TheSaltTraders(cmd.Cmd):
+
         intro = """
         Welcome to the world of salt, merchant!
 
@@ -159,24 +162,21 @@ if __name__ == "__main__":
 
         def do_list_stock(self, _):
             """ List your stock """
-            print(f"You have {salt}kg of salt and {gold} gold")
+            print(f"You have {stock["salt"]}kg of salt and {stock["gold"]} gold")
 
         def do_purchase(self, line):
             """Purchase salt from a mine"""
             amount, mine = line.split()
             amount = int(amount)
 
-            global salt
-            global gold
-
             try:
                 cost = buy_salt(amount, mine)
-                salt = salt + amount
-                gold = gold - cost
+                stock["salt"] = stock["salt"] + amount
+                stock["gold"] = stock["gold"] - cost
             except Exception as e:
                 print(e)
 
-            if is_bankrupt(gold):
+            if is_bankrupt(stock["gold"]):
                 print("You are bankrupt")
                 sys.exit()
 
@@ -186,13 +186,10 @@ if __name__ == "__main__":
             amount, market = line.split()
             amount = int(amount)
 
-            global salt
-            global gold
-
             try:
                 revenue = sell_salt(amount, market)
-                gold = gold + revenue
-                salt = salt - amount
+                stock["gold"] = stock["gold"] + revenue
+                stock["salt"] = stock["salt"] - amount
             except Exception as e:
                 print(e)
 
